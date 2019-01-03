@@ -1,0 +1,107 @@
+---
+bootstrap_wait_for_host: yes
+
+users_group_list:
+  - name: robertdb
+
+users_user_list:
+  - name: robertdb
+    comment: Robert de Bock
+    group: robertdb
+    groups: wheel
+    cron_allow: yes
+    sudo_options: "ALL=(ALL) NOPASSWD: ALL"
+    password: "$1$QbmM32Kz$nzFTRRxti0ZZ2oSC6ii8p1"
+    authorized_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCWswOogkZz/ihQA0lENCwDwSzmtmBWtFwzIzDlfa+eb4rBt6rZBg7enKeMqYtStI/NDneBwZUFBDIMu5zJTbvg7A60/WDhWXZmU21tZnm8K7KREFYOUndc6h//QHig6IIaIwwBZHF1NgXLtZ0qrUUlNU5JSEhDJsObMlPHtE4vFP8twPnfc7hxAnYma5+knU6qTMCDvhBE5tGJdor4UGeAhu+SwSVDloYtt1vGTmnFn8M/OD/fRMksusPefxyshJ37jpB4jY/Z9vzaNHwcj33prwl1b/xRfxr/+KRJsyq+ZKs9u2TVw9g4p+XLdfDtzZ8thR2P3x3MFrZOdFmCbo/5"
+
+repository_base: "ssh://git@github.com/robertdebock"
+repository_destination: /home/robertdb/github.com/robertdebock
+
+repositories:
+  - ansible-role-ansible
+  - ansible-role-ansible_lint
+  - ansible-role-apt_autostart
+  - ansible-role-ara
+  - ansible-role-artifactory
+  - ansible-role-at
+  - ansible-role-awx
+  - ansible-role-backup
+  - ansible-role-bootstrap
+  - ansible-role-buildtools
+  - ansible-role-ca
+  - ansible-role-cargo
+  - ansible-role-clamav
+  - ansible-role-cloud9
+  - ansible-role-cntlm
+  - ansible-role-common
+  - ansible-role-cve_2018_19788
+  - ansible-role-dhcpd
+  - ansible-role-digitalocean-agent
+  - ansible-role-dns
+  - ansible-role-docker
+  - ansible-role-dovecot
+  - ansible-role-epel
+  - ansible-role-fail2ban
+  - ansible-role-firewall
+  - ansible-role-git
+  - ansible-role-glusterfs
+  - ansible-role-go
+  - ansible-role-gotop
+  - ansible-role-haproxy
+  - ansible-role-haveged
+  - ansible-role-httpd
+  - ansible-role-investigate
+  - ansible-role-irslackd
+  - ansible-role-java
+  - ansible-role-jenkins
+  - ansible-role-lynis
+  - ansible-role-mediawiki
+  - ansible-role-memcached
+  - ansible-role-mitogen
+  - ansible-role-molecule
+  - ansible-role-mssql
+  - ansible-role-mysql
+  - ansible-role-natrouter
+  - ansible-role-nginx
+  - ansible-role-npm
+  - ansible-role-ntp
+  - ansible-role-openssh
+  - ansible-role-openvas
+  - ansible-role-owncloud
+  - ansible-role-packer
+  - ansible-role-php
+  - ansible-role-phpmyadmin
+  - ansible-role-postfix
+  - ansible-role-python-pip
+  - ansible-role-reboot
+  - ansible-role-redis
+  - ansible-role-release
+  - ansible-role-restore
+  - ansible-role-revealmd
+  - ansible-role-roundcubemail
+  - ansible-role-rsyslog
+  - ansible-role-ruby
+  - ansible-role-rundeck
+  - ansible-role-scl
+  - ansible-role-selinux
+  - ansible-role-skeleton
+  - ansible-role-snort
+  - ansible-role-spamassassin
+  - ansible-role-squid
+  - ansible-role-sudo-pair
+  - ansible-role-terraform
+  - ansible-role-tftpd
+  - ansible-role-tomcat
+  - ansible-role-travis
+  - ansible-role-update
+  - ansible-role-users
+  - ansible-role-xinetd
+  - ansible-role-zabbix
+  - ansible-role-zabbix_agent
+  - ansible-role-zabbix_proxy
+  - ansible-role-zabbix_repository
+  - ansible-role-zabbix_server
+  - ansible-role-zabbix_web
+  - ansible-tools
+  - drawings
+  - robertdebock.github.io

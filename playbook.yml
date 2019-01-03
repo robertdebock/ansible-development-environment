@@ -1,0 +1,55 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: setup an ansible development environment
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  roles:
+    - robertdebock.bootstrap
+    - robertdebock.update
+    - robertdebock.fail2ban
+    - robertdebock.openssh
+    - robertdebock.digitalocean_agent
+    - robertdebock.common
+    - robertdebock.users
+    - robertdebock.postfix
+    - robertdebock.docker
+    - robertdebock.investigate
+    - robertdebock.ansible
+    - robertdebock.ansible_lint
+    - robertdebock.buildtools
+    - robertdebock.molecule
+    - robertdebock.ara
+    - robertdebock.ruby
+    - robertdebock.travis
+
+  tasks:
+    - name: copy private key
+      copy:
+        src: id_rsa
+        dest: /home/robertdb/.ssh/id_rsa
+        mode: "0400"
+        owner: robertdb
+        group: robertdb
+
+    - name: copy git configuration
+      copy:
+        src: gitconfig
+        dest: /home/robertdb/.gitconfig
+
+    - name: create repository_destination
+      file:
+        path: "{{ repository_destination }}"
+        state: directory
+        owner: robertdb
+        group: robertdb
+
+    - name: clone all roles
+      git:
+        repo: "{{ repository_base }}/{{ item }}.git"
+        dest: "{{ repository_destination }}/{{ item }}"
+        accept_hostkey: yes
+        key_file: /home/robertdb/.ssh/id_rsa
+      with_items: "{{ repositories }}"
+      become_user: robertdb
