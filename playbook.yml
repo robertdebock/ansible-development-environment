@@ -10,6 +10,7 @@
     - robertdebock.update
     - robertdebock.fail2ban
     - robertdebock.openssh
+    - robertdebock.firewall
     - robertdebock.digitalocean_agent
     - robertdebock.common
     - robertdebock.users
