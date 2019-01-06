@@ -32,7 +32,7 @@ ara_configuration:
     value: 25
 
 repository_base: "ssh://git@github.com/robertdebock"
-repository_destination: /home/robertdb/github.com/robertdebock
+repository_destination: /home/robertdb/Documents/github.com/robertdebock
 
 repositories:
   - ansible-role-ansible
