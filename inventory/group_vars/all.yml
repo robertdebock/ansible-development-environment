@@ -8,7 +8,7 @@ users_user_list:
   - name: robertdb
     comment: Robert de Bock
     group: robertdb
-    groups: wheel
+    groups: wheel,docker
     cron_allow: yes
     sudo_options: "ALL=(ALL) NOPASSWD: ALL"
     password: "$1$QbmM32Kz$nzFTRRxti0ZZ2oSC6ii8p1"
