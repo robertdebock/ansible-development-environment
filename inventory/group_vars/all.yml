@@ -19,17 +19,9 @@ firewall_services:
   - name: 9191
     proto: tcp
 
-ara_user: robertdb
-
 ara_configuration:
-  - option: port
-    value: 9191
   - option: host
     value: 0.0.0.0
-  - option: playbook_per_page
-    value: 10
-  - option: result_per_page
-    value: 25
 
 repository_base: "ssh://git@github.com/robertdebock"
 repository_destination: /home/robertdb/Documents/github.com/robertdebock
