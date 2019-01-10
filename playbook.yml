@@ -33,24 +33,3 @@
         mode: "0400"
         owner: robertdb
         group: robertdb
-
-    - name: copy git configuration
-      copy:
-        src: gitconfig
-        dest: /home/robertdb/.gitconfig
-
-    - name: create repository_destination
-      file:
-        path: "{{ repository_destination }}"
-        state: directory
-        owner: robertdb
-        group: robertdb
-
-    - name: clone all roles
-      git:
-        repo: "{{ repository_base }}/{{ item }}.git"
-        dest: "{{ repository_destination }}/{{ item }}"
-        accept_hostkey: yes
-        key_file: /home/robertdb/.ssh/id_rsa
-      with_items: "{{ repositories }}"
-      become_user: robertdb

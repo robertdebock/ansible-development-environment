@@ -4,6 +4,8 @@ bootstrap_wait_for_host: yes
 users_group_list:
   - name: robertdb
 
+users_ssh_key_directory: files/ssh_keys
+
 users_user_list:
   - name: robertdb
     comment: Robert de Bock
@@ -11,8 +13,8 @@ users_user_list:
     groups: wheel,docker
     cron_allow: yes
     sudo_options: "ALL=(ALL) NOPASSWD: ALL"
-    password: "$1$QbmM32Kz$nzFTRRxti0ZZ2oSC6ii8p1"
     authorized_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCWswOogkZz/ihQA0lENCwDwSzmtmBWtFwzIzDlfa+eb4rBt6rZBg7enKeMqYtStI/NDneBwZUFBDIMu5zJTbvg7A60/WDhWXZmU21tZnm8K7KREFYOUndc6h//QHig6IIaIwwBZHF1NgXLtZ0qrUUlNU5JSEhDJsObMlPHtE4vFP8twPnfc7hxAnYma5+knU6qTMCDvhBE5tGJdor4UGeAhu+SwSVDloYtt1vGTmnFn8M/OD/fRMksusPefxyshJ37jpB4jY/Z9vzaNHwcj33prwl1b/xRfxr/+KRJsyq+ZKs9u2TVw9g4p+XLdfDtzZ8thR2P3x3MFrZOdFmCbo/5"
+    manage_ssh_key: yes
 
 firewall_services:
   - name: ssh
@@ -23,95 +25,98 @@ ara_configuration:
   - option: host
     value: 0.0.0.0
 
-repository_base: "ssh://git@github.com/robertdebock"
-repository_destination: /home/robertdb/Documents/github.com/robertdebock
+git_username: robertdb
+git_user_name: Robert de Bock
+git_user_email: robert@meinit.nl
 
-repositories:
-  - ansible-role-ansible
-  - ansible-role-ansible_lint
-  - ansible-role-apt_autostart
-  - ansible-role-ara
-  - ansible-role-artifactory
-  - ansible-role-at
-  - ansible-role-awx
-  - ansible-role-backup
-  - ansible-role-bootstrap
-  - ansible-role-buildtools
-  - ansible-role-ca
-  - ansible-role-cargo
-  - ansible-role-clamav
-  - ansible-role-cloud9
-  - ansible-role-cntlm
-  - ansible-role-common
-  - ansible-role-cve_2018_19788
-  - ansible-role-dhcpd
-  - ansible-role-digitalocean-agent
-  - ansible-role-dns
-  - ansible-role-docker
-  - ansible-role-dovecot
-  - ansible-role-epel
-  - ansible-role-fail2ban
-  - ansible-role-firewall
-  - ansible-role-git
-  - ansible-role-glusterfs
-  - ansible-role-go
-  - ansible-role-gotop
-  - ansible-role-haproxy
-  - ansible-role-haveged
-  - ansible-role-httpd
-  - ansible-role-investigate
-  - ansible-role-irslackd
-  - ansible-role-java
-  - ansible-role-jenkins
-  - ansible-role-locale
-  - ansible-role-lynis
-  - ansible-role-mediawiki
-  - ansible-role-memcached
-  - ansible-role-mitogen
-  - ansible-role-molecule
-  - ansible-role-mssql
-  - ansible-role-mysql
-  - ansible-role-natrouter
-  - ansible-role-nginx
-  - ansible-role-npm
-  - ansible-role-ntp
-  - ansible-role-openssh
-  - ansible-role-openvas
-  - ansible-role-owncloud
-  - ansible-role-packer
-  - ansible-role-php
-  - ansible-role-phpmyadmin
-  - ansible-role-postfix
-  - ansible-role-python-pip
-  - ansible-role-reboot
-  - ansible-role-redis
-  - ansible-role-release
-  - ansible-role-restore
-  - ansible-role-revealmd
-  - ansible-role-roundcubemail
-  - ansible-role-rsyslog
-  - ansible-role-ruby
-  - ansible-role-rundeck
-  - ansible-role-scl
-  - ansible-role-selinux
-  - ansible-role-skeleton
-  - ansible-role-snort
-  - ansible-role-spamassassin
-  - ansible-role-squid
-  - ansible-role-sudo-pair
-  - ansible-role-terraform
-  - ansible-role-tftpd
-  - ansible-role-tomcat
-  - ansible-role-travis
-  - ansible-role-update
-  - ansible-role-users
-  - ansible-role-xinetd
-  - ansible-role-zabbix
-  - ansible-role-zabbix_agent
-  - ansible-role-zabbix_proxy
-  - ansible-role-zabbix_repository
-  - ansible-role-zabbix_server
-  - ansible-role-zabbix_web
-  - ansible-tools
-  - drawings
-  - robertdebock.github.io
+git_repository_destination: /home/robertdb/Documents/github.com/robertdebock
+
+git_repositories:
+  - name: ssh://git@github.com/robertdebock/ansible-role-ansible.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-ansible_lint.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-apt_autostart.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-ara.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-artifactory.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-at.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-awx.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-backup.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-bootstrap.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-buildtools.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-ca.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-cargo.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-clamav.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-cloud9.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-cntlm.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-common.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-cve_2018_19788.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-dhcpd.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-digitalocean-agent.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-dns.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-docker.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-dovecot.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-epel.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-fail2ban.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-firewall.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-git.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-glusterfs.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-go.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-gotop.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-haproxy.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-haveged.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-httpd.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-investigate.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-irslackd.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-java.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-jenkins.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-locale.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-lynis.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-mediawiki.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-memcached.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-mitogen.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-molecule.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-mssql.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-mysql.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-natrouter.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-nginx.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-npm.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-ntp.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-openssh.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-openvas.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-owncloud.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-packer.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-php.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-phpmyadmin.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-postfix.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-python-pip.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-reboot.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-redis.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-release.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-restore.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-revealmd.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-roundcubemail.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-rsyslog.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-ruby.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-rundeck.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-scl.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-selinux.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-skeleton.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-snort.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-spamassassin.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-squid.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-sudo-pair.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-terraform.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-tftpd.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-tomcat.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-travis.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-update.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-users.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-xinetd.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-zabbix.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-zabbix_agent.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-zabbix_proxy.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-zabbix_repository.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-zabbix_server.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-zabbix_web.git
+  - name: ssh://git@github.com/robertdebock/ansible-tools.git
+  - name: ssh://git@github.com/robertdebock/drawings.git
+  - name: ssh://git@github.com/robertdebock/robertdebock.github.io.git
