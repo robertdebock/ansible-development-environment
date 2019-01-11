@@ -16,6 +16,7 @@
     - robertdebock.users
     - robertdebock.postfix
     - robertdebock.docker
+    - robertdebock.vagrant
     - robertdebock.investigate
     - robertdebock.ansible
     - robertdebock.ansible_lint
@@ -24,12 +25,3 @@
     - robertdebock.ara
     - robertdebock.ruby
     - robertdebock.travis
-
-  tasks:
-    - name: copy private key
-      copy:
-        src: id_rsa
-        dest: /home/robertdb/.ssh/id_rsa
-        mode: "0400"
-        owner: robertdb
-        group: robertdb
