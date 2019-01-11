@@ -110,6 +110,7 @@ git_repositories:
   - name: ssh://git@github.com/robertdebock/ansible-role-travis.git
   - name: ssh://git@github.com/robertdebock/ansible-role-update.git
   - name: ssh://git@github.com/robertdebock/ansible-role-users.git
+  - name: ssh://git@github.com/robertdebock/ansible-role-vagrant.git
   - name: ssh://git@github.com/robertdebock/ansible-role-xinetd.git
   - name: ssh://git@github.com/robertdebock/ansible-role-zabbix.git
   - name: ssh://git@github.com/robertdebock/ansible-role-zabbix_agent.git
