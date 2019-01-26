@@ -24,6 +24,25 @@ Download all required roles:
 ansible-galaxy install --role-file roles/requirements.yml
 ```
 
+## Mac / Linux
+
+Vagrant requires a different file for `Virtualbox` (typically Mac OS X) and `libvirt` (typically Linux).
+
+For Virtualbox / Mac OS X:
+
+```sh
+rm Vagrantfile
+ln -s Vagrantfile.virtualbox Vagrantfile
+```
+
+For libvirt / Linux:
+
+
+```sh
+rm Vagrantfile
+ln -s Vagrantfile.libvirt Vagrantfile
+```
+
 Now change a few files:
 
 - `files/gitconfig` should contain your details.
