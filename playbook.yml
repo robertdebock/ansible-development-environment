@@ -9,19 +9,20 @@
     - robertdebock.bootstrap
     - robertdebock.update
     - robertdebock.fail2ban
-    - robertdebock.openssh
     - robertdebock.firewall
     - robertdebock.digitalocean_agent
     - robertdebock.common
+    - robertdebock.docker
     - robertdebock.users
     - robertdebock.postfix
-    - robertdebock.docker
     - robertdebock.vagrant
     - robertdebock.investigate
     - robertdebock.ansible
     - robertdebock.ansible_lint
     - robertdebock.buildtools
+    - robertdebock.python_pip
     - robertdebock.molecule
     - robertdebock.ara
     - robertdebock.ruby
     - robertdebock.travis
+    - robertdebock.git
