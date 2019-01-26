@@ -1,0 +1,22 @@
+---
+- robertdebock.ansible
+- robertdebock.ansible_lint
+- robertdebock.ara
+- robertdebock.bootstrap
+- robertdebock.buildtools
+- robertdebock.common
+- robertdebock.digitalocean_agent
+- robertdebock.docker
+- robertdebock.fail2ban
+- robertdebock.firewall
+- robertdebock.git
+- robertdebock.investigate
+- robertdebock.molecule
+- robertdebock.postfix
+- robertdebock.python_pip
+- robertdebock.reboot
+- robertdebock.ruby
+- robertdebock.travis
+- robertdebock.update
+- robertdebock.users
+- robertdebock.vagrant
