@@ -2,6 +2,7 @@
 - robertdebock.ansible
 - robertdebock.ansible_lint
 - robertdebock.ara
+- robertdebock.atom
 - robertdebock.bootstrap
 - robertdebock.buildtools
 - robertdebock.common
