@@ -1,7 +1,15 @@
 Vagrant.configure("2") do |config|
-  config.vm.define "fedora29" do |fedora28|
-    fedora28.vm.box = "fedora/29-cloud-base"
-    fedora28.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.define "fedora" do |fedora|
+    fedora.vm.box = "fedora/29-cloud-base"
+    fedora.vm.synced_folder '.', '/vagrant', disabled: true
+    config.vm.provider "virtualbox" do |v|
+      v.memory = 4096
+      v.cpus = 2
+    end
+  end
+  config.vm.define "ubuntu" do |ubuntu|
+    ubuntu.vm.box = "ubuntu/trusty64"
+    ubuntu.vm.synced_folder '.', '/vagrant', disabled: true
     config.vm.provider "virtualbox" do |v|
       v.memory = 4096
       v.cpus = 2

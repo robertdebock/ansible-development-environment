@@ -12,6 +12,7 @@
     - robertdebock.firewall
     - robertdebock.digitalocean_agent
     - robertdebock.common
+    - robertdebock.python_pip
     - robertdebock.docker
     - robertdebock.users
     - robertdebock.postfix
@@ -20,7 +21,6 @@
     - robertdebock.ansible
     - robertdebock.ansible_lint
     - robertdebock.buildtools
-    - robertdebock.python_pip
     - robertdebock.molecule
     - robertdebock.ara
     - robertdebock.ruby
