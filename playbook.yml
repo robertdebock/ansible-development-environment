@@ -10,7 +10,6 @@
     - robertdebock.update
     - robertdebock.fail2ban
     - robertdebock.firewall
-    - robertdebock.digitalocean_agent
     - robertdebock.common
     - robertdebock.python_pip
     - robertdebock.docker

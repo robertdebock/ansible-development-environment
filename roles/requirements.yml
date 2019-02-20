@@ -6,7 +6,6 @@
 - robertdebock.bootstrap
 - robertdebock.buildtools
 - robertdebock.common
-- robertdebock.digitalocean_agent
 - robertdebock.docker
 - robertdebock.fail2ban
 - robertdebock.firewall
