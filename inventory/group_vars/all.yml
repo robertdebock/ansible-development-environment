@@ -14,7 +14,7 @@ users_user_list:
     cron_allow: yes
     sudo_options: "ALL=(ALL) NOPASSWD: ALL"
     authorized_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCWswOogkZz/ihQA0lENCwDwSzmtmBWtFwzIzDlfa+eb4rBt6rZBg7enKeMqYtStI/NDneBwZUFBDIMu5zJTbvg7A60/WDhWXZmU21tZnm8K7KREFYOUndc6h//QHig6IIaIwwBZHF1NgXLtZ0qrUUlNU5JSEhDJsObMlPHtE4vFP8twPnfc7hxAnYma5+knU6qTMCDvhBE5tGJdor4UGeAhu+SwSVDloYtt1vGTmnFn8M/OD/fRMksusPefxyshJ37jpB4jY/Z9vzaNHwcj33prwl1b/xRfxr/+KRJsyq+ZKs9u2TVw9g4p+XLdfDtzZ8thR2P3x3MFrZOdFmCbo/5"
-    manage_ssh_key: yes
+    tmanage_ssh_key: yes
     copy_private_key: yes
 
 firewall_services:
@@ -33,6 +33,8 @@ git_user_email: robert@meinit.nl
 git_repository_destination: /home/robertdb/Documents/github.com/robertdebock
 
 git_repositories:
+  - repo: ssh://git@github.com/robertdebock/ansible-role-anaconda.git
+    dest: ansible-role-anaconda
   - repo: ssh://git@github.com/robertdebock/ansible-role-ansible.git
     dest: ansible-role-ansible
   - repo: ssh://git@github.com/robertdebock/ansible-role-ansible_lint.git
@@ -77,6 +79,8 @@ git_repositories:
     dest: ansible-role-dns
   - repo: ssh://git@github.com/robertdebock/ansible-role-docker.git
     dest: ansible-role-docker
+  - repo: ssh://git@github.com/robertdebock/ansible-role-docker_ce.git
+    dest: ansible-role-docker_ce
   - repo: ssh://git@github.com/robertdebock/ansible-role-dovecot.git
     dest: ansible-role-dovecot
   - repo: ssh://git@github.com/robertdebock/ansible-role-epel.git
@@ -179,8 +183,12 @@ git_repositories:
     dest: ansible-role-spamassassin
   - repo: ssh://git@github.com/robertdebock/ansible-role-squid.git
     dest: ansible-role-squid
+  - repo: ssh://git@github.com/robertdebock/ansible-role-storage.git
+    dest: ansible-role-storage
   - repo: ssh://git@github.com/robertdebock/ansible-role-sudo-pair.git
     dest: ansible-role-sudo_pair
+  - repo: ssh://git@github.com/robertdebock/ansible-role-sysstat.git
+    dest: ansible-role-sysstat
   - repo: ssh://git@github.com/robertdebock/ansible-role-terraform.git
     dest: ansible-role-terraform
   - repo: ssh://git@github.com/robertdebock/ansible-role-tftpd.git
@@ -211,6 +219,8 @@ git_repositories:
     dest: ansible-role-zabbix_web
   - repo: ssh://git@github.com/robertdebock/ansible-tools.git
     dest: ansible-tools
+  - repo: ssh://git@github.com/robertdebock/ansible-tester.git
+    dest: ansible-tester
   - repo: ssh://git@github.com/robertdebock/drawings.git
     dest: drawings
   - repo: ssh://git@github.com/robertdebock/robertdebock.github.io.git
