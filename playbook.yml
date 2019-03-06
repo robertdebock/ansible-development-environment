@@ -9,8 +9,10 @@
     - robertdebock.bootstrap
     - robertdebock.update
     - robertdebock.fail2ban
-    - robertdebock.firewall
+    # - robertdebock.firewall
     - robertdebock.common
+    - robertdebock.buildtools
+    - robertdebock.epel
     - robertdebock.python_pip
     - robertdebock.docker
     - robertdebock.users
@@ -19,7 +21,6 @@
     - robertdebock.investigate
     - robertdebock.ansible
     - robertdebock.ansible_lint
-    - robertdebock.buildtools
     - robertdebock.molecule
     - robertdebock.ara
     - robertdebock.ruby

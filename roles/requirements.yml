@@ -7,6 +7,7 @@
 - robertdebock.buildtools
 - robertdebock.common
 - robertdebock.docker
+- robertdebock.epel
 - robertdebock.fail2ban
 - robertdebock.firewall
 - robertdebock.git
