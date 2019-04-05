@@ -9,7 +9,6 @@
 - robertdebock.docker
 - robertdebock.epel
 - robertdebock.fail2ban
-- robertdebock.firewall
 - robertdebock.git
 - robertdebock.investigate
 - robertdebock.molecule
@@ -17,6 +16,7 @@
 - robertdebock.python_pip
 - robertdebock.reboot
 - robertdebock.ruby
+- robertdebock.service
 - robertdebock.travis
 - robertdebock.update
 - robertdebock.users

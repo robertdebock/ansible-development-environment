@@ -9,7 +9,6 @@
     - robertdebock.bootstrap
     - robertdebock.update
     - robertdebock.fail2ban
-    # - robertdebock.firewall
     - robertdebock.common
     - robertdebock.buildtools
     - robertdebock.epel
