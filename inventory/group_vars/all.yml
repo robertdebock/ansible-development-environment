@@ -203,6 +203,8 @@ git_repositories:
     dest: ansible-role-squid
   - repo: ssh://git@github.com/robertdebock/ansible-role-storage.git
     dest: ansible-role-storage
+  - repo: ssh://git@github.com/robertdebock/ansible-role-stratis.git
+    dest: ansible-role-stratis
   - repo: ssh://git@github.com/robertdebock/ansible-role-sudo-pair.git
     dest: ansible-role-sudo_pair
   - repo: ssh://git@github.com/robertdebock/ansible-role-sysstat.git
