@@ -99,6 +99,8 @@ git_repositories:
     dest: ansible-role-fail2ban
   - repo: ssh://git@github.com/robertdebock/ansible-role-git.git
     dest: ansible-role-git
+  - repo: ssh://git@github.com/robertdebock/ansible-role-gitlab_runner.git
+    dest: ansible-role-gitlab_runner
   - repo: ssh://git@github.com/robertdebock/ansible-role-glusterfs.git
     dest: ansible-role-glusterfs
   - repo: ssh://git@github.com/robertdebock/ansible-role-go.git
