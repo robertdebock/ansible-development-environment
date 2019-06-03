@@ -1,2 +1,2 @@
 #fedora-s-1vcpu-2gb-fra1-01 ansible_host=167.99.141.134
-ubuntu-s-2vcpu-4gb-nyc1-01 ansible_host=206.189.178.203 ansible_user=root
+#ubuntu-s-2vcpu-4gb-nyc1-01 ansible_host=206.189.178.203 ansible_user=root
