@@ -6,23 +6,23 @@
   gather_facts: no
 
   roles:
-    - robertdebock.bootstrap
-    - robertdebock.update
-    - robertdebock.fail2ban
-    - robertdebock.common
-    - robertdebock.buildtools
-    - robertdebock.epel
-    - robertdebock.python_pip
-    - robertdebock.docker
-    - robertdebock.users
-    - robertdebock.postfix
-    - robertdebock.vagrant
-    - robertdebock.investigate
-    - robertdebock.ansible
-    - robertdebock.ansible_lint
-    - robertdebock.molecule
-    - robertdebock.ara
-    - robertdebock.ruby
-    - robertdebock.travis
-    - robertdebock.git
-    - robertdebock.atom
+    - bootstrap
+    - update
+    - fail2ban
+    - common
+    - buildtools
+    - epel
+    - python_pip
+    - docker
+    - users
+    - postfix
+    - vagrant
+    - investigate
+    - ansible
+    - ansible_lint
+    - molecule
+    - ara
+    - ruby
+    - travis
+    - git
+    - atom
