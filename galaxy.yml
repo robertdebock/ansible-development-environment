@@ -1,0 +1,16 @@
+namespace: "robertdebock"
+name: "ansible_development_environment"
+version: "1.0.0"
+readme: "README.md"
+authors:
+    - "Robert de Bock"
+dependencies:
+license:
+    - "Apache-2.0"
+tags:
+    - development
+    - molecule
+repository: "https://github.com/robertdebock/ansible-development-environment"
+documentation: "https://github.com/robertdebock/ansible-development-environment/blob/master/README.md"
+homepage: "https://robertdebock.nl"
+issues: "https://github.com/robertdebock/ansible-development-environment/issues"
