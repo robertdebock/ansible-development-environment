@@ -9,6 +9,14 @@ Setup a machine to write Ansible roles. Includes:
 
 ## Download
 
+### Mazer
+
+```
+mazer install robertdebock.ansible_development_environment
+```
+
+### GitHub
+
 In some directory, maybe `Documents` run:
 
 ```sh
