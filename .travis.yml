@@ -1,0 +1,14 @@
+---
+language: python
+
+jobs:
+  include:
+    - stage: prepare
+      name: install requirements
+      script: pip install mazer
+    - stage: build
+      name: mazer build
+      script: release=$(mazer build | tail -n1 | awk '{print $NF}')
+    - stage: release
+      name: mazer publish
+      script: mazer publish --api-key=${galaxy_api_key} ${release}
