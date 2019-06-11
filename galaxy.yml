@@ -1,7 +1,7 @@
 namespace: "robertdebock"
-name: "ansible_development_environment"
+name: "development_environment"
 description: Install everything you need to develop Ansible roles.
-version: "1.0.2"
+version: "1.0.3"
 readme: "README.md"
 authors:
     - "Robert de Bock"
@@ -11,6 +11,7 @@ license:
 tags:
     - development
     - molecule
+    - ara
 repository: "https://github.com/robertdebock/ansible-development-environment"
 documentation: "https://github.com/robertdebock/ansible-development-environment/blob/master/README.md"
 homepage: "https://robertdebock.nl"
