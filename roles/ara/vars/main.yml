@@ -1,0 +1,50 @@
+---
+# vars file for ara
+_ara_packages:
+  default:
+    - gcc
+  Alpine:
+    - linux-headers
+  CentOS:
+    - gcc
+    - python-devel
+    - libffi-devel
+    - openssl-devel
+    - redhat-rpm-config
+  Debian:
+    - gcc
+    - python-dev
+    - libffi-dev
+    - libssl-dev
+  Fedora:
+    - gcc
+    - python-devel
+    - libffi-devel
+    - openssl-devel
+    - redhat-rpm-config
+  openSUSE Leap:
+    - gcc
+    - python-devel
+  Ubuntu:
+    - gcc
+    - python-dev
+    - libffi-dev
+    - libssl-dev
+
+ara_packages: "{{ _ara_packages[ansible_distribution] | default (_ara_packages['default'] ) }}"
+
+_ara_binary_location:
+  default: /usr/bin
+  Debian: /usr/local/bin
+  Ubuntu: /usr/local/bin
+
+ara_binary_location: "{{ _ara_binary_location[ansible_distribution] | default(_ara_binary_location['default']) }}"
+
+ara_setup_command_python2: python -m ara.setup.callback_plugins
+ara_setup_command_python3: python3 -m ara.setup.callback_plugins
+
+service_list:
+  - name: ara
+    description: Ansible Reports Ara
+    start_command: "{{ ara_binary_location }}/ara-manage runserver"
+    user_name: "{{ ara_user }}"

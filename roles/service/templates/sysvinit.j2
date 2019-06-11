@@ -1,0 +1,77 @@
+#!/bin/sh
+{{ ansible_managed | comment }}
+#
+#       /etc/init.d/{{ item.name }}
+#
+#       {{ item.description }}
+#       As simple as possible, using Apache Tomcat's daemon.sh mostly.
+#
+# chkconfig: 2345 20 80
+# description: {{ item.name }}
+
+# Source function library.
+if [ -f /etc/init.d/functions ] ; then
+  . /etc/init.d/functions
+fi
+
+start() {
+  echo -n "Starting {{ item.name }}: "
+{% if item.working_directory is defined %}
+  cd {{ item.working_directory }}
+{% endif %}
+{% if item.type is defined and item.type != "simple" %}
+  # Start the program in the foreground, when finished, continue.
+  {% if item.user_name is defined %}su - {{ item.user_name ~ ' ' }}{% endif %}{{ item.start_command }}
+{% else %}
+  # Start the program in the background and continue.
+  ({% if item.user_name is defined %}su - {{ item.user_name ~ ' ' }}{% endif %}{{ item.start_command }} &)
+{% endif %}
+  returncode="${?}"
+  touch /var/lock/subsys/{{ item.name }}
+  return ${returncode}
+}
+
+stop() {
+  echo -n "Shutting down {{ item.name }}: "
+  {{ item.stop_command | default('killall -f {{ item.start_command.split[0] }}') }}
+  returncode="${?}"
+  rm -f /var/lock/subsys/{{ item.name }}
+  return ${returncode}
+}
+
+status() {
+{% if item.status_pattern is defined %}
+  pgrep -f {{ item.status_pattern }} > /dev/null 2>&1
+{% else %}
+  echo "Not implemented." ; exit 1
+{% endif %}
+  returncode="${?}"
+  if [ $returncode -gt 0 ] ; then
+    echo "{{ item.name }} is not running."
+  else
+    echo "{{ item.name }} is running."
+  fi
+  return ${returncode}
+}
+
+case "$1" in
+  start)
+    start
+  ;;
+  stop)
+    stop
+  ;;
+  status)
+    status
+  ;;
+  restart)
+    stop
+    start
+  ;;
+    *)
+  echo "Usage: <servicename> {start|stop|status|restart}"
+  exit 1
+  ;;
+esac
+
+exit $?

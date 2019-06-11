@@ -1,0 +1,30 @@
+---
+# vars file for molecule
+_molecule_requirements:
+  default: []
+  Archlinux:
+    - bash
+  Alpine:
+    - linux-headers
+  CentOS:
+    - python-devel
+    - openssl-devel
+  Debian:
+    - libssl-dev
+  Fedora:
+    - python3-devel
+    - openssl-devel
+  openSUSE Leap:
+    - python-devel
+  Ubuntu:
+    - libssl-dev
+
+molecule_requirements: "{{ _molecule_requirements[ansible_distribution] | default(_molecule_requirements['default']) }}"
+
+molecule_packages:
+  - molecule
+
+# _molecule_extra_args:
+#   Ubuntu: "--ignore-installed entrypoints"
+#
+# molecule_extra_args: "{{ _molecule_extra_args[ansible_distribution] | default(omit) }}"

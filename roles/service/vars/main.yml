@@ -1,0 +1,16 @@
+---
+# vars file for service
+_service_required_packages:
+  default: []
+  Archlinux:
+    - psmisc
+  Debian:
+    - psmisc
+  Fedora:
+    - psmisc
+  openSUSE Leap:
+    - psmisc
+  Ubuntu:
+    - psmisc
+
+service_required_packages: "{{ _service_required_packages[ansible_distribution] | default(_service_required_packages['default']) }}"

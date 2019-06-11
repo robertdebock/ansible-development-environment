@@ -1,0 +1,9 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: no
+  become: yes
+  serial: 30%
+
+  roles:
+    - role: robertdebock.bootstrap

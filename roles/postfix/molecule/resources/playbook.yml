@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  vars:
+    postfix_aliases:
+      - name: root
+        destination: robert@meinit.nl
+
+  roles:
+    - ansible-role-postfix

@@ -1,5 +1,4 @@
 id_rsa
-roles/*
 !roles/requirements.yml
 files/ssh_keys
 .vagrant

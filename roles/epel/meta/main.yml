@@ -1,0 +1,24 @@
+---
+galaxy_info:
+  author: Robert de Bock
+  ansible_role: epel
+  description: Install epel on your system.
+  license: Apache-2.0
+  company: none
+  min_ansible_version: 2.6
+
+  platforms:
+    - name: EL
+      version:
+        - 6
+        - 7
+
+  galaxy_tags:
+    - epel
+    - repository
+    - installer
+    - packages
+    - centos
+    - rhel
+
+dependencies: []

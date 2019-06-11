@@ -1,0 +1,26 @@
+---
+# vars file for atom
+_atom_requirements:
+  apt:
+    - apt-transport-https
+
+atom_requirements: "{{ _atom_requirements[ansible_pkg_mgr] | default(omit) }}"
+
+atom_packages: "{{ _atom_packages[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_atom_packages[ansible_distribution] | default(_atom_packages['default'])) }}"
+
+_atom_package:
+  apt:
+    url: 'https://atom.io/download/deb'
+    name: atom-amd64.deb
+  dnf:
+    url: 'https://atom.io/download/rpm'
+    name: atom.x86_64.rpm
+  yum:
+    url: 'https://atom.io/download/rpm'
+    name: atom.x86_64.rpm
+  zypper:
+    url: 'https://atom.io/download/rpm'
+    name: atom.x86_64.rpm
+
+atom_package_url: '{{ _atom_package[ansible_pkg_mgr]["url"] }}'
+atom_package: "{{ _atom_package[ansible_pkg_mgr]['name'] }}"

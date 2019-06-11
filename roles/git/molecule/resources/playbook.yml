@@ -1,0 +1,22 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  vars:
+    git_username: root
+    git_groupname: root
+    git_repository_destination: /root
+    git_repositories:
+      - repo: https://github.com/robertdebock/ansible-role-bootstrap
+        dest: bootstrap
+      - repo: https://github.com/robertdebock/ansible-role-bootstrap
+        dest: bootstrap-force
+        force: yes
+      - repo: https://github.com/robertdebock/ansible-role-bootstrap
+        dest: bootstrap-version
+        version: 2.11.1
+
+  roles:
+    - ansible-role-git

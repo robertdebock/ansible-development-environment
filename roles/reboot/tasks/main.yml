@@ -1,0 +1,37 @@
+---
+# tasks file for reboot
+- name: see if a reboot is required
+  command: needs-restarting -r
+  register: needsrestarting
+  changed_when:
+    - needsrestarting.rc != 0
+  failed_when:
+    - needsrestarting.rc != 1
+    - needsrestarting.rc != 0
+  when:
+    - ansible_pkg_mgr == "yum"
+    - ansible_distribution_major_version == "7"
+    - ansible_virtualization_type != "docker"
+    - not reboot_always
+
+- name: flush handlers
+  meta: flush_handlers
+
+- name: reboot the machine
+  shell: "(sleep {{ reboot_delay }} && {{ reboot_command }} &)"
+  async: 1
+  poll: 0
+  ignore_errors: yes
+  when:
+    - ansible_virtualization_type != "docker"
+    - (needsrestarting.skipped is defined and needsrestarting.skipped )
+      or needsrestarting.changed
+  notify:
+    - 1 wait for the start of reboot
+    - 2 wait for the machine to be up
+    - 3 gather facts after reboot
+  tags:
+    - skip_ansible_lint
+
+- name: flush handlers
+  meta: flush_handlers

@@ -1,0 +1,24 @@
+{{ ansible_managed | comment }}
+[Unit]
+Description={{ item.description }}
+
+[Service]
+{% if item.type is defined and item.type != "simple" %}
+Type={{ item.type }}
+{% endif %}
+{% if item.working_directory is defined %}
+WorkingDirectory={{ item.working_directory }}
+{% endif %}
+{% if item.user_name is defined %}
+User={{ item.user_name }}
+{% endif %}
+{% if item.group_name is defined %}
+Group={{ item.group_name }}
+{% endif %}
+ExecStart={{ item.start_command }}
+{% if item.stop_command is defined %}
+ExecStop={{ item.stop_command }}
+{% endif %}
+
+[Install]
+WantedBy=multi-user.target

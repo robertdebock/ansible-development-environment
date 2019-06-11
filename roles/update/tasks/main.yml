@@ -1,0 +1,119 @@
+---
+# tasks file for update
+- name: update cache (apk)
+  apk:
+    update_cache: yes
+  when:
+    - ansible_pkg_mgr == "apk"
+  changed_when: no
+  register: update_update_cache_apk
+  until: update_update_cache_apk
+  retries: 3
+
+- name: update all software (apk)
+  apk:
+    upgrade: yes
+  when:
+    - ansible_pkg_mgr == "apk"
+  register: update_update_all_software_apk
+  until: update_update_all_software_apk
+  retries: 3
+
+- name: update all software (apt)
+  apt:
+    update_cache: yes
+    upgrade: "{{ update_upgrade_command }}"
+    cache_valid_time: "{{ update_cache_valid_time }}"
+  register: update_all_software_apt
+  when:
+    - ansible_pkg_mgr == "apt"
+  until: update_all_software_apt
+  retries: 3
+
+- name: apt autoremove (apt)
+  apt:
+    autoremove: "{{ update_autoremove }}"
+  when:
+    - ansible_pkg_mgr == "apt"
+    - update_autoremove == "yes"
+  tags:
+    - skip_ansible_lint
+
+- name: update all software (dnf)
+  dnf:
+    name: "*"
+    state: latest
+  register: update_result_dnf
+  when:
+    - ansible_pkg_mgr == "dnf"
+  tags:
+    - skip_ansible_lint
+
+- name: update all software (pacman)
+  pacman:
+    update_cache: yes
+    upgrade: yes
+  register: update_result_pacman
+  when:
+    - ansible_pkg_mgr == "pacman"
+  tags:
+    - skip_ansible_lint
+
+- name: update all software (yum/6)
+  yum:
+    name: "*"
+    state: latest
+  when:
+    - ansible_pkg_mgr == "yum"
+    - ansible_distribution_major_version == "6"
+  tags:
+    - skip_ansible_lint
+  register: update_result_yum_6
+
+- name: update all software (yum/7)
+  yum:
+    name: "*"
+    state: latest
+  when:
+    - ansible_pkg_mgr == "yum"
+    - ansible_distribution_major_version == "7"
+  tags:
+    - skip_ansible_lint
+  register: update_result_yum_7
+
+- name: install yum-utils
+  package:
+    name: yum-utils
+  when:
+    - ansible_pkg_mgr == "yum"
+    - ansible_distribution_major_version == "7"
+  register: update_install_yum_utils
+  until: update_install_yum_utils
+  retries: 3
+
+- name: update all software (zypper)
+  zypper:
+    name: "*"
+    state: latest
+  when:
+    - ansible_pkg_mgr == "zypper"
+  tags:
+    - skip_ansible_lint
+  register: update_result_zypper
+
+- name: reboot for updates
+  include_role:
+    name: robertdebock.reboot
+  vars:
+    reboot_message: rebooting for robertdebock/ansible-role-update
+  when:
+    - update_update_all_software_apk.changed or
+      update_all_software_apt.changed or
+      update_result_dnf.changed or
+      update_result_pacman.changed or
+      update_result_yum_6.changed or
+      update_result_yum_7.changed or
+      update_result_zypper.changed
+    - update_reboot
+  tags:
+    - skip_ansible_lint

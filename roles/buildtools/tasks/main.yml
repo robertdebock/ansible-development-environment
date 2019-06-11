@@ -1,0 +1,9 @@
+---
+# tasks file for buildtools
+- name: install buildtools
+  package:
+    name: "{{ buildtools_packages }}"
+    state: present
+  register: buildtools_install_buildtools
+  until: buildtools_install_buildtools is succeeded
+  retries: 3

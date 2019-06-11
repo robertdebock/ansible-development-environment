@@ -1,0 +1,19 @@
+---
+# defaults file for service
+
+# status_list can contain a list of services to add to the system.
+# The mandatory items for each item are:
+# - name: The (short) name of the service, i.e. "tomcat".
+# - description: A bit longer name, i.e. "Tomcat application server".
+# - start_command: The command to start the daemon,
+#   i.e. "/usr/local/bin/java -jar some.jar"
+# The optional items are:
+# - stop_command: By default the program that is started is found and stopped.
+#   in case a running program is renamed or expanded (including a path) during
+#   startup, you can specify a custom stop command here, i.e. "pkill foo"
+# - status_pattern: What program (or pattern) to look for when finding the
+#   status of a program, i.e. "artifactory".
+# - type: How the program starts; "simple" or "forking". Simple means the
+#   program runs on the foreground, i.e. "nc -l 1234". Forking means the
+#   program itself forks, i.e. "nc -l 12345 &"
+# - working_directory: The directory to cd into before starting the service.

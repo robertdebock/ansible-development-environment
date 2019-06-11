@@ -1,0 +1,92 @@
+---
+sudo: required
+language: python
+services: docker
+
+env:
+  - version=">=2.7,<2.8" distro="alpine-latest"
+  - version="" distro="alpine-latest"
+  - version="devel" distro="alpine-latest"
+  - version=">=2.7,<2.8" distro="alpine-edge"
+  - version="" distro="alpine-edge"
+  - version="devel" distro="alpine-edge"
+  - version=">=2.7,<2.8" distro="archlinux"
+  - version="" distro="archlinux"
+  - version="devel" distro="archlinux"
+  - version=">=2.7,<2.8" distro="centos-6" expectation="fail"
+  - version="" distro="centos-6" expectation="fail"
+  - version="devel" distro="centos-6" expectation="fail"
+  - version=">=2.7,<2.8" distro="centos-latest"
+  - version="" distro="centos-latest"
+  - version="devel" distro="centos-latest"
+  - version=">=2.7,<2.8" distro="debian-latest"
+  - version="" distro="debian-latest"
+  - version="devel" distro="debian-latest"
+  - version=">=2.7,<2.8" distro="debian-stable"
+  - version="" distro="debian-stable"
+  - version="devel" distro="debian-stable"
+  - version=">=2.7,<2.8" distro="debian-unstable"
+  - version="" distro="debian-unstable"
+  - version="devel" distro="debian-unstable"
+  - version=">=2.7,<2.8" distro="fedora-latest"
+  - version="" distro="fedora-latest"
+  - version="devel" distro="fedora-latest"
+  - version=">=2.7,<2.8" distro="fedora-rawhide"
+  - version="" distro="fedora-rawhide"
+  - version="devel" distro="fedora-rawhide"
+  - version=">=2.7,<2.8" distro="opensuse-leap"
+  - version="" distro="opensuse-leap"
+  - version="devel" distro="opensuse-leap"
+  - version=">=2.7,<2.8" distro="ubuntu-rolling"
+  - version="" distro="ubuntu-rolling"
+  - version="devel" distro="ubuntu-rolling"
+  - version=">=2.7,<2.8" distro="ubuntu-latest"
+  - version="" distro="ubuntu-latest"
+  - version="devel" distro="ubuntu-latest"
+  - version=">=2.7,<2.8" distro="ubuntu-devel"
+  - version="" distro="ubuntu-devel"
+  - version="devel" distro="ubuntu-devel"
+
+matrix:
+  allow_failures:
+    - env: version=">=2.7,<2.8" distro="alpine-edge"
+    - env: version="" distro="alpine-edge"
+    - env: version="devel" distro="alpine-edge"
+    - env: version="devel" distro="alpine-latest"
+    - env: version="devel" distro="archlinux"
+    - env: version="devel" distro="centos-6" expectation="fail"
+    - env: version="devel" distro="centos-latest"
+    - env: version="devel" distro="debian-latest"
+    - env: version="devel" distro="debian-stable"
+    - env: version=">=2.7,<2.8" distro="debian-unstable"
+    - env: version="" distro="debian-unstable"
+    - env: version="devel" distro="debian-unstable"
+    - env: version="devel" distro="fedora-latest"
+    - env: version=">=2.7,<2.8" distro="fedora-rawhide"
+    - env: version="" distro="fedora-rawhide"
+    - env: version="devel" distro="fedora-rawhide"
+    - env: version="devel" distro="opensuse-leap"
+    - env: version="devel" distro="ubuntu-rolling"
+    - env: version=">=2.7,<2.8" distro="ubuntu-devel"
+    - env: version="" distro="ubuntu-devel"
+    - env: version="devel" distro="ubuntu-devel"
+    - env: version="devel" distro="ubuntu-latest"
+
+cache:
+  - pip
+
+install:
+  - pip install --upgrade pip
+  - if [ "${version}" != "devel" ] ; then pip install ansible"${version}" ; fi
+  - if [ "${version}" = "devel" ] ; then pip install git+https://github.com/ansible/ansible.git@devel ; fi
+  - pip install molecule
+  - pip install docker
+
+script:
+  - if [ "${expectation}" = "fail" ] ; then ! molecule test --scenario-name "${distro}" ; else molecule test --scenario-name "${distro}" ; fi
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+  slack:
+    secure: "n7u1Uc3sZszghMynczG25+WGHDctpTRgXNpL7VDbj0ehoPQf1e0gNvXh2oQJhjssqfCgSPzdKhbF+X0/TJL2CLIZaMJXzlnQNek1AbpKfAfzmAAk8xCshAvUvto/sP/LKUCUY6dRVUS154p5p9h7RIYVPkBLqvTM0OdOizo6LzJTiqHPd0IwwsUMj6xAms6hwlY1m3M0q1GCx9R+DsqNxKWXR8mEBgvDap+KLxrGT34dOjUZqVqUA7qflbQpLrDsEG6ZR9UIXxOoQoyqwKqXG66FJfKRrMLnxLbi7UC9HBl4Dda0PZIyWbVhotM/vK/8SW72YyR+bqvqBmunPwaU5p15ipArGpMkRTm642RyeKB4XvgCvIBBycC/kl5aj2DBumkGs+nqZpq1fFpK2clSVUHdmkffAddbjRrMH9ZMnWfP85KaHXkg6cymBFxpp+K0uRL6QFTqPO/tHmZ+oWtiKUvy25n06KiDkMdn4MsqfvpaB5CfidbC7zcKMcGk5lcWwvKLMsBKXZI48z7ty/8XKYO1Ss/XgEyPbXg4MrSTwPCY/0tawaAdqqMen+0qLfSURsFN5TG0+Ym/ov+rLqq3TaqyawSRMAe9p1atWKkE3lEbS45KLuvlEMS9W1XHrzrx5MuDcFFqii8ePI7FFeMWoSFqeYXT0Bk7K3FlQ/vyf28="
+  email: false
