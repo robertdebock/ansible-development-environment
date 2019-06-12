@@ -17,7 +17,9 @@ mazer install robertdebock.ansible_development_environment
 
 ## Requirements
 
-- One machine, about 4GB or RAM will do.
+- One machine
+- About 4GB or RAM will do.
+- 2 CPUs, 1 will also do.
 - Personalized `inventory/group_vars/all.yml`.
 
 ## Mac / Linux
