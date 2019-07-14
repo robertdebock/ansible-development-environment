@@ -181,6 +181,8 @@ git_repositories:
     dest: ansible-role-redis
   - repo: ssh://git@github.com/robertdebock/ansible-role-release.git
     dest: ansible-role-release
+  - repo: ssh://git@github.com/robertdebock/ansible-role-remi.git
+    dest: ansible-role-remi
   - repo: ssh://git@github.com/robertdebock/ansible-role-restore.git
     dest: ansible-role-restore
   - repo: ssh://git@github.com/robertdebock/ansible-role-revealmd.git
