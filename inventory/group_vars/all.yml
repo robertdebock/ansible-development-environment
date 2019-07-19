@@ -171,6 +171,8 @@ git_repositories:
     dest: ansible-role-phpmyadmin
   - repo: ssh://git@github.com/robertdebock/ansible-role-postfix.git
     dest: ansible-role-postfix
+  - repo: ssh://git@github.com/robertdebock/ansible-role-postgres.git
+    dest: ansible-role-postgres
   - repo: ssh://git@github.com/robertdebock/ansible-role-powertop.git
     dest: ansible-role-powertop
   - repo: ssh://git@github.com/robertdebock/ansible-role-python_pip.git
