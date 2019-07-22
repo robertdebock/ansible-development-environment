@@ -12,7 +12,7 @@ Setup a machine to write Ansible roles. Includes:
 ### Mazer
 
 ```
-mazer install robertdebock.ansible_development_environment
+mazer install robertdebock.development_environment
 ```
 
 ## Requirements
