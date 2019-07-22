@@ -1,1 +1,1 @@
-Vagrantfile.libvirt
+Vagrantfile.virtualbox
