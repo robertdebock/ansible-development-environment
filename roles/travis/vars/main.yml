@@ -1,0 +1,22 @@
+---
+# vars file for travis
+_travis_requirements:
+  default: []
+  Alpine:
+    - ruby-dev
+  Archlinux:
+    - bash
+  CentOS:
+    - ruby-devel
+  Debian:
+    - ruby-dev
+  Fedora:
+    - ruby-devel
+  openSUSE Leap:
+    - ruby-devel
+  Ubuntu:
+    - ruby-dev
+
+travis_requirements: "{{ _travis_requirements[ansible_distribution] | default(_travis_requirements['default']) }}"
+
+travis_package: travis

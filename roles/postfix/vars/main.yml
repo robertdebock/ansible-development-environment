@@ -1,0 +1,21 @@
+---
+# vars file for postfix
+postfix_packages:
+  - postfix
+
+postfix_service: postfix
+
+postfix_daemon_directory:
+  default: /usr/libexec/postfix
+  Debian: /usr/lib/postfix/sbin
+  Ubuntu: /usr/lib/postfix/sbin
+  openSUSE Leap: /usr/lib/postfix
+
+postfix_group: postdrop
+
+_postfix_alias_path:
+  default: /etc/aliases
+  Alpine: /etc/postfix/aliases
+  Archlinux: /etc/postfix/aliases
+
+postfix_alias_path: "{{ _postfix_alias_path[ansible_distribution] | default(_postfix_alias_path['default']) }}"

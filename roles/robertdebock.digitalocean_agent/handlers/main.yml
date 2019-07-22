@@ -1,0 +1,9 @@
+---
+# handlers file for digitalocean-agent
+- name: update apt cache
+  apt:
+    update_cache: yes
+  when:
+    - ansible_pkg_mgr == "apt"
+  tags:
+    - skip_ansible_lint

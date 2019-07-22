@@ -1,0 +1,19 @@
+---
+# tasks file for fail2ban
+- name: install fail2ban
+  package:
+    name: "{{ fail2ban_packages }}"
+    state: "{{ fail2ban_package_state }}"
+  register: fail2ban_install_fail2ban
+  until: fail2ban_install_fail2ban is succeeded
+  retries: 3
+
+- name: start and enable fail2ban
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - "{{ fail2ban_service }}"
+  when:
+    - ansible_virtualization_type != "docker" or fail2ban_ignore_docker

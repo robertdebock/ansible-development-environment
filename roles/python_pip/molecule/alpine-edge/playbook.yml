@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: no
+  become: yes
+
+  vars:
+    python_pip_modules:
+      - name: jinja2
+      - name: ansible
+
+  roles:
+    - robertdebock.bootstrap
+    - robertdebock.epel
+    - robertdebock.buildtools
+    - ansible-role-python-pip

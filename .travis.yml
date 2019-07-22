@@ -1,0 +1,9 @@
+---
+language: python
+
+install:
+  - pip install mazer
+
+script:
+  - release=$(mazer build | tail -n1 | awk '{print $NF}')
+  - mazer publish --api-key=${galaxy_api_key} ${release}

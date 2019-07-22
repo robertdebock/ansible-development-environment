@@ -1,0 +1,6 @@
+---
+# handlers file for docker
+- name: change owner for docker socket
+  file:
+    path: /var/run/docker.sock
+    group: docker

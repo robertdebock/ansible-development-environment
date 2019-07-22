@@ -1,0 +1,38 @@
+---
+# tasks file for ansible
+- name: test veriables and environment
+  assert:
+    that:
+      - ansible_package_state is defined
+      - ansible_package_state == "present" or
+        ansible_package_state == "latest" or
+        ansible_package_state == "absent"
+
+- name: install ansible
+  package:
+    name: "{{ ansible_packages }}"
+    state: "{{ ansible_package_state }}"
+  register: ansible_install_ansible
+  until: ansible_install_ansible is succeeded
+  retries: 3
+
+- name: ensure the ansible directory exists
+  file:
+    path: /etc/ansible
+    state: directory
+
+- name: mark configuration file as ansible managed
+  lineinfile:
+    path: "{{ ansible_configuration_directory }}/{{ ansible_configuration_file }}"
+    create: yes
+    insertbefore: BOF
+    line: "# This file is managed by Ansible."
+
+- name: configure ansible
+  ini_file:
+    path: "{{ ansible_configuration_directory }}/{{ ansible_configuration_file }}"
+    section: "{{ item.section | default('defaults') }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - "{{ ansible_configuration }}"

@@ -1,0 +1,5 @@
+---
+# defaults file for buildtools
+
+# To update all packages installed by this roles, set `buildtools_package_state` to `latest`.
+buildtools_package_state: present

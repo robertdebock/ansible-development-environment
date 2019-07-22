@@ -1,0 +1,13 @@
+---
+# vars file for python_pip
+_python_pip_packages:
+  default:
+    - python-pip
+  Alpine:
+    - py-pip
+    - python2-dev
+
+python_pip_packages: "{{ _python_pip_packages[ansible_distribution] | default(_python_pip_packages['default']) }}"
+
+python_pip_conflicting_packages:
+  - python-requests

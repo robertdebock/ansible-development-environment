@@ -1,0 +1,14 @@
+---
+# vars file for postfix
+postfix_packages:
+  - postfix
+
+postfix_service: postfix
+
+postfix_daemon_directory:
+  default: /usr/libexec/postfix
+  Ubuntu: /usr/lib/postfix
+  openSUSE Leap: /usr/lib/postfix
+  openSUSE Tumbleweed: /usr/lib/postfix
+
+postfix_group: postdrop

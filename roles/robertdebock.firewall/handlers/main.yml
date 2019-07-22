@@ -1,0 +1,11 @@
+---
+# handlers file for firewall
+- name: reload firewall
+  service:
+    name: "{{ firewall_service }}"
+    state: reloaded
+  when:
+    - ansible_virtualization_type != "docker" or firewall_ignore_docker
+
+- name: reload firewalld
+  command: firewall-cmd --reload

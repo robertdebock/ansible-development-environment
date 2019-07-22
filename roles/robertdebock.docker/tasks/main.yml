@@ -1,0 +1,60 @@
+---
+# tasks file for docker
+- name: prepare debian with apt-transport-https
+  package:
+    name: "{{ docker_requirements }}"
+    state: present
+  register: docker_prepare_debian_with_apt_transport_https
+  until: docker_prepare_debian_with_apt_transport_https is succeeded
+  retries: 3
+
+- name: prepare debian with apt key
+  apt_key:
+    keyserver: pgp.mit.edu
+    id: 58118E89F3A912897C070ADBF76221572C52609D
+    state: present
+  when:
+    - ansible_distribution == "Debian"
+  register: docker_prepare_debian_with_apt_key
+  until: docker_prepare_debian_with_apt_key is succeeded
+  retries: 3
+
+- name: prepare debian with repository
+  apt_repository:
+    repo: "{{ docker_apt_repository }}"
+    state: present
+  when:
+    - ansible_distribution == "Debian"
+
+- name: install docker
+  package:
+    name: "{{ docker_packages }}"
+    state: "{{ docker_package_state }}"
+  register: docker_install_docker
+  until: docker_install_docker is succeeded
+  retries: 3
+
+- name: add docker group
+  group:
+    name: docker
+    system: yes
+
+- name: install modules
+  pip:
+    name: "{{ item.name }}"
+    state: present
+    version: "{{ item.version | default(omit) }}"
+  with_items: "{{ docker_pip_modules }}"
+  register: docker_install_modules
+  until: docker_install_modules is succeeded
+  retries: 3
+
+- name: start and enable docker
+  service:
+    name: "{{ docker_service }}"
+    state: started
+    enabled: yes
+  when:
+    - ansible_virtualization_type != "docker" or docker_ignore_docker
+  notify:
+    - change owner for docker socket

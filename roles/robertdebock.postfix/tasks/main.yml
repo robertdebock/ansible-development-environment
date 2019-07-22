@@ -1,0 +1,38 @@
+---
+# tasks file for postfix
+- name: install postfix
+  package:
+    name: "{{ postfix_packages }}"
+    state: "{{ postfix_package_state }}"
+  register: postfix_install_postfix
+  until: postfix_install_postfix
+  retries: 3
+
+- name: create group
+  group:
+    name: "{{ postfix_group }}"
+    state: present
+
+- name: configure postfix (main.cf)
+  template:
+    src: main.cf.j2
+    dest: /etc/postfix/main.cf
+    validate: postconf -d -c %s
+  notify:
+    - restart postfix
+
+- name: configure postfix (master.cf)
+  template:
+    src: master.cf.j2
+    dest: /etc/postfix/master.cf
+    validate: postconf -d -c %s
+  notify:
+    - restart postfix
+
+- name: start and enable postfix
+  service:
+    name: "{{ postfix_service }}"
+    state: started
+    enabled: yes
+  when:
+    - ansible_virtualization_type != "docker" or postfix_ignore_docker

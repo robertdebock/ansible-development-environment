@@ -1,0 +1,42 @@
+---
+# tasks file for digitalocean-agent
+- name: import rpm key
+  rpm_key:
+    key: "{{ digitalocean_agent_gpgkey }}"
+  when:
+    - ansible_pkg_mgr == "yum" or ansible_pkg_mgr == "dnf"
+  register: digitalocean_agent_import_rpm_key
+  until: digitalocean_agent_import_rpm_key is succeeded
+  retries: 3
+
+- name: import apt key
+  apt_key:
+    url: "{{ digitalocean_agent_gpgkey }}"
+    state: present
+  when:
+    - ansible_pkg_mgr == "apt"
+  register: digitalocean_agent_import_apt_key
+  until: digitalocean_agent_import_apt_key is succeeded
+  retries: 3
+
+- name: install repository
+  copy:
+    src: "{{ digitalocean_agent_repository_src }}"
+    dest: "{{ digitalocean_agent_repository_dest }}"
+  when:
+    - ansible_pkg_mgr == "yum" or
+      ansible_pkg_mgr == "dnf" or
+      ansible_pkg_mgr == "apt"
+  notify:
+    - update apt cache
+
+- name: flush handlers
+  meta: flush_handlers
+
+- name: install do-agent
+  package:
+    name: do-agent
+    state: present
+  register: digitalocean_agent_install_do_agent
+  until: digitalocean_agent_install_do_agent is succeeded
+  retries: 3

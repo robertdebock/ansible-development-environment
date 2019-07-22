@@ -1,0 +1,29 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+lint:
+  name: yamllint
+platforms:
+  - name: travis-debian
+    box: debian/stretch64
+  - name: travis-fedora
+    box: fedora/29-cloud-base
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+  config_options:
+    defaults:
+      callback_plugins: /usr/lib/python2.7/site-packages/ara/plugins/callbacks
+scenario:
+  name: vagrant
+verifier:
+  name: goss
+  lint:
+    name: yamllint

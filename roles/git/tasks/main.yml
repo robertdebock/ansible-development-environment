@@ -1,0 +1,66 @@
+---
+# tasks file for git
+- name: install git
+  package:
+    name: "{{ git_packages }}"
+    state: present
+  register: git_install_git
+  until: git_install_git is succeeded
+  retries: 3
+
+- name: see if the specified user exists
+  getent:
+    database: passwd
+    key: "{{ git_username }}"
+    fail_key: no
+  when:
+    - git_username is defined
+
+- name: create directory for git configuration
+  file:
+    path: /home/{{ git_username }}
+    state: directory
+    owner: "{{ git_username | default(omit) }}"
+    group: "{{ git_groupname | default(omit) }}"
+  when:
+    - getent_passwd is defined
+    - getent_passwd[git_username] != none
+
+- name: place git configuration
+  template:
+    src: gitconfig.j2
+    dest: /home/{{ git_username }}/.gitconfig
+  when:
+    - git_user_email is defined
+    - git_user_name is defined
+    - git_username is defined
+    - getent_passwd[git_username] != none
+
+- name: create repository_destination
+  file:
+    path: "{{ git_repository_destination }}"
+    state: directory
+    owner: "{{ git_username | default(omit) }}"
+    group: "{{ git_groupname | default(omit) }}"
+  when:
+    - git_username is defined
+    - git_repository_destination is defined
+    - getent_passwd[git_username] != none
+
+- name: clone all roles
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ git_repository_destination }}/{{ item.dest }}"
+    accept_hostkey: yes
+    version: "{{ item.version | default('HEAD') }}"
+    force: "{{ item.force | default(git_force) }}"
+  with_items: "{{ git_repositories }}"
+  become: yes
+  become_user: "{{ git_username }}"
+  when:
+    - git_repositories is defined
+    - git_repository_destination is defined
+    - git_username is defined
+    - getent_passwd[git_username] != none
+  loop_control:
+    label: "{{ item.dest }}"

@@ -1,0 +1,64 @@
+---
+# tasks file for common
+- name: install requirements
+  package:
+    name: "{{ common_requirements }}"
+    state: present
+  register: common_install_requirements
+  until: common_install_requirements is succeeded
+  retries: 3
+
+- name: check for network manager
+  stat:
+    path: /etc/NetworkManager/NetworkManager.conf
+  register: common_check_for_network_manager
+
+- name: set nameserver in resolv.conf
+  lineinfile:
+    path: /etc/resolv.conf
+    line: "nameserver {{ item }}"
+  with_items:
+    - "{{ common_nameservers }}"
+  when:
+    - common_nameservers is defined
+    - not common_check_for_network_manager.stat.exists
+    - ansible_virtualization_type != "docker"
+  notify:
+    - gather facts
+
+- name: set nameservers in network manager
+  ini_file:
+    path: /etc/NetworkManager/conf.d/dnsservers.conf
+    section: global-dns-domain-*
+    option: servers
+    value: "{{ common_nameservers | join(',') }}"
+  when:
+    - common_check_for_network_manager.stat.exists
+  notify:
+    - gather facts
+
+- name: flush handlers
+  meta: flush_handlers
+
+- name: set hostname
+  hostname:
+    name: "{{ common_hostname }}"
+  when:
+    - ansible_virtualization_type != "docker"
+  register: set_hostname
+
+- name: reboot for hostname
+  include_role:
+    name: robertdebock.reboot
+  when:
+    - set_hostname.changed
+    - common_reboot
+  tags:
+    - skip_ansible_lint
+
+- name: fill /etc/hosts
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+  when:
+    - ansible_virtualization_type != "docker"

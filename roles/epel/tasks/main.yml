@@ -1,0 +1,11 @@
+---
+# tasks file for epel
+- name: install epel-release
+  package:
+    name: epel-release
+    state: present
+  when:
+    - ansible_distribution in [ "CentOS", "RedHat" ]
+  register: epel_install_epel_release
+  until: epel_install_epel_release is succeeded
+  retries: 3

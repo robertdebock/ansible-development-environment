@@ -1,0 +1,7 @@
+[digitalocean-agent]
+name=DigitalOcean agent
+baseurl=https://repos.sonar.digitalocean.com/yum/$basearch
+failovermethod=priority
+enabled=1
+gpgcheck=1
+gpgkey=https://repos.sonar.digitalocean.com/sonar-agent.asc

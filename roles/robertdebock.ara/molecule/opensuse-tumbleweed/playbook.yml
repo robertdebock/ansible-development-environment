@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: no
+  become: yes
+
+  roles:
+    - robertdebock.bootstrap
+    - robertdebock.epel
+    - robertdebock.python_pip
+    - ansible-role-ara

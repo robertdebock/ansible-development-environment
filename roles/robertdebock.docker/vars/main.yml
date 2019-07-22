@@ -1,0 +1,30 @@
+---
+# vars file for docker
+_docker_requirements:
+  default: []
+  Debian:
+    - ca-certificates
+    - curl
+    - gnupg2
+    - software-properties-common
+
+docker_requirements: "{{ _docker_requirements[ansible_distribution] | default(_docker_requirements['default']) }}"
+
+_docker_packages:
+  default:
+    - docker
+  CentOS:
+    - docker-io
+  Debian:
+    - docker-engine
+  Ubuntu:
+    - docker.io
+
+docker_packages: "{{ _docker_packages[ansible_distribution] | default(_docker_packages['default']) }}"
+
+docker_service: docker
+
+docker_pip_modules:
+  - name: docker-compose
+
+docker_apt_repository: "deb https://apt.dockerproject.org/repo {{ ansible_distribution | lower }}-{{ ansible_distribution_release | lower }} main"

@@ -1,0 +1,60 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: travis-alpine-edge
+    image: alpine:edge
+    command: sh -c "while true ; do sleep 1 ; done"
+  - name: travis-alpine-latest
+    image: alpine:latest
+    command: sh -c "while true ; do sleep 1 ; done"
+  - name: travis-archlinux
+    image: base/archlinux
+  - name: travis-centos-6
+    image: centos:6
+  - name: travis-centos-latest
+    image: centos:latest
+  - name: travis-debian-latest
+    image: debian:latest
+  - name: travis-debian-stable
+    image: debian:stable
+  - name: travis-debian-unstable
+    image: debian:unstable
+  - name: travis-fedora-latest
+    image: fedora:latest
+  - name: travis-fedora-rawhide
+    image: fedora:rawhide
+  - name: travis-opensuse-leap
+    image: opensuse:leap
+  - name: travis-opensuse-tumbleweed
+    image: opensuse:tumbleweed
+  - name: travis-ubuntu-artful
+    image: ubuntu:artful
+  - name: travis-ubuntu-devel
+    image: ubuntu:devel
+provisioner:
+  name: ansible
+  inventory:
+    group_vars:
+      all:
+        travis_ignore_docker: no
+    host_vars:
+      travis-fedora-rawhide:
+        ansible_python_interpreter: /usr/bin/python3
+  lint:
+    name: ansible-lint
+  config_options:
+    defaults:
+      callback_plugins: /usr/lib/python2.7/site-packages/ara/plugins/callbacks
+scenario:
+  name: default
+verifier:
+  name: goss
+  lint:
+    name: yamllint

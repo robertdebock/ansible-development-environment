@@ -1,0 +1,60 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: investigate-alpine-edge
+    image: alpine:edge
+    command: sh -c "while true ; do sleep 1 ; done"
+  - name: investigate-alpine-latest
+    image: alpine:latest
+    command: sh -c "while true ; do sleep 1 ; done"
+  - name: investigate-archlinux
+    image: base/archlinux
+  - name: investigate-centos-6
+    image: centos:6
+  - name: investigate-centos-latest
+    image: centos:latest
+  - name: investigate-debian-latest
+    image: debian:latest
+  - name: investigate-debian-stable
+    image: debian:stable
+  - name: investigate-debian-unstable
+    image: debian:unstable
+  - name: investigate-fedora-latest
+    image: fedora:latest
+  - name: investigate-fedora-rawhide
+    image: fedora:rawhide
+  - name: investigate-opensuse-leap
+    image: opensuse:leap
+  - name: investigate-opensuse-tumbleweed
+    image: opensuse:tumbleweed
+  - name: investigate-ubuntu-artful
+    image: ubuntu:artful
+  - name: investigate-ubuntu-devel
+    image: ubuntu:devel
+provisioner:
+  name: ansible
+  inventory:
+    group_vars:
+      all:
+        investigate_ignore_docker: no
+    host_vars:
+      investigate-fedora-rawhide:
+        ansible_python_interpreter: /usr/bin/python3
+  lint:
+    name: ansible-lint
+  config_options:
+    defaults:
+      callback_plugins: /usr/lib/python2.7/site-packages/ara/plugins/callbacks
+scenario:
+  name: default
+verifier:
+  name: goss
+  lint:
+    name: yamllint

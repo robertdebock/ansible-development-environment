@@ -9,20 +9,18 @@ Setup a machine to write Ansible roles. Includes:
 
 ## Download
 
-In some directory, maybe `Documents` run:
+### Mazer
 
-```sh
-git clone https://github.com/robertdebock/ansible-development-environment
-cd ansible-development-environment
+```
+mazer install robertdebock.ansible_development_environment
 ```
 
-## Setup
+## Requirements
 
-Download all required roles:
-
-```sh
-ansible-galaxy install --role-file roles/requirements.yml
-```
+- One machine
+- About 4GB or RAM will do.
+- 2 CPUs, 1 will also do.
+- Personalized `inventory/group_vars/all.yml`.
 
 ## Mac / Linux
 

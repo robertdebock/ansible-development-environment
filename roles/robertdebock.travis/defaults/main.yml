@@ -1,0 +1,5 @@
+---
+# defaults file for travis
+
+# To update packages this role places on the system, set `travis_package_state` to `latest`.
+travis_package_state: present

@@ -1,0 +1,45 @@
+---
+# tasks file for python_pip
+- name: remove conflicting packages
+  package:
+    name: "{{ python_pip_conflicting_packages }}"
+    state: absent
+  when:
+    - ansible_distribution != "Archlinux"
+
+- name: install python pip
+  package:
+    name: "{{ python_pip_packages }}"
+    state: "{{ python_pip_package_state }}"
+  register: python_pip_install_python_pip
+  until: python_pip_install_python_pip
+  retries: 3
+
+- name: update pip
+  pip:
+    name: pip
+    state: present
+    version: "{{ python_pip_version }}"
+  register: update_pip
+  until: update_pip is succeeded
+  retries: 3
+
+- name: update setuptools
+  pip:
+    name: setuptools
+    state: present
+    version: 40.2.0
+  register: update_setuptools
+  until: update_setuptools is succeeded
+  retries: 3
+
+- name: install requested modules
+  pip:
+    name: "{{ item.name }}"
+    state: present
+    version: "{{ item.version | default(omit) }}"
+  with_items:
+    - "{{ python_pip_modules }}"
+  register: install_requested_modules
+  until: install_requested_modules is succeeded
+  retries: 3

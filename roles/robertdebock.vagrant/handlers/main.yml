@@ -1,0 +1,8 @@
+---
+# handlers file for vagrant
+- name: restart vagrant
+  service:
+    name: "{{ vagrant_service }}"
+    state: restarted
+  when:
+    - ansible_virtualization_type != "docker" or vagrant_ignore_docker

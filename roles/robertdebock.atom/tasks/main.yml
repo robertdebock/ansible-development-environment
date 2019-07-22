@@ -1,0 +1,82 @@
+---
+# tasks file for atom
+- name: test veriables and environment
+  assert:
+    that:
+      - atom_package_state is defined
+      - atom_package_state == "present" or
+        atom_package_state == "latest" or
+        atom_package_state == "absent"
+      - ansible_pkg_mgr is defined
+      - ansible_pkg_mgr == "yum" or
+        ansible_pkg_mgr == "dnf" or
+        ansible_pkg_mgr == "apt" or
+        ansible_pkg_mgr == "zypper"
+      - atom_package_url is defined
+      - atom_package is defined
+
+- name: install requirements
+  package:
+    name: "{{ atom_requirements }}"
+    state: "{{ atom_package_state }}"
+  when:
+    - atom_requirements is defined
+    - ansible_pkg_mgr == "apt"
+  register: atom_install_requirements
+  until: atom_install_requirements is succeeded
+  retries: 3
+
+- name: download atom
+  get_url:
+    url: "{{ atom_package_url }}"
+    dest: "/tmp/{{ atom_package }}"
+    validate_certs: no
+  when:
+    - ansible_pkg_mgr == "apt" or
+      ansible_pkg_mgr == "dnf" or
+      ansible_pkg_mgr == "yum" or
+      ansible_pkg_mgr == "zypper"
+  register: atom_download_atom
+  until: atom_download_atom is succeeded
+  retries: 3
+
+- name: install atom deb
+  apt:
+    deb: "/tmp/{{ atom_package }}"
+    state: "{{ atom_package_state }}"
+  register: atom_install_atom_deb
+  until: atom_install_atom_deb is succeeded
+  retries: 3
+  when:
+    - ansible_pkg_mgr == "apt"
+
+- name: install atom rpm dnf
+  dnf:
+    name: "/tmp/{{ atom_package }}"
+    state: "{{ atom_package_state }}"
+  register: atom_install_atom_rpm_dnf
+  until: atom_install_atom_rpm_dnf is succeeded
+  retries: 3
+  when:
+    - ansible_pkg_mgr == "dnf"
+
+- name: install atom rpm yum
+  yum:
+    name: "/tmp/{{ atom_package }}"
+    state: "{{ atom_package_state }}"
+  register: atom_install_atom_rpm_yum
+  until: atom_install_atom_rpm_yum is succeeded
+  retries: 3
+  when:
+    - ansible_pkg_mgr == "yum"
+
+- name: install atom rpm zypper
+  zypper:
+    name: "/tmp/{{ atom_package }}"
+    state: "{{ atom_package_state }}"
+    disable_gpg_check: yes
+  register: atom_install_atom_rpm_zypper
+  until: atom_install_atom_rpm_zypper is succeeded
+  retries: 3
+  when:
+    - ansible_pkg_mgr == "zypper"

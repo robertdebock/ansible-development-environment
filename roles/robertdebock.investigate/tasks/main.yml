@@ -1,0 +1,9 @@
+---
+# tasks file for investigate
+- name: install investigation tools
+  package:
+    name: "{{ investigate_packages }}"
+    state: "{{ investigate_package_state }}"
+  register: investigate_install_investigate
+  until: investigate_install_investigate is succeeded
+  retries: 3

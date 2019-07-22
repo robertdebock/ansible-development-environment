@@ -1,0 +1,100 @@
+---
+# tasks file for firewall
+- name: use configured python version
+  set_fact:
+    ansible_python_interpreter: "{{ firewall_ansible_python_interpreter }}"
+
+- name: remove conflicting software
+  package:
+    name: "{{ firewall_packages_conflicting }}"
+    state: absent
+  when:
+    - firewall_packages_conflicting is defined
+
+- name: install required software
+  package:
+    name: "{{ firewall_packages_required }}"
+    state: "{{ firewall_package_state }}"
+  when:
+    - firewall_packages_required is defined
+  register: firewall_install_required_software
+  until: firewall_install_required_software is succeeded
+  retries: 3
+
+- name: open ports (ufw)
+  ufw:
+    rule: "{{ item.rule | default('allow') }}"
+    port: "{{ item.name }}"
+    proto: "{{ item.protocol | default('tcp') }}"
+  with_items:
+    - "{{ firewall_services }}"
+  when:
+    - firewall_services is defined
+    - ansible_virtualization_type != "docker" or firewall_ignore_docker
+    - firewall_service == "ufw"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: open ports (firewalld-port)
+  firewalld:
+    port: "{{ item.name }}/{{ item.protocol | default('tcp') }}"
+    permanent: yes
+    state: enabled
+  with_items:
+    - "{{ firewall_services }}"
+  when:
+    - firewall_services is defined
+    - firewall_service == "firewalld"
+    - ansible_virtualization_type != "docker" or firewall_ignore_docker
+    - item.name is number
+  loop_control:
+    label: "{{ item.name }}"
+  notify:
+    - reload firewalld
+
+- name: open ports (firewalld-service)
+  firewalld:
+    service: "{{ item.name }}"
+    permanent: yes
+    state: enabled
+  with_items:
+    - "{{ firewall_services }}"
+  when:
+    - firewall_services is defined
+    - firewall_service == "firewalld"
+    - ansible_virtualization_type != "docker" or firewall_ignore_docker
+    - item.name is not number
+  loop_control:
+    label: "{{ item.name }}"
+  notify:
+    - reload firewalld
+
+- name: enable ufw
+  ufw:
+    state: enabled
+  when:
+    - firewall_service == "ufw"
+    - ansible_virtualization_type != "docker" or firewall_ignore_docker
+
+- name: configure iptables
+  template:
+    src: iptables.j2
+    dest: "{{ firewall_iptables_rulefile }}"
+    validate: "iptables-restore --test %s"
+  when:
+    - ansible_virtualization_type != "docker" or firewall_ignore_docker
+    - firewall_services is defined
+    - firewall_service == "iptables"
+  loop_control:
+    label: "{{ item.name }}"
+  notify:
+    - reload firewall
+
+- name: start and enable firewall service
+  service:
+    name: "{{ firewall_service }}"
+    state: started
+    enabled: yes
+  when:
+    - ansible_virtualization_type != "docker" or firewall_ignore_docker
+    - firewall_service is defined

@@ -1,0 +1,66 @@
+---
+# tasks file for vagrant
+- name: test veriables and environment
+  assert:
+    that:
+      - vagrant_version is defined
+
+- name: download vagrant
+  get_url:
+    url: "{{ vagrant_package }}"
+    dest: /tmp
+  register: vagrant_download_vagrant
+  until: vagrant_download_vagrant is succeeded
+  retries: 3
+
+- name: install vagrant rpm using package
+  package:
+    name: "/tmp/{{ vagrant_package | basename }}"
+    state: present
+  register: vagrant_install_vagrant_rpm_using_package
+  until: vagrant_install_vagrant_rpm_using_package is succeeded
+  retries: 3
+  when:
+    - ansible_pkg_mgr == "yum" or
+      ansible_pkg_mgr == "dnf"
+
+- name: install vagrant rpm using zypper
+  zypper:
+    name: "/tmp/{{ vagrant_package | basename }}"
+    state: present
+    disable_gpg_check: yes
+  register: vagrant_install_vagrant_rpm_using_zypper
+  until: vagrant_install_vagrant_rpm_using_zypper is succeeded
+  retries: 3
+  when:
+    - ansible_pkg_mgr == "zypper"
+
+- name: install vagrant deb
+  apt:
+    deb: "/tmp/{{ vagrant_package | basename }}"
+    state: present
+  register: vagrant_install_vagrant_deb
+  until: vagrant_install_vagrant_deb is succeeded
+  retries: 3
+  when:
+    - ansible_pkg_mgr == "apt"
+
+- name: install vagrant archive
+  unarchive:
+    src: "/tmp/{{ vagrant_package | basename }}"
+    dest: "{{ vagrant_unarchive_dest }}"
+    creates: "{{ vagrant_unarchive_dest }}/vagrant"
+    remote_src: yes
+  when:
+    - ansible_pkg_mgr != "apt"
+    - ansible_pkg_mgr != "yum"
+    - ansible_pkg_mgr != "dnf"
+    - ansible_pkg_mgr != "zypper"
+
+- name: install pip requirements
+  pip:
+    name: "{{ vagrant_pip_packages }}"
+    state: present
+  register: vagrant_install_pip_requirements
+  until: vagrant_install_pip_requirements is succeeded
+  retries: 3

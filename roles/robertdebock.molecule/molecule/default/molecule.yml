@@ -1,0 +1,60 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: molecule-alpine-edge
+    image: alpine:edge
+    command: sh -c "while true ; do sleep 1 ; done"
+  - name: molecule-alpine-latest
+    image: alpine:latest
+    command: sh -c "while true ; do sleep 1 ; done"
+  - name: molecule-archlinux
+    image: base/archlinux
+  - name: molecule-centos-6
+    image: centos:6
+  - name: molecule-centos-latest
+    image: centos:latest
+  - name: molecule-debian-latest
+    image: debian:latest
+  - name: molecule-debian-stable
+    image: debian:stable
+  - name: molecule-debian-unstable
+    image: debian:unstable
+  - name: molecule-fedora-latest
+    image: fedora:latest
+  - name: molecule-fedora-rawhide
+    image: fedora:rawhide
+  - name: molecule-opensuse-leap
+    image: opensuse:leap
+  - name: molecule-opensuse-tumbleweed
+    image: opensuse:tumbleweed
+  - name: molecule-ubuntu-artful
+    image: ubuntu:artful
+  - name: molecule-ubuntu-devel
+    image: ubuntu:devel
+provisioner:
+  name: ansible
+  inventory:
+    group_vars:
+      all:
+        molecule_ignore_docker: no
+    host_vars:
+      molecule-fedora-rawhide:
+        ansible_python_interpreter: /usr/bin/python3
+  lint:
+    name: ansible-lint
+  config_options:
+    defaults:
+      callback_plugins: /usr/lib/python2.7/site-packages/ara/plugins/callbacks
+scenario:
+  name: default
+verifier:
+  name: goss
+  lint:
+    name: yamllint

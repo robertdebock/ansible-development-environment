@@ -1,0 +1,20 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: false
+
+  roles:
+    - robertdebock.bootstrap
+    - robertdebock.epel
+    - robertdebock.python_pip
+    - ansible-role-docker
+
+  tasks:
+    - name: Create a container
+      docker_container:
+        name: openssh
+        image: robertdebock/docker-centos-openssh
+        ports:
+          - "2222:22"
+      when:
+        - ansible_virtualization_type != "docker"

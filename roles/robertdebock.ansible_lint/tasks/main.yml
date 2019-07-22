@@ -1,0 +1,17 @@
+---
+# tasks file for ansible_lint
+- name: test veriables and environment
+  assert:
+    that:
+      - ansible_lint_package_state is defined
+      - ansible_lint_package_state == "present" or
+        ansible_lint_package_state == "latest" or
+        ansible_lint_package_state == "absent"
+
+- name: install ansible_lint
+  pip:
+    name: "{{ ansible_lint_packages }}"
+    state: "{{ ansible_lint_package_state }}"
+  register: ansible_lint_install_ansible_lint
+  until: ansible_lint_install_ansible_lint is succeeded
+  retries: 3

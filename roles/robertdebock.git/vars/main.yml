@@ -1,0 +1,7 @@
+---
+# vars file for git
+_git_packages:
+  default:
+    - git
+
+git_packages: "{{ _git_packages[ansible_distribution] | default(_git_packages['default']) }}"

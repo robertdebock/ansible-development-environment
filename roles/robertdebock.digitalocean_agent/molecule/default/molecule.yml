@@ -1,0 +1,59 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: digitalocean-agent-alpine-edge
+    image: alpine:edge
+    command: sh -c "while true ; do sleep 1 ; done"
+  - name: digitalocean-agent-alpine-latest
+    image: alpine:latest
+    command: sh -c "while true ; do sleep 1 ; done"
+  - name: digitalocean-agent-archlinux
+    image: base/archlinux
+  - name: digitalocean-agent-centos-6
+    image: centos:6
+  - name: digitalocean-agent-centos-latest
+    image: centos:latest
+  - name: digitalocean-agent-debian-latest
+    image: debian:latest
+  - name: digitalocean-agent-debian-stable
+    image: debian:stable
+  - name: digitalocean-agent-debian-unstable
+    image: debian:unstable
+  - name: digitalocean-agent-fedora-latest
+    image: fedora:latest
+  - name: digitalocean-agent-fedora-rawhide
+    image: fedora:rawhide
+  - name: digitalocean-agent-opensuse-leap
+    image: opensuse:leap
+  - name: digitalocean-agent-opensuse-tumbleweed
+    image: opensuse:tumbleweed
+  - name: digitalocean-agent-ubuntu-artful
+    image: ubuntu:artful
+  - name: digitalocean-agent-ubuntu-devel
+    image: ubuntu:devel
+  - name: digitalocean-agent-ubuntu-latest
+    image: ubuntu:latest
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      digitalocean-fedora-rawhide:
+        ansible_python_interpreter: /usr/bin/python3
+  lint:
+    name: ansible-lint
+  config_options:
+    defaults:
+      callback_plugins: /usr/lib/python2.7/site-packages/ara/plugins/callbacks
+scenario:
+  name: default
+verifier:
+  name: goss
+  lint:
+    name: yamllint

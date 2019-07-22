@@ -1,0 +1,22 @@
+---
+# tasks file for travis
+- name: test veriables and environment
+  assert:
+    that:
+
+- name: install requirements
+  package:
+    name: "{{ travis_requirements }}"
+    state: present
+  register: travis_install_requirements
+  until: travis_install_requirements is succeeded
+  retries: 3
+
+- name: install travis
+  gem:
+    name: "{{ travis_package }}"
+    state: present
+    user_install: no
+  register: travis_install_travis
+  until: travis_install_travis is succeeded
+  retries: 3

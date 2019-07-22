@@ -1,0 +1,79 @@
+---
+# tasks file for ara
+- name: install required packages
+  package:
+    name: "{{ ara_packages }}"
+    state: "{{ ara_package_state }}"
+  become: yes
+  register: ara_install_required_packages
+  until: ara_install_required_packages is succeeded
+  retries: 3
+
+- name: install ara
+  pip:
+    name: ara
+    state: "{{ ara_package_state }}"
+  register: ara_install_ara
+  until: ara_install_ara is succeeded
+  retries: 3
+
+- name: register ara to a sysvinit system
+  template:
+    src: ara.j2
+    dest: "/etc/init.d/ara"
+    mode: 0750
+  when:
+    - ansible_service_mgr == "sysvinit" or ansible_service_mgr == "upstart"
+  become: yes
+
+- name: register ara to a systemd system
+  template:
+    src: ara.service.j2
+    dest: /etc/systemd/system/ara.service
+  when:
+    - ansible_service_mgr == "systemd"
+  notify:
+    - systemctl daemon-reload
+  become: yes
+
+- name: find callback_plugins path
+  shell: "{{ ara_setup_command_python2 }} || {{ ara_setup_command_python3 }}"
+  changed_when: no
+  register: ara_callback_plugins
+
+- name: configure ansible to use ara
+  ini_file:
+    path: "{{ ara_configuration_file }}"
+    section: defaults
+    option: callback_plugins
+    value: "{{ ara_callback_plugins.stdout }}"
+  notify:
+    - restart ara
+  when:
+    - ara_configuration_file is defined
+    - ara_callback_plugins.stdout is defined
+  become: yes
+
+- name: configure ara
+  ini_file:
+    path: "{{ ara_configuration_file }}"
+    section: ara
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  notify:
+    - restart ara
+  with_items:
+    - "{{ ara_configuration }}"
+  when:
+    - ara_configuration is defined
+  loop_control:
+    label: "{{ item.option }}"
+
+- name: start and enable ara
+  service:
+    name: ara
+    state: started
+    enabled: yes
+  when:
+    - ansible_virtualization_type != "docker" or ara_ignore_docker
+  become: yes

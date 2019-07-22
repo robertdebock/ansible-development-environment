@@ -1,0 +1,16 @@
+{{ ansible_managed | comment }}
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -p icmp -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+
+{% for service in firewall_services %}
+-A INPUT -m state --state NEW {% if service.protocol is defined %}{% if service.protocol == "tcp" %}-m tcp{% endif %}{% endif %} -p {{ service.protocol | default ('tcp') }} --dport {{ service.name }} -j ACCEPT
+{% endfor %}
+
+-A INPUT -j REJECT --reject-with icmp-host-prohibited
+-A FORWARD -j REJECT --reject-with icmp-host-prohibited
+COMMIT

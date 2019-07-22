@@ -1,0 +1,21 @@
+---
+# vars file for molecule
+_molecule_requirements:
+  default: []
+  Archlinux:
+    - bash
+  Alpine:
+    - linux-headers
+  CentOS:
+    - python-devel
+  Fedora:
+    - python3-devel
+  openSUSE Leap:
+    - python-devel
+  openSUSE Tumbleweed:
+    - python-devel
+
+molecule_requirements: "{{ _molecule_requirements[ansible_distribution] | default(_molecule_requirements['default']) }}"
+
+molecule_packages:
+  - molecule
