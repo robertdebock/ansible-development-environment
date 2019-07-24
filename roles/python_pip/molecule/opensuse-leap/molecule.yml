@@ -3,20 +3,20 @@ dependency:
   name: galaxy
   options:
     role-file: requirements.yml
-driver:
-  name: docker
 lint:
   name: yamllint
+driver:
+  name: docker
 platforms:
-  - name: python-pip-opensuse-leap
+  - name: python_pip-opensuse-leap
     image: opensuse:leap
+    pre_build_image: yes
 provisioner:
   name: ansible
+  playbooks:
+    prepare: ../resources/prepare.yml
+    converge: ../resources/playbook.yml
   lint:
     name: ansible-lint
 scenario:
   name: opensuse-leap
-verifier:
-  name: goss
-  lint:
-    name: yamllint

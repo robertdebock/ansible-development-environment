@@ -3,27 +3,27 @@ dependency:
   name: galaxy
   options:
     role-file: requirements.yml
+lint:
+  name: yamllint
 driver:
   name: vagrant
   provider:
     name: virtualbox
-lint:
-  name: yamllint
 platforms:
-  - name: python-pip-debian
+  - name: python_pip-debian
     box: debian/stretch64
-  - name: python-pip-fedora
-    box: fedora/29-cloud-base
+  - name: python_pip-fedora
+    box: fedora/30-cloud-base
 provisioner:
   name: ansible
+  playbooks:
+    prepare: ../resources/prepare.yml
+    converge: ../resources/playbook.yml
   lint:
     name: ansible-lint
-  config_options:
-    defaults:
-      callback_plugins: /usr/lib/python2.7/site-packages/ara/plugins/callbacks
+  inventory:
+    host_vars:
+      python_pip-fedora:
+        ansible_python_interpreter: /usr/bin/python3
 scenario:
   name: vagrant
-verifier:
-  name: goss
-  lint:
-    name: yamllint

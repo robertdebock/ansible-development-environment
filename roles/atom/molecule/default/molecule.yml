@@ -25,9 +25,6 @@ platforms:
   - name: atom-centos-latest
     image: centos:latest
     pre_build_image: yes
-  - name: atom-debian-latest
-    image: debian:latest
-    pre_build_image: yes
   - name: atom-debian-stable
     image: debian:stable
     pre_build_image: yes
@@ -41,7 +38,7 @@ platforms:
     image: fedora:rawhide
     pre_build_image: yes
   - name: atom-opensuse-leap
-    image: opensuse:leap
+    image: opensuse/leap
     pre_build_image: yes
   - name: atom-ubuntu-latest
     image: ubuntu:latest
@@ -59,5 +56,11 @@ provisioner:
     converge: ../resources/playbook.yml
   lint:
     name: ansible-lint
+  inventory:
+    host_vars:
+      atom-fedora-latest:
+        ansible_python_interpreter: /usr/bin/python3
+      atom-fedora-rawhide:
+        ansible_python_interpreter: /usr/bin/python3
 scenario:
   name: default

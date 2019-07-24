@@ -4,5 +4,5 @@
   package:
     name: "{{ ruby_packages }}"
   register: ruby_install_ruby
-  until: ruby_install_ruby
+  until: ruby_install_ruby is succeeded
   retries: 3

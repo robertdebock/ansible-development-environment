@@ -48,7 +48,6 @@ _buildtools_packages:
     - libaio-devel
     - libapparmor-devel
     - libdb-4_8-devel
-    - libgcj-devel
     - libosip2-devel
     - libstdc++-devel
     - openldap2-devel

@@ -1,21 +1,5 @@
 ---
 # tasks file for service
-- name: test veriables and environment
-  assert:
-    that:
-      - service_list is defined
-
-- name: test service_list
-  assert:
-    that:
-      - item.name is defined
-      - item.description is defined
-      - item.start_command is defined
-  with_items:
-    - "{{ service_list }}"
-  loop_control:
-    label: "{{ item.name }}"
-
 - name: install required packages
   package:
     name: "{{ service_required_packages }}"
@@ -23,6 +7,9 @@
   register: service_install_required_packages
   until: service_install_required_packages is succeeded
   retries: 3
+
+- name: gather_facts
+  setup:
 
 - name: configure systemd service
   template:

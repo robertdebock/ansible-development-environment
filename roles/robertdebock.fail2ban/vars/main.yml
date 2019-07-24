@@ -1,6 +1,0 @@
----
-# vars file for fail2ban
-fail2ban_packages:
-  - fail2ban
-
-fail2ban_service: fail2ban

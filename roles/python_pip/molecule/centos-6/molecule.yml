@@ -3,20 +3,20 @@ dependency:
   name: galaxy
   options:
     role-file: requirements.yml
-driver:
-  name: docker
 lint:
   name: yamllint
+driver:
+  name: docker
 platforms:
-  - name: python-pip-centos-6
+  - name: python_pip-centos-6
     image: centos:6
+    pre_build_image: yes
 provisioner:
   name: ansible
+  playbooks:
+    prepare: ../resources/prepare.yml
+    converge: ../resources/playbook.yml
   lint:
     name: ansible-lint
 scenario:
   name: centos-6
-verifier:
-  name: goss
-  lint:
-    name: yamllint

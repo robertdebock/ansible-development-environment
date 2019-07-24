@@ -13,10 +13,14 @@ platforms:
   - name: epel-debian
     box: debian/stretch64
   - name: epel-fedora
-    box: fedora/29-cloud-base
+    box: fedora/30-cloud-base
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  inventory:
+    host_vars:
+      epel-fedora:
+        ansible_python_interpreter: /usr/bin/python3
 scenario:
   name: vagrant

@@ -1,8 +1,0 @@
----
-# handlers file for postfix
-- name: restart postfix
-  service:
-    name: "{{ postfix_service }}"
-    state: restarted
-  when:
-    - ansible_virtualization_type != "docker" or postfix_ignore_docker

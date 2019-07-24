@@ -1,5 +1,0 @@
-# Molecule managed
----
-service:
-  ara:
-    enabled: true

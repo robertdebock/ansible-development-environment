@@ -8,6 +8,3 @@ _python_pip_packages:
     - python2-dev
 
 python_pip_packages: "{{ _python_pip_packages[ansible_distribution] | default(_python_pip_packages['default']) }}"
-
-python_pip_conflicting_packages:
-  - python-requests

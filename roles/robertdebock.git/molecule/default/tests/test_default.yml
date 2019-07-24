@@ -1,5 +1,0 @@
-# Molecule managed
----
-file:
-  /usr/bin/git:
-    exists: true

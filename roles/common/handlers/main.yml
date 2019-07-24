@@ -3,3 +3,8 @@
 - name: gather facts
   setup:
   become: no
+
+- name: reload network manager
+  service:
+    name: NetworkManager
+    state: reloaded

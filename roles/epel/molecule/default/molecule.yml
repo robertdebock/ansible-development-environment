@@ -16,5 +16,11 @@ provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  inventory:
+    host_vars:
+      epel-fedora-latest:
+        ansible_python_interpreter: /usr/bin/python3
+      epel-fedora-rawhide:
+        ansible_python_interpreter: /usr/bin/python3
 scenario:
   name: default

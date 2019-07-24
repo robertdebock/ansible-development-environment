@@ -13,15 +13,21 @@ docker_requirements: "{{ _docker_requirements[ansible_distribution] | default(_d
 _docker_packages:
   default:
     - docker
+    - docker-compose
+  Alpine:
+    - docker
   CentOS:
     - docker-io
+    - docker-compose
   Ubuntu:
     - docker.io
+    - docker-compose
 
 
 docker_packages: "{{ _docker_packages[ansible_distribution] | default(_docker_packages['default']) }}"
 
 docker_pip_packages:
   - docker
+  - docker-compose
 
 docker_service: docker

@@ -15,7 +15,7 @@
     name: "{{ postfix_packages }}"
     state: present
   register: postfix_install_postfix
-  until: postfix_install_postfix
+  until: postfix_install_postfix is succeeded
   retries: 3
 
 - name: create group

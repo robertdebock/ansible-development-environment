@@ -25,9 +25,6 @@ platforms:
   - name: bootstrap-centos-latest
     image: centos:latest
     pre_build_image: yes
-  - name: bootstrap-debian-latest
-    image: debian:latest
-    pre_build_image: yes
   - name: bootstrap-debian-stable
     image: debian:stable
     pre_build_image: yes
@@ -40,9 +37,24 @@ platforms:
   - name: bootstrap-fedora-rawhide
     image: fedora:rawhide
     pre_build_image: yes
+    registry:
+      url: registry.fedoraproject.org
   - name: bootstrap-opensuse-leap
-    image: opensuse:leap
+    image: opensuse/leap
     pre_build_image: yes
+  - name: bootstrap-rhel-7
+    image: ubi7/ubi
+    pre_build_image: yes
+    registry:
+      url: registry.access.redhat.com
+      credentials:
+        username: $registryredhatiousername
+        password: $registryredhatiopassword
+  - name: bootstrap-rhel-latest
+    image: ubi8/ubi
+    pre_build_image: yes
+    registry:
+      url: registry.access.redhat.com
   - name: bootstrap-ubuntu-latest
     image: ubuntu:latest
     pre_build_image: yes
@@ -58,5 +70,11 @@ provisioner:
     converge: ../resources/playbook.yml
   lint:
     name: ansible-lint
+  inventory:
+    host_vars:
+      bootstrap-fedora-latest:
+        ansible_python_interpreter: /usr/bin/python3
+      bootstrap-fedora-rawhide:
+        ansible_python_interpreter: /usr/bin/python3
 scenario:
   name: default
