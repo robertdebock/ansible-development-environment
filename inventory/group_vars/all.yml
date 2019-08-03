@@ -89,6 +89,8 @@ git_repositories:
     dest: ansible-role-docker_ce
   - repo: ssh://git@github.com/robertdebock/ansible-role-dovecot.git
     dest: ansible-role-dovecot
+  - repo: ssh://git@github.com/robertdebock/ansible-role-dsvpn.git
+    dest: ansible-role-dsvpn
   - repo: ssh://git@github.com/robertdebock/ansible-role-earlyoom.git
     dest: ansible-role-earlyoom
   - repo: ssh://git@github.com/robertdebock/ansible-role-environment.git
