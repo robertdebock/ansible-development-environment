@@ -119,6 +119,8 @@ git_repositories:
     dest: ansible-role-haveged
   - repo: ssh://git@github.com/robertdebock/ansible-role-httpd.git
     dest: ansible-role-httpd
+  - repo: ssh://git@github.com/robertdebock/ansible-role-hostname.git
+    dest: ansible-role-hostname
   - repo: ssh://git@github.com/robertdebock/ansible-role-investigate.git
     dest: ansible-role-investigate
   - repo: ssh://git@github.com/robertdebock/ansible-role-irslackd.git
