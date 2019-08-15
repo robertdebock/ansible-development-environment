@@ -75,6 +75,8 @@ git_repositories:
     dest: ansible-role-cntlm
   - repo: ssh://git@github.com/robertdebock/ansible-role-common.git
     dest: ansible-role-common
+  - repo: ssh://git@github.com/robertdebock/ansible-role-container_docs.git
+    dest: ansible-role-container_docs
   - repo: ssh://git@github.com/robertdebock/ansible-role-cron.git
     dest: ansible-role-cron
   - repo: ssh://git@github.com/robertdebock/ansible-role-dhcpd.git
