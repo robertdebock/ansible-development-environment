@@ -50,7 +50,7 @@
 
 - name: reboot for hostname
   include_role:
-    name: robertdebock.reboot
+    name: reboot
   when:
     - set_hostname.changed
     - common_reboot | bool

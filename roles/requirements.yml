@@ -34,7 +34,7 @@
 - src: robertdebock.ruby
   name: ruby
 - src: robertdebock.service
-  name: robertdebock.service
+  name: service
 - src: robertdebock.travis
   name: travis
 - src: robertdebock.update

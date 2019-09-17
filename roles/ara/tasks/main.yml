@@ -18,7 +18,7 @@
 
 - name: create ara service
   import_role:
-    name: robertdebock.service
+    name: service
 
 - name: find callback_plugins path
   block:
