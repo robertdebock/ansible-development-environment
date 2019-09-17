@@ -19,6 +19,9 @@ _docker_packages:
   CentOS:
     - docker-io
     - docker-compose
+  Debian:
+    - docker.io
+    - docker-compose
   Ubuntu:
     - docker.io
     - docker-compose

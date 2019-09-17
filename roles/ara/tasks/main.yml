@@ -10,7 +10,7 @@
 
 - name: install ara
   pip:
-    name: ara
+    name: ara[server]
     state: present
   register: ara_install_ara
   until: ara_install_ara is succeeded

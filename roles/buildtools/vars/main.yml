@@ -19,6 +19,7 @@ _buildtools_packages:
   Fedora:
     - "@Development tools"
     - perl-Digest-SHA
+    - libffi-devel
   openSUSE Leap:
     - autoconf
     - automake

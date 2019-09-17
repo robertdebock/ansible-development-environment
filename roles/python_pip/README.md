@@ -33,7 +33,6 @@ The machine you are running this on, may need to be prepared.
   hosts: all
   gather_facts: no
   become: yes
-  serial: 30%
 
   roles:
     - robertdebock.bootstrap
@@ -52,20 +51,23 @@ These variables are set in `defaults/main.yml`:
 # defaults file for python_pip
 
 # The version of pip to update to.
-python_pip_version: 19.0.3
+python_pip_version: 19.2.3
 
 # The version of setuptools to update to.
-python_pip_setuptools_version: 40.9.0
+python_pip_setuptools_version: 41.2.0
 
 # By default no modules should be installed.
 python_pip_modules: []
+
+# Connect to a (pypi) proxy by setting this variable.
+# python_pip_proxy: "https://user:password@proxy:8443/artifactory/pypi/pypi-virtual/simple"
 ```
 
 Requirements
 ------------
 
 - Access to a repository containing packages, likely on the internet.
-- A recent version of Ansible. (Tests run on the last 3 release of Ansible.)
+- A recent version of Ansible. (Tests run on the current, previous and next release of Ansible.)
 
 The following roles can be installed to ensure all requirements are met, using `ansible-galaxy install -r requirements.yml`:
 
@@ -99,7 +101,6 @@ This role has been tested against the following distributions and Ansible versio
 |archlinux|yes|yes|yes*|
 |centos-6|no|no|no*|
 |centos-latest|yes|yes|yes*|
-|debian-latest|yes|yes|yes*|
 |debian-stable|yes|yes|yes*|
 |debian-unstable*|yes|yes|yes*|
 |fedora-latest|yes|yes|yes*|
@@ -110,6 +111,16 @@ This role has been tested against the following distributions and Ansible versio
 |ubuntu-rolling|yes|yes|yes*|
 
 A single star means the build may fail, it's marked as an experimental build.
+
+
+Included version(s)
+-------------------
+
+This role [refers to a version](https://github.com/robertdebock/ansible-role-python_pip/blob/master/defaults/main.yml) released by PyPi. Check the released version(s) here:
+- [pip](https://pypi.org/project/pip/).
+- [setuptools](https://pypi.org/project/setuptools/).
+
+This version reference means a role may get outdated. Monthly tests occur to see if [bit-rot](https://en.wikipedia.org/wiki/Software_rot) occured. If you however find a problem, please create an issue, I'll get on it as soon as possible.
 
 Testing
 -------
@@ -124,19 +135,9 @@ pip install molecule
 molecule test
 ```
 
-To test on Amazon EC2, configure [~/.aws/credentials](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html) and `export AWS_REGION=eu-central-1` before running `molecule test --scenario-name ec2`.
+To test on Amazon EC2, configure [~/.aws/credentials](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html) and set a region using `export AWS_REGION=eu-central-1` before running `molecule test --scenario-name ec2`.
 
 There are many specific scenarios available, please have a look in the `molecule/` directory.
-
-Run the [ansible-galaxy](https://github.com/ansible/galaxy-lint-rules) and [my](https://github.com/robertdebock/ansible-lint-rules) lint rules if you want your change to be merges:
-
-```shell
-git clone https://github.com/ansible/ansible-lint.git /tmp/ansible-lint
-ansible-lint -r /tmp/ansible-lint/lib/ansiblelint/rules .
-
-git clone https://github.com/robertdebock/ansible-lint /tmp/my-ansible-lint
-ansible-lint -r /tmp/my-ansible-lint/rules .
-```
 
 License
 -------
@@ -147,4 +148,4 @@ Apache-2.0
 Author Information
 ------------------
 
-Robert de Bock
+[Robert de Bock](https://robertdebock.nl/)

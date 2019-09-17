@@ -43,6 +43,10 @@ _bootstrap_packages:
     - iproute
     - python2
     - sudo
+  Debian:
+    - aptitude
+    - python
+    - sudo
   Fedora:
     - iproute
     - python3
@@ -135,7 +139,6 @@ _bootstrap_preview_packages:
     - tar
     - unzip
     - gzip
-    - policycoreutils-python
     - xz
   Debian:
     - apt-transport-https
@@ -149,7 +152,6 @@ _bootstrap_preview_packages:
     - tar
     - unzip
     - gzip
-    - policycoreutils-python
     - xz
   FreeBSD:
     - unzip

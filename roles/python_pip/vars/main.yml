@@ -6,5 +6,7 @@ _python_pip_packages:
   Alpine:
     - py-pip
     - python2-dev
+  Ubuntu:
+    - python-pip
 
 python_pip_packages: "{{ _python_pip_packages[ansible_distribution] | default(_python_pip_packages['default']) }}"

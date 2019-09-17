@@ -9,7 +9,7 @@ driver:
   name: docker
 platforms:
   - name: ara-opensuse-leap
-    image: opensuse:leap
+    image: opensuse/leap
     pre_build_image: yes
 provisioner:
   name: ansible
@@ -18,5 +18,9 @@ provisioner:
     converge: ../resources/playbook.yml
   lint:
     name: ansible-lint
+    options:
+      exclude:
+        - meta/version.yml
+        - meta/exception.yml
 scenario:
   name: opensuse-leap

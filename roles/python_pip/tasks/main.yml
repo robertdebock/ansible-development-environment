@@ -26,6 +26,15 @@
   until: update_setuptools is succeeded
   retries: 3
 
+- name: Configure pip proxy
+  ini_file:
+    path: /etc/pip.conf
+    section: global
+    option: index-url
+    value: "{{ python_pip_proxy }}"
+  when:
+    - python_pip_proxy is defined
+
 - name: install requested modules
   pip:
     name: "{{ item.name }}"

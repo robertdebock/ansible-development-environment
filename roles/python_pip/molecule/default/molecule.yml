@@ -25,9 +25,6 @@ platforms:
   - name: python_pip-centos-latest
     image: centos:latest
     pre_build_image: yes
-  - name: python_pip-debian-latest
-    image: debian:latest
-    pre_build_image: yes
   - name: python_pip-debian-stable
     image: debian:stable
     pre_build_image: yes
@@ -41,7 +38,7 @@ platforms:
     image: fedora:rawhide
     pre_build_image: yes
   - name: python_pip-opensuse-leap
-    image: opensuse:leap
+    image: opensuse/leap
     pre_build_image: yes
   - name: python_pip-ubuntu-latest
     image: ubuntu:latest
@@ -59,6 +56,10 @@ provisioner:
     converge: ../resources/playbook.yml
   lint:
     name: ansible-lint
+    options:
+      exclude:
+        - meta/version.yml
+        - meta/exception.yml
   inventory:
     host_vars:
       python_pip-fedora-latest:

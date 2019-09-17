@@ -28,6 +28,7 @@ This example is taken from `molecule/resources/playbook.yml`:
 The machine you are running this on, may need to be prepared.
 ```yaml
 No preparation required.
+```
 
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.
 
@@ -93,7 +94,6 @@ This role has been tested against the following distributions and Ansible versio
 |debian-unstable*|yes|yes|yes*|
 |fedora-latest|yes|yes|yes*|
 |fedora-rawhide*|yes|yes|yes*|
-|gentoo|yes|yes|yes*|
 |kali|yes|yes|yes*|
 |opensuse-leap|yes|yes|yes*|
 |ubuntu-devel*|yes|yes|yes*|
@@ -101,6 +101,9 @@ This role has been tested against the following distributions and Ansible versio
 |ubuntu-rolling|yes|yes|yes*|
 
 A single star means the build may fail, it's marked as an experimental build.
+
+
+
 
 Testing
 -------
