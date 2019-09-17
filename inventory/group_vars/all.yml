@@ -147,6 +147,8 @@ git_repositories:
     dest: ansible-role-mediawiki
   - repo: ssh://git@github.com/robertdebock/ansible-role-memcached.git
     dest: ansible-role-memcached
+  - repo: ssh://git@github.com/robertdebock/ansible-role-minikube.git
+    dest: ansible-role-minikube
   - repo: ssh://git@github.com/robertdebock/ansible-role-mitogen.git
     dest: ansible-role-mitogen
   - repo: ssh://git@github.com/robertdebock/ansible-role-molecule.git
@@ -199,6 +201,8 @@ git_repositories:
     dest: ansible-role-revealmd
   - repo: ssh://git@github.com/robertdebock/ansible-role-roundcubemail.git
     dest: ansible-role-roundcubemail
+  - repo: ssh://git@github.com/robertdebock/ansible-role-rpmfusion.git
+    dest: ansible-role-rpmfusion
   - repo: ssh://git@github.com/robertdebock/ansible-role-rsyslog.git
     dest: ansible-role-rsyslog
   - repo: ssh://git@github.com/robertdebock/ansible-role-ruby.git
