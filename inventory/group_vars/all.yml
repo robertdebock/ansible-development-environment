@@ -169,6 +169,8 @@ git_repositories:
     dest: ansible-role-openssh
   - repo: ssh://git@github.com/robertdebock/ansible-role-openvas.git
     dest: ansible-role-openvas
+  - repo: ssh://git@github.com/robertdebock/ansible-role-obsproject.git
+    dest: ansible-role-obsproject
   - repo: ssh://git@github.com/robertdebock/ansible-role-owncloud.git
     dest: ansible-role-owncloud
   - repo: ssh://git@github.com/robertdebock/ansible-role-packer.git
