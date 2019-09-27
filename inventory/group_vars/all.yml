@@ -79,6 +79,8 @@ git_repositories:
     dest: ansible-role-container_docs
   - repo: ssh://git@github.com/robertdebock/ansible-role-cron.git
     dest: ansible-role-cron
+  - repo: ssh://git@github.com/robertdebock/ansible-role-debug.git
+    dest: ansible-role-debug
   - repo: ssh://git@github.com/robertdebock/ansible-role-dhcpd.git
     dest: ansible-role-dhcpd
   - repo: ssh://git@github.com/robertdebock/ansible-role-digitalocean-agent.git
