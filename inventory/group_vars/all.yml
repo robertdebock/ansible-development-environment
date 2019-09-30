@@ -167,6 +167,8 @@ git_repositories:
     dest: ansible-role-npm
   - repo: ssh://git@github.com/robertdebock/ansible-role-ntp.git
     dest: ansible-role-ntp
+  - repo: ssh://git@github.com/robertdebock/ansible-role-omsagent.git
+    dest: ansible-role-omsagent
   - repo: ssh://git@github.com/robertdebock/ansible-role-openssh.git
     dest: ansible-role-openssh
   - repo: ssh://git@github.com/robertdebock/ansible-role-openvas.git
