@@ -265,6 +265,8 @@ git_repositories:
     dest: ansible-role-update
   - repo: ssh://git@github.com/robertdebock/ansible-role-update_package_cache.git
     dest: ansible-role-update_package_cache
+  - repo: ssh://git@github.com/robertdebock/ansible-role-unowned_files.git
+    dest: ansible-role-unowned_files
   - repo: ssh://git@github.com/robertdebock/ansible-role-ulimit.git
     dest: ansible-role-ulimit
   - repo: ssh://git@github.com/robertdebock/ansible-role-users.git
