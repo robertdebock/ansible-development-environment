@@ -57,6 +57,8 @@ git_repositories:
     dest: ansible-role-auditd
   - repo: ssh://git@github.com/robertdebock/ansible-role-awx.git
     dest: ansible-role-awx
+  - repo: ssh://git@github.com/robertdebock/ansible-role-azure_cli.git
+    dest: ansible-role-azure_cli
   - repo: ssh://git@github.com/robertdebock/ansible-role-backup.git
     dest: ansible-role-backup
   - repo: ssh://git@github.com/robertdebock/ansible-role-bios_update.git
