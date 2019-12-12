@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
   config.vm.define "fedora" do |fedora|
-    fedora.vm.box = "fedora/30-cloud-base"
+    fedora.vm.box = "fedora/31-cloud-base"
     fedora.vm.synced_folder '.', '/vagrant', disabled: true
     config.vm.provider "virtualbox" do |v|
       v.memory = 4096

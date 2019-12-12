@@ -109,6 +109,8 @@ git_repositories:
     dest: ansible-role-etherpad
   - repo: ssh://git@github.com/robertdebock/ansible-role-firewall.git
     dest: ansible-role-firewall
+  - repo: ssh://git@github.com/robertdebock/ansible-role-forensics.git
+    dest: ansible-role-forensics
   - repo: ssh://git@github.com/robertdebock/ansible-role-fail2ban.git
     dest: ansible-role-fail2ban
   - repo: ssh://git@github.com/robertdebock/ansible-role-git.git
