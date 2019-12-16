@@ -183,8 +183,6 @@ git_repositories:
     dest: ansible-role-omsagent
   - repo: ssh://git@github.com/robertdebock/ansible-role-openssh.git
     dest: ansible-role-openssh
-  - repo: ssh://git@github.com/robertdebock/ansible-role-openvas.git
-    dest: ansible-role-openvas
   - repo: ssh://git@github.com/robertdebock/ansible-role-obsproject.git
     dest: ansible-role-obsproject
   - repo: ssh://git@github.com/robertdebock/ansible-role-owncloud.git
@@ -279,8 +277,6 @@ git_repositories:
     dest: ansible-role-xinetd
   - repo: ssh://git@github.com/robertdebock/ansible-role-y.git
     dest: ansible-role-y
-  - repo: ssh://git@github.com/robertdebock/ansible-role-zabbix.git
-    dest: ansible-role-zabbix
   - repo: ssh://git@github.com/robertdebock/ansible-role-zabbix_repository.git
     dest: ansible-role-zabbix_repository
   - repo: ssh://git@github.com/robertdebock/ansible-role-zabbix_server.git
