@@ -5,21 +5,22 @@ galaxy_info:
   description: Install pythons pip on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.6
+  min_ansible_version: 2.8
 
   platforms:
     - name: Alpine
       versions:
         - all
     - name: ArchLinux
-      version:
+      versions:
         - all
     - name: Debian
       versions:
         - all
     - name: EL
-      version:
+      versions:
         - 7
+        - 8
     - name: Fedora
       versions:
         - all
@@ -37,10 +38,6 @@ galaxy_info:
     - pypip
     - system
     - installer
-    - alpine
-    - debian
     - centos
-    - fedora
-    - ubuntu
 
 dependencies: []

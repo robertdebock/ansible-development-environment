@@ -1,9 +1,5 @@
 ---
 # tasks file for ansible_lint
-- name: test veriables and environment
-  assert:
-    that:
-
 - name: install ansible_lint
   pip:
     name: "{{ ansible_lint_packages }}"

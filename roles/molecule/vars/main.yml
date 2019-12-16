@@ -6,25 +6,15 @@ _molecule_requirements:
     - bash
   Alpine:
     - linux-headers
-  CentOS:
+  CentOS-7:
     - python-devel
     - openssl-devel
   Debian:
     - libssl-dev
-  Fedora:
+  RedHat:
     - python3-devel
     - openssl-devel
-  openSUSE Leap:
+  Suse:
     - python-devel
-  Ubuntu:
-    - libssl-dev
 
-molecule_requirements: "{{ _molecule_requirements[ansible_distribution] | default(_molecule_requirements['default']) }}"
-
-molecule_packages:
-  - molecule
-
-# _molecule_extra_args:
-#   Ubuntu: "--ignore-installed entrypoints"
-#
-# molecule_extra_args: "{{ _molecule_extra_args[ansible_distribution] | default(omit) }}"
+molecule_requirements: "{{ _molecule_requirements[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_molecule_requirements[ansible_os_family] | default(_molecule_requirements['default'])) }}"

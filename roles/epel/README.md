@@ -2,14 +2,14 @@ epel
 =========
 
 <img src="https://docs.ansible.com/ansible-tower/3.2.4/html_ja/installandreference/_static/images/logo_invert.png" width="10%" height="10%" alt="Ansible logo" align="right"/>
-<a href="https://travis-ci.org/robertdebock/ansible-role-epel"><img src="https://travis-ci.org/robertdebock/ansible-role-epel.svg?branch=master" alt="Build status" align="left"/></a>
+<a href="https://travis-ci.org/robertdebock/ansible-role-epel"> <img src="https://travis-ci.org/robertdebock/ansible-role-epel.svg?branch=master" alt="Build status"/></a> <img src="https://img.shields.io/ansible/role/d/21643"/> <img src="https://img.shields.io/ansible/quality/21643"/>
 
 Install epel on your system.
 
 Example Playbook
 ----------------
 
-This example is taken from `molecule/resources/playbook.yml`:
+This example is taken from `molecule/resources/playbook.yml` and is tested on each push, pull request and release.
 ```yaml
 ---
 - name: Converge
@@ -21,7 +21,7 @@ This example is taken from `molecule/resources/playbook.yml`:
     - robertdebock.epel
 ```
 
-The machine you are running this on, may need to be prepared.
+The machine you are running this on, may need to be prepared, I use this playbook to ensure everything is in place to let the role work.
 ```yaml
 ---
 - name: Prepare
@@ -31,6 +31,22 @@ The machine you are running this on, may need to be prepared.
 
   roles:
     - robertdebock.bootstrap
+```
+
+After running this role, this playbook runs to verify that everything works, this may be a good example how you can use this role.
+```yaml
+---
+- name: Verify
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: install a package from epel
+      package:
+        name: zstd
+        state: present
+
 ```
 
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.
@@ -70,31 +86,68 @@ Here is an overview of related roles:
 Compatibility
 -------------
 
-This role has been tested against the following distributions and Ansible version:
+This role has been tested on these [container images](https://hub.docker.com/):
 
-|distribution|ansible 2.7|ansible 2.8|ansible devel|
-|------------|-----------|-----------|-------------|
-|centos-6|yes|yes|yes*|
-|centos-latest|yes|yes|yes*|
+|container|tag|allow_failures|
+|---------|---|--------------|
+|amazonlinux|1|no|
+|amazonlinux|latest|no|
+|centos|7|no|
+|redhat|7|no|
+|centos|latest|no|
+|redhat|latest|no|
 
-A single star means the build may fail, it's marked as an experimental build.
+This role has been tested on these Ansible versions:
+
+- ansible>=2.8, <2.9
+- ansible>=2.9
+- git+https://github.com/ansible/ansible.git@devel
+
+
 
 Testing
 -------
 
-[Unit tests](https://travis-ci.org/robertdebock/ansible-role-epel) are done on every commit and periodically.
+[Unit tests](https://travis-ci.org/robertdebock/ansible-role-epel) are done on every commit, pull request, release and periodically.
 
 If you find issues, please register them in [GitHub](https://github.com/robertdebock/ansible-role-epel/issues)
 
-To test this role locally please use [Molecule](https://github.com/ansible/molecule):
+Testing is done using [Tox](https://tox.readthedocs.io/en/latest/) and [Molecule](https://github.com/ansible/molecule):
+
+[Tox](https://tox.readthedocs.io/en/latest/) tests multiple ansible versions.
+[Molecule](https://github.com/ansible/molecule) tests multiple distributions.
+
+To test using the defaults (any installed ansible version, namespace: `robertdebock`, image: `fedora`, tag: `latest`):
+
 ```
-pip install molecule
 molecule test
+
+# Or select a specific image:
+image=ubuntu molecule test
+# Or select a specific image and a specific tag:
+image="debian" tag="stable" tox
 ```
 
-To test on Amazon EC2, configure [~/.aws/credentials](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html) and set a region using `export AWS_REGION=eu-central-1` before running `molecule test --scenario-name ec2`.
+Or you can test multiple versions of Ansible, and select images:
+Tox allows multiple versions of Ansible to be tested. To run the default (namespace: `robertdebock`, image: `fedora`, tag: `latest`) tests:
 
-There are many specific scenarios available, please have a look in the `molecule/` directory.
+```
+tox
+
+# To run CentOS (namespace: `robertdebock`, tag: `latest`)
+image="centos" tox
+# Or customize more:
+image="debian" tag="stable" tox
+```
+
+Modules
+-------
+
+This role uses the following modules:
+```yaml
+---
+- package
+```
 
 License
 -------

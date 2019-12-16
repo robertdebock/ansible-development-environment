@@ -2,14 +2,14 @@ python_pip
 =========
 
 <img src="https://docs.ansible.com/ansible-tower/3.2.4/html_ja/installandreference/_static/images/logo_invert.png" width="10%" height="10%" alt="Ansible logo" align="right"/>
-<a href="https://travis-ci.org/robertdebock/ansible-role-python_pip"><img src="https://travis-ci.org/robertdebock/ansible-role-python_pip.svg?branch=master" alt="Build status" align="left"/></a>
+<a href="https://travis-ci.org/robertdebock/ansible-role-python_pip"> <img src="https://travis-ci.org/robertdebock/ansible-role-python_pip.svg?branch=master" alt="Build status"/></a> <img src="https://img.shields.io/ansible/role/d/42440"/> <img src="https://img.shields.io/ansible/quality/42440"/>
 
 Install pythons pip on your system.
 
 Example Playbook
 ----------------
 
-This example is taken from `molecule/resources/playbook.yml`:
+This example is taken from `molecule/resources/playbook.yml` and is tested on each push, pull request and release.
 ```yaml
 ---
 - name: Converge
@@ -17,16 +17,11 @@ This example is taken from `molecule/resources/playbook.yml`:
   become: yes
   gather_facts: yes
 
-  vars:
-    python_pip_modules:
-      - name: jinja2
-      - name: ansible
-
   roles:
     - robertdebock.python_pip
 ```
 
-The machine you are running this on, may need to be prepared.
+The machine you are running this on, may need to be prepared, I use this playbook to ensure everything is in place to let the role work.
 ```yaml
 ---
 - name: Prepare
@@ -40,6 +35,22 @@ The machine you are running this on, may need to be prepared.
     - robertdebock.buildtools
 ```
 
+After running this role, this playbook runs to verify that everything works, this may be a good example how you can use this role.
+```yaml
+---
+- name: Verify
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: install pip module
+      pip:
+        name: ansible
+        state: present
+```
+```
+
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.
 
 Role Variables
@@ -49,13 +60,6 @@ These variables are set in `defaults/main.yml`:
 ```yaml
 ---
 # defaults file for python_pip
-
-# The version of pip to update to.
-python_pip_version: 19.2.3
-
-# The version of setuptools to update to.
-python_pip_setuptools_version: 41.2.0
-
 # By default no modules should be installed.
 python_pip_modules: []
 
@@ -76,7 +80,6 @@ The following roles can be installed to ensure all requirements are met, using `
 - robertdebock.bootstrap
 - robertdebock.buildtools
 - robertdebock.epel
-- robertdebock.scl
 
 ```
 
@@ -92,52 +95,69 @@ Here is an overview of related roles:
 Compatibility
 -------------
 
-This role has been tested against the following distributions and Ansible version:
+This role has been tested on these [container images](https://hub.docker.com/):
 
-|distribution|ansible 2.7|ansible 2.8|ansible devel|
-|------------|-----------|-----------|-------------|
-|alpine-edge*|yes|yes|yes*|
-|alpine-latest|yes|yes|yes*|
-|archlinux|yes|yes|yes*|
-|centos-6|no|no|no*|
-|centos-latest|yes|yes|yes*|
-|debian-stable|yes|yes|yes*|
-|debian-unstable*|yes|yes|yes*|
-|fedora-latest|yes|yes|yes*|
-|fedora-rawhide*|yes|yes|yes*|
-|opensuse-leap|yes|yes|yes*|
-|ubuntu-devel*|yes|yes|yes*|
-|ubuntu-latest|yes|yes|yes*|
-|ubuntu-rolling|yes|yes|yes*|
+|container|tags|
+|---------|----|
+|alpine|all|
+|archlinux|all|
+|debian|all|
+|el|7, 8|
+|fedora|all|
+|opensuse|all|
+|ubuntu|artful, bionic|
 
-A single star means the build may fail, it's marked as an experimental build.
+The minimum version of Ansible required is 2.8 but tests have been done to:
 
+- The previous version, on version lower.
+- The current version.
+- The development version.
 
-Included version(s)
--------------------
+Exceptions
+----------
 
-This role [refers to a version](https://github.com/robertdebock/ansible-role-python_pip/blob/master/defaults/main.yml) released by PyPi. Check the released version(s) here:
-- [pip](https://pypi.org/project/pip/).
-- [setuptools](https://pypi.org/project/setuptools/).
+Some variarations of the build matrix do not work. These are the variations and reasons why the build won't work:
 
-This version reference means a role may get outdated. Monthly tests occur to see if [bit-rot](https://en.wikipedia.org/wiki/Software_rot) occured. If you however find a problem, please create an issue, I'll get on it as soon as possible.
+| variation                 | reason                 |
+|---------------------------|------------------------|
+| amazonline:1 | ImportError: No module named pkg_resources |
+| amazonline | ImportError: No module named pkg_resources |
+
 
 Testing
 -------
 
-[Unit tests](https://travis-ci.org/robertdebock/ansible-role-python_pip) are done on every commit and periodically.
+[Unit tests](https://travis-ci.org/robertdebock/ansible-role-python_pip) are done on every commit, pull request, release and periodically.
 
 If you find issues, please register them in [GitHub](https://github.com/robertdebock/ansible-role-python_pip/issues)
 
-To test this role locally please use [Molecule](https://github.com/ansible/molecule):
+Testing is done using [Tox](https://tox.readthedocs.io/en/latest/) and [Molecule](https://github.com/ansible/molecule):
+
+[Tox](https://tox.readthedocs.io/en/latest/) tests multiple ansible versions.
+[Molecule](https://github.com/ansible/molecule) tests multiple distributions.
+
+To test using the defaults (any installed ansible version, namespace: `robertdebock`, image: `fedora`, tag: `latest`):
+
 ```
-pip install molecule
 molecule test
+
+# Or select a specific image:
+image=ubuntu molecule test
+# Or select a specific image and a specific tag:
+image="debian" tag="stable" tox
 ```
 
-To test on Amazon EC2, configure [~/.aws/credentials](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html) and set a region using `export AWS_REGION=eu-central-1` before running `molecule test --scenario-name ec2`.
+Or you can test multiple versions of Ansible, and select images:
+Tox allows multiple versions of Ansible to be tested. To run the default (namespace: `robertdebock`, image: `fedora`, tag: `latest`) tests:
 
-There are many specific scenarios available, please have a look in the `molecule/` directory.
+```
+tox
+
+# To run CentOS (namespace: `robertdebock`, tag: `latest`)
+image="centos" tox
+# Or customize more:
+image="debian" tag="stable" tox
+```
 
 License
 -------

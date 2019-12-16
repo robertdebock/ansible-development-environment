@@ -103,7 +103,7 @@
 
 - name: reboot for updates
   include_role:
-    name: reboot
+    name: robertdebock.reboot
   vars:
     reboot_message: rebooting for robertdebock/ansible-role-update
   when:

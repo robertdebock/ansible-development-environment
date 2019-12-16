@@ -5,22 +5,21 @@ galaxy_info:
   description: Install atom on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.6
+  min_ansible_version: 2.8
 
   platforms:
+    - name: Amazon
+      versions:
+        - Candidate
     - name: Alpine
       versions:
         - all
     - name: ArchLinux
-      version:
+      versions:
         - all
     - name: Debian
       versions:
         - all
-    - name: EL
-      version:
-        - 6
-        - 7
     - name: Fedora
       versions:
         - all
@@ -34,14 +33,8 @@ galaxy_info:
 
   galaxy_tags:
     - atom
-    - alpine
     - archlinux
     - centos
-    - debian
-    - el
-    - fedora
-    - opensuse
     - rhel
-    - ubuntu
 
 dependencies: []

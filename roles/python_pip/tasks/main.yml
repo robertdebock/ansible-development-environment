@@ -8,25 +8,7 @@
   until: python_pip_install_python_pip is succeeded
   retries: 3
 
-- name: update pip
-  pip:
-    name: pip
-    state: present
-    version: "{{ python_pip_version }}"
-  register: update_pip
-  until: update_pip is succeeded
-  retries: 3
-
-- name: update setuptools
-  pip:
-    name: setuptools
-    state: present
-    version: "{{ python_pip_setuptools_version }}"
-  register: update_setuptools
-  until: update_setuptools is succeeded
-  retries: 3
-
-- name: Configure pip proxy
+- name: configure pip proxy
   ini_file:
     path: /etc/pip.conf
     section: global
@@ -42,6 +24,8 @@
     version: "{{ item.version | default(omit) }}"
   with_items:
     - "{{ python_pip_modules }}"
+  loop_control:
+    label: "{{ item.name }}"
   register: install_requested_modules
   until: install_requested_modules is succeeded
   retries: 3

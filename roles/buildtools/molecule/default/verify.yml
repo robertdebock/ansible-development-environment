@@ -1,0 +1,30 @@
+---
+- name: Verify
+  hosts: all
+  become: no
+  gather_facts: no
+
+  tasks:
+    - name: run gcc
+      command: gcc --version
+
+    - name: run make
+      command: make --version
+
+    - name: run shasum
+      command: shasum --version
+
+    - name: run bison
+      command: bison --version
+
+    - name: find libelf
+      find:
+        paths: /usr
+        patterns: libelf.so.1
+      register: buildtools_find_libelf
+
+    - name: assert the results
+      assert:
+        that:
+          - buildtools_find_libelf.matched >= 0
+        msg: could not find libelf.so.1 in /usr

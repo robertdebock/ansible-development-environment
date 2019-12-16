@@ -8,13 +8,13 @@ _reboot_requirements:
 reboot_requirements: "{{ _reboot_requirements[ansible_distribution] | default(_reboot_requirements['default']) }}"
 
 _reboot_needs_restarting_command:
-  CentOS: needs-restarting -r
-  Fedora: needs-restarting
+  RedHat-7: needs-restarting -r
+  RedHat: needs-restarting
 
-reboot_needs_restarting_command: "{{ _reboot_needs_restarting_command[ansible_distribution] }}"
+reboot_needs_restarting_command: "{{ _reboot_needs_restarting_command[ansible_os_family ~ '-' ~ ansible_distribution_major_version] | default(_reboot_needs_restarting_command[ansible_os_family]) }}"
 
 _reboot_command:
   default: shutdown -r now {{ reboot_message }}
   Alpine: reboot
 
-reboot_command: "{{ _reboot_command[ansible_distribution] | default(_reboot_command['default']) }}"
+reboot_command: "{{ _reboot_command[ansible_os_family] | default(_reboot_command['default']) }}"

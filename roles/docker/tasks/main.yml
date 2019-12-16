@@ -26,7 +26,7 @@
     name: "{{ docker_service }}"
     state: started
     enabled: yes
-  when:
-    - ansible_virtualization_type != "docker"
   notify:
     - change owner for docker socket
+  when:
+    - ansible_virtualization_type != "docker"

@@ -1,30 +1,29 @@
 ---
+#
+# Ansible managed
+#
 dependency:
   name: galaxy
   options:
     role-file: requirements.yml
-driver:
-  name: docker
 lint:
   name: yamllint
+driver:
+  name: docker
 platforms:
-  - name: epel-centos-6
-    image: centos:6
-  - name: epel-centos-latest
-    image: centos:latest
+  - name: "epel-${image:-fedora}-${tag:-latest}${TOX_ENVNAME}"
+    image: "${namespace:-robertdebock}/${image:-fedora}:${tag:-latest}"
+    command: /sbin/init
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: yes
+    pre_build_image: yes
 provisioner:
+  name: ansible
+verifier:
   name: ansible
   lint:
     name: ansible-lint
-    options:
-      exclude:
-        - meta/version.yml
-        - meta/exception.yml
-  inventory:
-    host_vars:
-      epel-fedora-latest:
-        ansible_python_interpreter: /usr/bin/python3
-      epel-fedora-rawhide:
-        ansible_python_interpreter: /usr/bin/python3
+    enabled: no
 scenario:
   name: default

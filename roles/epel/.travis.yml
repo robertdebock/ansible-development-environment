@@ -1,33 +1,38 @@
 ---
-sudo: required
+#
+# Ansible managed
+#
 language: python
-services: docker
+
+python:
+  - "3.7"
+
+services:
+  - docker
 
 env:
-  - version=">=2.7,<2.8" distro="centos-6"
-  - version="" distro="centos-6"
-  - version="devel" distro="centos-6"
-  - version=">=2.7,<2.8" distro="centos-latest"
-  - version="" distro="centos-latest"
-  - version="devel" distro="centos-latest"
+  global:
+    namespace="robertdebock"
+  matrix:
+    - image="amazonlinux" tag="1"
+    - image="amazonlinux"
+    - image="centos" tag="7"
+    - image="redhat" tag="7"
+    - image="centos"
+    - image="redhat"
 
 matrix:
   allow_failures:
-    - env: version="devel" distro="centos-6"
-    - env: version="devel" distro="centos-latest"
 
 cache:
   - pip
 
 install:
   - pip install --upgrade pip
-  - if [ "${version}" != "devel" ] ; then pip install ansible"${version}" ; fi
-  - if [ "${version}" = "devel" ] ; then pip install git+https://github.com/ansible/ansible.git@devel ; fi
-  - pip install molecule
-  - pip install docker
+  - pip install tox
 
 script:
-  - if [ "${expectation}" = "fail" ] ; then ! molecule test --scenario-name "${distro}" ; else molecule test --scenario-name "${distro}" ; fi
+  - tox --parallel all
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

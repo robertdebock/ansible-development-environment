@@ -4,8 +4,6 @@
   service:
     name: "{{ postfix_service }}"
     state: restarted
-  when:
-    - ansible_virtualization_type != "docker"
 
 - name: rebuild alias database
   command: postmap "{{ postfix_alias_path }}"

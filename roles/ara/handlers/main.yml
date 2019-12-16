@@ -4,8 +4,6 @@
   service:
     name: ara
     state: restarted
-  when:
-    - ansible_virtualization_type != "docker"
   become: yes
 
 - name: systemctl daemon-reload

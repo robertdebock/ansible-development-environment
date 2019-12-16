@@ -5,22 +5,22 @@ galaxy_info:
   description: Install and configure fail2ban on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.6
+  min_ansible_version: 2.8
 
   platforms:
-    - name: Alpine
+    - name: Amazon
       versions:
         - all
     - name: ArchLinux
-      version:
+      versions:
         - all
     - name: Debian
       versions:
         - all
     - name: EL
-      version:
-        - 6
+      versions:
         - 7
+        - 8
     - name: Fedora
       versions:
         - all
@@ -36,11 +36,7 @@ galaxy_info:
     - fail2ban
     - installer
     - package
-    - alpine
     - centos
-    - debian
-    - fedora
     - rhel
-    - ubuntu
 
 dependencies: []

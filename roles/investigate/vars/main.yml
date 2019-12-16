@@ -24,7 +24,7 @@ _investigate_packages:
     - bash-completion
     - curl
     - screen
-  CentOS:
+  RedHat:
     - net-tools
     - tcpdump
     - telnet
@@ -32,23 +32,7 @@ _investigate_packages:
     - bash-completion
     - curl
     - screen
-  Fedora:
-    - net-tools
-    - tcpdump
-    - telnet
-    - bash
-    - bash-completion
-    - curl
-    - screen
-  openSUSE Leap:
-    - net-tools
-    - tcpdump
-    - telnet
-    - bash
-    - bash-completion
-    - curl
-    - screen
-  Ubuntu:
+  Suse:
     - net-tools
     - tcpdump
     - telnet
@@ -57,4 +41,4 @@ _investigate_packages:
     - curl
     - screen
 
-investigate_packages: "{{ _investigate_packages[ansible_distribution] }}"
+investigate_packages: "{{ _investigate_packages[ansible_os_family] }}"

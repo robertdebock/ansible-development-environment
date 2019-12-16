@@ -5,56 +5,40 @@ _buildtools_packages:
     - build-essential
   Alpine:
     - alpine-sdk
+    - bison
+    - elfutils-libelf
     - libffi-dev
     - openssl-dev
     - perl-utils
-  Amazon:
-    - gcc
-    - make
+    - python3-dev
   Archlinux:
     - base-devel
-  CentOS:
-    - "@Development tools"
-    - perl-Digest-SHA
-  Fedora:
-    - "@Development tools"
-    - perl-Digest-SHA
-    - libffi-devel
-  openSUSE Leap:
-    - autoconf
-    - automake
-    - binutils
+    - libelf
+  Debian:
     - bison
-    - cpp
-    - cvs
-    - flex
+    - build-essential
+    - libelf-dev
+  CentOS-7:
+    - "@Development Tools"
+    - elfutils-libelf-devel
+    - perl-Digest-SHA
+    - python-devel
+  CentOS:
+    - "@Development Tools"
+    - elfutils-libelf-devel
+    - perl-Digest-SHA
+    - python3-devel
+  RedHat:
+    - bison
+    - elfutils-libelf-devel
     - gcc
-    - gdbm-devel
-    - gettext-tools
-    - glibc-devel
-    - libtool
-    - m4
     - make
-    - makeinfo
-    - patch
-    - zlib-devel
-    - bin86
-    - binutils-devel
-    - fdupes
-    - gcc-c++
-    - gcc-info
-    - glibc-info
-    - gmp-devel
-    - gperf
-    - libaio-devel
-    - libapparmor-devel
-    - libdb-4_8-devel
-    - libosip2-devel
-    - libstdc++-devel
-    - openldap2-devel
-    - pam-devel
-    - patch
-    - pkg-config
-    - subversion
+    - perl-Digest-SHA
+  Suse:
+    - bison
+    - gcc
+    - libelf-devel
+    - make
+    - perl-Digest-SHA1
 
-buildtools_packages: "{{ _buildtools_packages[ansible_distribution] | default (_buildtools_packages['default'] ) }}"
+buildtools_packages: "{{ _buildtools_packages[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_buildtools_packages[ansible_distribution] | default(_buildtools_packages[ansible_os_family] | default (_buildtools_packages['default']))) }}"

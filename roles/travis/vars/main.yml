@@ -6,17 +6,13 @@ _travis_requirements:
     - ruby-dev
   Archlinux:
     - bash
-  CentOS:
-    - ruby-devel
   Debian:
     - ruby-dev
-  Fedora:
+  RedHat:
     - ruby-devel
-  openSUSE Leap:
+  Suse:
     - ruby-devel
-  Ubuntu:
-    - ruby-dev
 
-travis_requirements: "{{ _travis_requirements[ansible_distribution] | default(_travis_requirements['default']) }}"
+travis_requirements: "{{ _travis_requirements[ansible_os_family] | default(_travis_requirements['default']) }}"
 
 travis_package: travis

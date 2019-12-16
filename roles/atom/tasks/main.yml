@@ -1,16 +1,5 @@
 ---
 # tasks file for atom
-- name: test veriables and environment
-  assert:
-    that:
-      - ansible_pkg_mgr is defined
-      - ansible_pkg_mgr == "yum" or
-        ansible_pkg_mgr == "dnf" or
-        ansible_pkg_mgr == "apt" or
-        ansible_pkg_mgr == "zypper"
-      - atom_package_url is defined
-      - atom_package is defined
-
 - name: install requirements
   package:
     name: "{{ atom_requirements }}"

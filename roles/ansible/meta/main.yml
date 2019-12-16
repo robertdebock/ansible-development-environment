@@ -5,26 +5,26 @@ galaxy_info:
   description: Install and configure ansible on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.6
+  min_ansible_version: 2.8
 
   platforms:
+    - name: Amazon
+      versions:
+        - Candidate
     - name: Alpine
       versions:
         - all
     - name: ArchLinux
-      version:
+      versions:
         - all
     - name: Debian
       versions:
         - all
     - name: EL
-      version:
-        - 6
-        - 7
-    - name: Fedora
       versions:
-        - all
-    - name: OpenSUSE
+        - 7
+        - 8
+    - name: Fedora
       versions:
         - all
     - name: Ubuntu
@@ -34,14 +34,5 @@ galaxy_info:
 
   galaxy_tags:
     - ansible
-    - alpine
-    - archlinux
-    - centos
-    - debian
-    - el
-    - fedora
-    - opensuse
-    - rhel
-    - ubuntu
 
 dependencies: []

@@ -1,6 +1,6 @@
 ---
 # tasks file for bootstrap
-- name: wait for the host
+- name: Wait for host
   wait_for:
     port: "{{ ansible_port | default('22') }}"
     host: "{{ (ansible_ssh_host | default(ansible_host) | default(inventory_hostname)) }}"
@@ -11,54 +11,46 @@
     - ansible_connection != "docker"
     - bootstrap_wait_for_host | bool
 
-- name: test connection, otherwise register package manager
+- name: Prepare system
   block:
-    - name: test connection (allowed to fail)
+    - name: Test connection
       wait_for_connection:
         timeout: "{{ bootstrap_timeout }}"
       register: bootstrap_connect
       changed_when: no
-
   rescue:
-    - name: register package manager
-      include_tasks: register.yml
+    - name: Gather bootstrap facts
+      include_tasks: "gather_facts.yml"
 
-    - name: install using registered package manager
-      include_tasks: install.yml
+    - name: Install bootstrap packages
+      raw: "{{ bootstrap_install.raw }}"
+      register: bootstrap_install_packages
+      changed_when: (bootstrap_install.stdout_regex in bootstrap_install_packages.stdout and
+                     bootstrap_os_family in ['Alpine', 'Archlinux', 'Gentoo']) or (
+                     bootstrap_install.stdout_regex not in bootstrap_install_packages.stdout and
+                     bootstrap_os_family in ['Debian', 'RedHat', 'Suse'])
+      until: bootstrap_install_packages is succeeded
+      retries: "{{ bootstrap_retries }}"
+      vars:
+        ansible_user: "{{ bootstrap_user }}"
+  always:
+    - name: Set bootstrap ansible_user
+      set_fact:
+        bootstrap_ansible_user: "{{ ansible_user | default(omit) if bootstrap_connect is succeeded else bootstrap_user }}"
+      changed_when: no
 
-- name: gather facts
-  setup:
-  become: no
+- name: Ensure system is prepared
+  block:
+    - name: Gather ansible facts
+      setup:
 
-- name: install bootstrap packages
-  package:
-    name: "{{ bootstrap_packages }}"
-    state: present
-  register: packageresult
-  until: packageresult is succeeded
-
-- name: install software to support stable modules
-  package:
-    name: "{{ bootstrap_stable_packages }}"
-    state: present
-  when:
-    - bootstrap_stable_packages is defined
-  register: packagestableresult
-  until: packagestableresult is succeeded
-  notify:
-    - gather facts
-
-- name: install software to support preview modules
-  package:
-    name: "{{ bootstrap_preview_packages }}"
-    state: present
-  when:
-    - bootstrap_preview | bool
-    - bootstrap_preview_packages is defined
-  register: packagepreviewresult
-  until: packagepreviewresult is succeeded
-  notify:
-    - gather facts
-
-- name: flush handlers
-  meta: flush_handlers
+    - name: Install bootstrap packages
+      package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ bootstrap_facts_packages.split() }}"
+      register: bootstrap_install_facts_packages
+      until: bootstrap_install_facts_packages is succeeded
+      retries: "{{ bootstrap_retries }}"
+  vars:
+    ansible_user: "{{ bootstrap_ansible_user | default(omit) }}"

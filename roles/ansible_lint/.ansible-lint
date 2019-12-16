@@ -1,0 +1,5 @@
+#
+# Ansible managed
+#
+exclude_paths:
+  - ./meta/exception.yml

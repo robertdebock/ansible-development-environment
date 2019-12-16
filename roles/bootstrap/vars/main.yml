@@ -1,189 +1,69 @@
 ---
 # vars file for bootstrap
-
-bootstrap_remote_user: "{{ (ansible_user | default(omit, true)) if bootstrap_connect is succeeded else bootstrap_user }}"
-
-# A string containing all packages required to be installed using the `raw`
-# module, separated by a space.
-bootstrap_apk_packages: python sudo
-bootstrap_apt_packages: python sudo
-bootstrap_dnf_packages: python3 sudo
-bootstrap_emerge_packages: python sudo gentoolkit
-bootstrap_pacman_packages: python sudo
-bootstrap_pkg_add_packages: python-3* sudo--
-bootstrap_pkg_packages: python sudo
-bootstrap_yum_packages: python2 sudo
-bootstrap_zypper_packages: python python-xml sudo
-
-bootstrap_alpine_community_repo: "http://dl-cdn.alpinelinux.org/alpine/v{{ ansible_distribution_version.split('.')[0] }}.{{ ansible_distribution_version.split('.')[1] }}/community"
-
-# Some distributions do not have the fact `ansible_distribution_major_version`,
-# as a workaround it's determined here, saved to another variable and used
-# later.
-
-bootstrap_ansible_distribution_major_version: ansible_distibution_major_version | default('none')
-
-# A dictionary based on Ansible facts `ansible_distribution` and
-# `ansible_distribution_major_version` containing a list of packages.
-# This list is very similar to the `boostrap_{{ ansible_pkg_mgr }}_package`
-# list. This dictionary is used to be able to update these packages.
 _bootstrap_packages:
-  default:
-    - python
-    - sudo
+  Alpine: python3 sudo
+  Archlinux: python sudo
+  Debian: python3 sudo gnupg python3-apt
+  Gentoo: python sudo gentoolkit
+  RedHat: python3 sudo
+  Suse: python python-xml sudo
+  Amazon: python sudo
+  CentOS_7: python sudo
+  Debian_8: python sudo gnupg
+  Debian_9: python sudo gnupg
+  RedHat_7: python sudo
+
+_bootstrap_install:
   Alpine:
-    - python
-    - sudo
-    - shadow
+    raw: "LANG=C apk update ; apk add {{ bootstrap_packages }}"
+    stdout_regex: 'Installing'
   Archlinux:
-    - iproute2
-    - python
-    - sudo
-  CentOS:
-    - iproute
-    - python2
-    - sudo
+    raw: "LANG=C pacman -Sy --noconfirm {{ bootstrap_packages }}"
+    stdout_regex: ' installing python'
   Debian:
-    - aptitude
-    - python
-    - sudo
-  Fedora:
-    - iproute
-    - python3
-    - python3-dnf
-    - sudo
-  FreeBSD:
-    - python
-    - sudo
+    raw: "LANG=C apt-get update && apt-get install -y {{ bootstrap_packages }}"
+    stdout_regex: ' 0 newly installed'
   Gentoo:
-    - python
-    - sudo
-    - gentoolkit
-  OpenBSD:
-    - python%3
-    - sudo--
-  openSUSE Leap:
-    - iproute2
-    - python
-    - python-xml
-    - sudo
-  RedHat-7:
-    - iproute
-    - python
-    - sudo
+    raw: "LANG=C equery l {{ bootstrap_packages }} ||
+          (emaint -a sync ; emerge -qkv {{ bootstrap_packages }} ; echo 'changed')"
+    stdout_regex: 'changed'
   RedHat:
-    - iproute
-    - python3
-    - sudo
-  Ubuntu:
-    - iproute2
-    - python3
-    - sudo
+    raw: "LANG=C yum -y install {{ bootstrap_packages }}"
+    stdout_regex: 'Nothing'
+  Suse:
+    raw: "LANG=C zypper -n install {{ bootstrap_packages }}"
+    stdout_regex: 'Nothing'
 
-bootstrap_packages: "{{ _bootstrap_packages[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_bootstrap_packages[ansible_distribution] | default(_bootstrap_packages['default'])) }}"
+# See URL for available OS families and search queries
+# https://github.com/ansible/ansible/blob/devel/lib/ansible/module_utils/facts/system/distribution.py
+bootstrap_os_family_map:
+  Alpine: [Alpine]
+  Archlinux: [Archlinux, Antergos, Manjaro]
+  Debian: [Debian, Ubuntu, Raspbian, Neon, KDE neon,
+           Linux Mint, SteamOS, Devuan, Kali, 'Cumulus Linux']
+  Gentoo: [Gentoo, Funtoo]
+  RedHat: [RedHat, Fedora, CentOS, Scientific, SLC,
+           Ascendos, CloudLinux, PSBM, OracleLinux, OVS,
+           OEL, Amazon, Virtuozzo, XenServer, Alibaba]
+  Suse: [SLED, 'openSUSE Tumbleweed', 'openSUSE Leap',
+         SLES_SAP, SUSE_LINUX, SLES, openSUSE, SuSE]
 
-# A dictionary based on Ansible facts `ansible_distribution` and
-# `ansible_distribution_major_version` containing a list of packages. The
-# packages in these lists support modules marked as `stable`.
-_bootstrap_stable_packages:
-  default:
-    - python
-  Alpine:
-    - acl
-    - ca-certificates
-    - py-simplejson
-  CentOS-6:
-    - acl
-    - python-simplejson
-    - yum-plugin-ovl
-  CentOS-7:
-    - acl
-    - yum-plugin-ovl
-  Debian:
-    - acl
-    - ca-certificates
-    - python-apt
-    - python-simplejson
-  Fedora:
-    - acl
-    - polkit
-    - python-devel
-    - python-simplejson
-  OpenBSD:
-    - py-simplejson--
-  openSUSE Leap:
-    - acl
-    - ca-certificates
-  RedHat:
-    - acl
-  Ubuntu:
-    - acl
-    - ca-certificates
-    - python3-apt
-    - python3-simplejson
+bootstrap_search:
+  Archlinux: 'Arch Linux'
+  OracleLinux: 'Oracle Linux'
+  RedHat: 'Red Hat'
 
-bootstrap_stable_packages: "{{ _bootstrap_stable_packages[ansible_distribution ~ '-' ~ bootstrap_ansible_distribution_major_version] | default(_bootstrap_stable_packages[ansible_distribution] | default(_bootstrap_stable_packages['default'])) }}"
+# Map the right set of packages, based on gathered bootstrap facts.
+bootstrap_packages: "{{ _bootstrap_packages[bootstrap_distribution ~'_'~ bootstrap_distribution_major_version]|default(
+                     _bootstrap_packages[bootstrap_distribution])|default(
+                     _bootstrap_packages[bootstrap_os_family]) }}"
 
-# A dictionary based on Ansible facts `ansible_distribution` and
-# `ansible_distribution_major_version` containing a list of packages. The
-# packages in these lists support modules marked as `preview`.
-_bootstrap_preview_packages:
-  default:
-    - lvm2
-    - tar
-    - unzip
-    - gzip
-    - xz
-  CentOS:
-    - lvm2
-    - tar
-    - unzip
-    - gzip
-    - xz
-  Debian:
-    - apt-transport-https
-    - gzip
-    - lvm2
-    - tar
-    - unzip
-    - xz-utils
-  Fedora:
-    - lvm2
-    - tar
-    - unzip
-    - gzip
-    - xz
-  FreeBSD:
-    - unzip
-    - gzip
-    - xz
-  Gentoo:
-    - gzip
-    - tar
-    - unzip
-  Kali:
-    - lvm2
-    - tar
-    - unzip
-    - gzip
-    - xz-utils
-  Kali GNU/Linux:
-    - lvm2
-    - tar
-    - unzip
-    - gzip
-    - xz-utils
-  OpenBSD:
-    - unzip--
-    - xz
-  Ubuntu:
-    - apt-transport-https
-    - gzip
-    - lvm2
-    - tar
-    - unzip
-    - xz-utils
+# Map the right install command, based on gathered bootstrap facts.
+bootstrap_install: "{{ _bootstrap_install[bootstrap_distribution ~'_'~ bootstrap_distribution_major_version]|default(
+                    _bootstrap_install[bootstrap_distribution])|default(
+                    _bootstrap_install[bootstrap_os_family]) }}"
 
-bootstrap_preview_packages: "{{ _bootstrap_preview_packages[ansible_distribution] | default(_bootstrap_preview_packages['default']) }}"
-
-bootstrap_emerge_command: equery l {{ bootstrap_emerge_packages }} || (emaint -a sync ; emerge -qkv {{ bootstrap_emerge_packages }} ; echo "changed")
+# Map the right set of packages, based on gathered ansible_facts.
+bootstrap_facts_packages: "{{ _bootstrap_packages[ansible_distribution ~'_'~ ansible_distribution_major_version]|default(
+                           _bootstrap_packages[ansible_distribution])|default(
+                           _bootstrap_packages[ansible_os_family]) }}"

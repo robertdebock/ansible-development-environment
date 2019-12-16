@@ -2,14 +2,14 @@ molecule
 =========
 
 <img src="https://docs.ansible.com/ansible-tower/3.2.4/html_ja/installandreference/_static/images/logo_invert.png" width="10%" height="10%" alt="Ansible logo" align="right"/>
-<a href="https://travis-ci.org/robertdebock/ansible-role-molecule"><img src="https://travis-ci.org/robertdebock/ansible-role-molecule.svg?branch=master" alt="Build status" align="left"/></a>
+<a href="https://travis-ci.org/robertdebock/ansible-role-molecule"> <img src="https://travis-ci.org/robertdebock/ansible-role-molecule.svg?branch=master" alt="Build status"/></a> <img src="https://img.shields.io/ansible/role/d/35945"/> <img src="https://img.shields.io/ansible/quality/35945"/>
 
 Install Molecule on your system.
 
 Example Playbook
 ----------------
 
-This example is taken from `molecule/resources/playbook.yml`:
+This example is taken from `molecule/resources/playbook.yml` and is tested on each push, pull request and release.
 ```yaml
 ---
 - name: Converge
@@ -21,7 +21,7 @@ This example is taken from `molecule/resources/playbook.yml`:
     - robertdebock.molecule
 ```
 
-The machine you are running this on, may need to be prepared.
+The machine you are running this on, may need to be prepared, I use this playbook to ensure everything is in place to let the role work.
 ```yaml
 ---
 - name: Prepare
@@ -36,6 +36,7 @@ The machine you are running this on, may need to be prepared.
     - role: robertdebock.python_pip
 ```
 
+
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.
 
 Role Variables
@@ -45,6 +46,9 @@ These variables are set in `defaults/main.yml`:
 ```yaml
 ---
 # defaults file for molecule
+# If you need to give extra options to pip, use `molecule_extra_args`. For
+# example:
+# molecule_extra_args: "--user"
 ```
 
 Requirements
@@ -76,42 +80,81 @@ Here is an overview of related roles:
 Compatibility
 -------------
 
-This role has been tested against the following distributions and Ansible version:
+This role has been tested on these [container images](https://hub.docker.com/):
 
-|distribution|ansible 2.7|ansible 2.8|ansible devel|
-|------------|-----------|-----------|-------------|
-|alpine-edge*|yes|yes|yes*|
-|alpine-latest|yes|yes|yes*|
-|archlinux|yes|yes|yes*|
-|centos-6|no|no|no*|
-|centos-latest|yes|yes|yes*|
-|debian-stable|yes|yes|yes*|
-|debian-unstable*|yes|yes|yes*|
-|fedora-latest|yes|yes|yes*|
-|fedora-rawhide*|yes|yes|yes*|
-|opensuse-leap|yes|yes|yes*|
-|ubuntu-devel*|yes|yes|yes*|
-|ubuntu-latest|yes|yes|yes*|
-|ubuntu-rolling|yes|yes|yes*|
+|container|tag|allow_failures|
+|---------|---|--------------|
+|alpine|latest|no|
+|alpine|edge|yes|
+|debian|unstable|yes|
+|debian|latest|no|
+|centos|latest|no|
+|fedora|latest|no|
+|fedora|rawhide|yes|
+|opensuse|latest|no|
 
-A single star means the build may fail, it's marked as an experimental build.
+This role has been tested on these Ansible versions:
+
+- ansible>=2.8, <2.9
+- ansible>=2.9
+- git+https://github.com/ansible/ansible.git@devel
+
+Exceptions
+----------
+
+Some variarations of the build matrix do not work. These are the variations and reasons why the build won't work:
+
+| variation                 | reason                 |
+|---------------------------|------------------------|
+| CentOS 7 | error in click-completion setup command: 'install_requires' must be a string or list of strings containing valid project/version requirement specifiers |
+| amazonlinux | Dependency (python_pip) not available |
+| ubuntu | Not idempotent on install stratis |
+
 
 Testing
 -------
 
-[Unit tests](https://travis-ci.org/robertdebock/ansible-role-molecule) are done on every commit and periodically.
+[Unit tests](https://travis-ci.org/robertdebock/ansible-role-molecule) are done on every commit, pull request, release and periodically.
 
 If you find issues, please register them in [GitHub](https://github.com/robertdebock/ansible-role-molecule/issues)
 
-To test this role locally please use [Molecule](https://github.com/ansible/molecule):
+Testing is done using [Tox](https://tox.readthedocs.io/en/latest/) and [Molecule](https://github.com/ansible/molecule):
+
+[Tox](https://tox.readthedocs.io/en/latest/) tests multiple ansible versions.
+[Molecule](https://github.com/ansible/molecule) tests multiple distributions.
+
+To test using the defaults (any installed ansible version, namespace: `robertdebock`, image: `fedora`, tag: `latest`):
+
 ```
-pip install molecule
 molecule test
+
+# Or select a specific image:
+image=ubuntu molecule test
+# Or select a specific image and a specific tag:
+image="debian" tag="stable" tox
 ```
 
-To test on Amazon EC2, configure [~/.aws/credentials](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html) and set a region using `export AWS_REGION=eu-central-1` before running `molecule test --scenario-name ec2`.
+Or you can test multiple versions of Ansible, and select images:
+Tox allows multiple versions of Ansible to be tested. To run the default (namespace: `robertdebock`, image: `fedora`, tag: `latest`) tests:
 
-There are many specific scenarios available, please have a look in the `molecule/` directory.
+```
+tox
+
+# To run CentOS (namespace: `robertdebock`, tag: `latest`)
+image="centos" tox
+# Or customize more:
+image="debian" tag="stable" tox
+```
+
+Modules
+-------
+
+This role uses the following modules:
+```yaml
+---
+- package
+- pip
+```
 
 License
 -------

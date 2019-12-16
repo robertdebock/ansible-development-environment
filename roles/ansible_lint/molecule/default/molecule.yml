@@ -1,4 +1,7 @@
 ---
+#
+# Ansible managed
+#
 dependency:
   name: galaxy
   options:
@@ -8,63 +11,14 @@ lint:
 driver:
   name: docker
 platforms:
-  - name: ansible_lint-alpine-edge
-    image: alpine:edge
-    pre_build_image: yes
-    command: sh -c "while true ; do sleep 1 ; done"
-  - name: ansible_lint-alpine-latest
-    image: alpine:latest
-    pre_build_image: yes
-    command: sh -c "while true ; do sleep 1 ; done"
-  - name: ansible_lint-archlinux
-    image: archlinux/base
-    pre_build_image: yes
-  - name: ansible_lint-centos-6
-    image: centos:6
-    pre_build_image: yes
-  - name: ansible_lint-centos-latest
-    image: centos:latest
-    pre_build_image: yes
-  - name: ansible_lint-debian-stable
-    image: debian:stable
-    pre_build_image: yes
-  - name: ansible_lint-debian-unstable
-    image: debian:unstable
-    pre_build_image: yes
-  - name: ansible_lint-fedora-latest
-    image: fedora:latest
-    pre_build_image: yes
-  - name: ansible_lint-fedora-rawhide
-    image: fedora:rawhide
-    pre_build_image: yes
-  - name: ansible_lint-opensuse-leap
-    image: opensuse/leap
-    pre_build_image: yes
-  - name: ansible_lint-ubuntu-latest
-    image: ubuntu:latest
-    pre_build_image: yes
-  - name: ansible_lint-ubuntu-rolling
-    image: ubuntu:rolling
-    pre_build_image: yes
-  - name: ansible_lint-ubuntu-devel
-    image: ubuntu:devel
+  - name: "ansible_lint-${image:-fedora}-${tag:-latest}${TOX_ENVNAME}"
+    image: "${namespace:-robertdebock}/${image:-fedora}:${tag:-latest}"
+    command: /sbin/init
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: yes
     pre_build_image: yes
 provisioner:
   name: ansible
-  playbooks:
-    prepare: ../resources/prepare.yml
-    converge: ../resources/playbook.yml
-  lint:
-    name: ansible-lint
-    options:
-      exclude:
-        - meta/version.yml
-        - meta/exception.yml
-  inventory:
-    host_vars:
-      ansible_lint-fedora-latest:
-        ansible_python_interpreter: /usr/bin/python3
-      ansible_lint-fedora-rawhide:
-        ansible_python_interpreter: /usr/bin/python3
 scenario:
   name: default

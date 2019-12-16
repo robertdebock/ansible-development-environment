@@ -5,40 +5,33 @@ galaxy_info:
   description: Prepare your system to be managed by Ansible.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.6
+  min_ansible_version: 2.8
 
   platforms:
-    - name: Alpine
-      versions:
-        - all
     - name: Amazon
       versions:
         - all
+    - name: Alpine
+      versions:
+        - all
     - name: ArchLinux
-      version:
+      versions:
         - all
     - name: Debian
       versions:
         - all
     - name: EL
-      version:
-        - 6
+      versions:
         - 7
+        - 8
     - name: Fedora
-      versions:
-        - all
-    - name: FreeBSD
-      versions:
-        - 10.4
-        - 11.2
-    - name: OpenBSD
       versions:
         - all
     - name: OpenSUSE
       versions:
         - all
     - name: SLES
-      verions:
+      versions:
         - all
     - name: Ubuntu
       versions:
@@ -46,22 +39,11 @@ galaxy_info:
         - bionic
 
   galaxy_tags:
-    - alpine
     - bootstrap
     - centos
-    - debian
-    - el
-    - fedora
-    - freebsd
-    - gentoo
     - installer
-    - kali
-    - openbsd
-    - opensuse
-    - rhel
     - server
-    - sudo
     - system
-    - ubuntu
+    - oraclelinux
 
 dependencies: []

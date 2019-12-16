@@ -1,9 +1,5 @@
 ---
 # tasks file for travis
-- name: test veriables and environment
-  assert:
-    that:
-
 - name: install requirements
   package:
     name: "{{ travis_requirements }}"

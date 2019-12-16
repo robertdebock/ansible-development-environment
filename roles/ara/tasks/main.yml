@@ -1,13 +1,5 @@
 ---
 # tasks file for ara
-- name: install required packages
-  package:
-    name: "{{ ara_packages }}"
-    state: present
-  register: ara_install_required_packages
-  until: ara_install_required_packages is succeeded
-  retries: 3
-
 - name: install ara
   pip:
     name: ara[server]
@@ -18,7 +10,7 @@
 
 - name: create ara service
   import_role:
-    name: service
+    name: robertdebock.service
 
 - name: find callback_plugins path
   block:
@@ -65,5 +57,3 @@
     name: ara
     state: started
     enabled: yes
-  when:
-    - ansible_virtualization_type != "docker"

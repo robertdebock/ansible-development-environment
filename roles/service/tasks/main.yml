@@ -35,8 +35,6 @@
       ansible_service_mgr == "openrc"
   with_items:
     - "{{ service_list }}"
-  notify:
-    - restart service
   loop_control:
     label: "{{ item.name }}"
 

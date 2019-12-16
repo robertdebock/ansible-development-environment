@@ -1,8 +1,0 @@
----
-project_name: PyPi
-reference: "https://github.com/robertdebock/ansible-role-python_pip/blob/master/defaults/main.yml"
-versions:
-  - name: pip
-    url: "https://pypi.org/project/pip/"
-  - name: setuptools
-    url: "https://pypi.org/project/setuptools/"

@@ -5,11 +5,12 @@ postfix_packages:
 
 postfix_service: postfix
 
-postfix_daemon_directory:
+_postfix_daemon_directory:
   default: /usr/libexec/postfix
   Debian: /usr/lib/postfix/sbin
-  Ubuntu: /usr/lib/postfix/sbin
-  openSUSE Leap: /usr/lib/postfix
+  Suse: /usr/lib/postfix/bin
+
+postfix_daemon_directory: "{{_postfix_daemon_directory[ansible_os_family] | default(_postfix_daemon_directory['default']) }}"
 
 postfix_group: postdrop
 
@@ -18,4 +19,4 @@ _postfix_alias_path:
   Alpine: /etc/postfix/aliases
   Archlinux: /etc/postfix/aliases
 
-postfix_alias_path: "{{ _postfix_alias_path[ansible_distribution] | default(_postfix_alias_path['default']) }}"
+postfix_alias_path: "{{ _postfix_alias_path[ansible_os_family] | default(_postfix_alias_path['default']) }}"

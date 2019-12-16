@@ -4,7 +4,6 @@
 #       /etc/init.d/{{ item.name }}
 #
 #       {{ item.description }}
-#       As simple as possible, using Apache Tomcat's daemon.sh mostly.
 #
 # chkconfig: 2345 20 80
 # description: {{ item.name }}
@@ -15,41 +14,61 @@ if [ -f /etc/init.d/functions ] ; then
 fi
 
 start() {
-  echo -n "Starting {{ item.name }}: "
-{% if item.working_directory is defined %}
-  cd {{ item.working_directory }}
-{% endif %}
-{% if item.type is defined and item.type != "simple" %}
-  # Start the program in the foreground, when finished, continue.
-  {% if item.user_name is defined %}su - {{ item.user_name ~ ' ' }}{% endif %}{{ item.start_command }}
+{% if item.status_pattern is defined %}
+  pgrep -f {{ item.status_pattern }} > /dev/null
 {% else %}
-  # Start the program in the background and continue.
-  ({% if item.user_name is defined %}su - {{ item.user_name ~ ' ' }}{% endif %}{{ item.start_command }} &)
+  pgrep -f {{ item.start_command | regex_replace(' .*') }} > /dev/null
 {% endif %}
   returncode="${?}"
-  touch /var/lock/subsys/{{ item.name }}
-  return ${returncode}
+  if [ $returncode -gt 0 ] ; then
+    echo -n "Starting {{ item.name }}: "
+{% if item.working_directory is defined %}
+    cd {{ item.working_directory }}
+{% endif %}
+{% if item.type is defined and item.type != "simple" %}
+    {% if item.user_name is defined %}su - {{ item.user_name ~ ' ' }}{% endif %}{{ item.start_command }}
+{% else %}
+    ({% if item.user_name is defined %}su - {{ item.user_name ~ ' ' }}{% endif %}{{ item.start_command }} &)
+{% endif %}
+    returncode="${?}"
+    touch /var/lock/subsys/{{ item.name }}
+  else
+    echo "Already running."
+  fi
 }
 
 stop() {
-  echo -n "Shutting down {{ item.name }}: "
-  {{ item.stop_command | default('killall -f {{ item.start_command.split[0] }}') }}
+{% if item.status_pattern is defined %}
+  pgrep -f {{ item.status_pattern }} > /dev/null
+{% else %}
+  pgrep -f {{ item.start_command | regex_replace(' .*') }} > /dev/null
+{% endif %}
   returncode="${?}"
-  rm -f /var/lock/subsys/{{ item.name }}
-  return ${returncode}
+  if [ $returncode -eq 0 ] ; then
+    echo -n "Shutting down {{ item.name }}: "
+{% if item.stop_command is defined %}
+    {{ item.stop_command }}
+{% else %}
+    pkill -f {{ item.start_command | regex_replace(' .*') }}
+{% endif %}
+    returncode="${?}"
+    rm -f /var/lock/subsys/{{ item.name }}
+  else
+    echo "Already stopped."
+  fi
 }
 
 status() {
 {% if item.status_pattern is defined %}
-  pgrep -f {{ item.status_pattern }} > /dev/null 2>&1
+  pgrep -f {{ item.status_pattern }} > /dev/null
 {% else %}
-  echo "Not implemented." ; exit 1
+  pgrep -f {{ item.start_command | regex_replace(' .*') }} > /dev/null
 {% endif %}
   returncode="${?}"
   if [ $returncode -gt 0 ] ; then
-    echo "{{ item.name }} is not running."
+    echo "{{ item.name }} is not running." ; exit ${returncode}
   else
-    echo "{{ item.name }} is running."
+    echo "{{ item.name }} is running." ; exit ${returncode}
   fi
   return ${returncode}
 }
@@ -64,7 +83,7 @@ case "$1" in
   status)
     status
   ;;
-  restart)
+  restart|force-reload)
     stop
     start
   ;;

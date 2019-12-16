@@ -1,0 +1,11 @@
+---
+- name: Verify
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: install a package from epel
+      package:
+        name: zstd
+        state: present

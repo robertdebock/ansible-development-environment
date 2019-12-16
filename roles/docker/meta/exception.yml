@@ -1,0 +1,6 @@
+---
+exceptions:
+  - variation: Ubuntu
+    reason: "Unable to find any of pip2, pip to use."
+  - variation: amazonlinux
+    reason: "Required dependency (python_pip) does not work on amazonlinux."

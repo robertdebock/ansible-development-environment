@@ -7,19 +7,13 @@
   register: molecule_install_requirements
   until: molecule_install_requirements is succeeded
   retries: 3
-
-- name: register molecule state
-  stat:
-    path: /usr/local/bin/molecule
-  register: register_molecule_state
+  become: true
 
 - name: install molecule
   pip:
-    name: "{{ molecule_packages }}"
+    name: molecule
     state: present
     extra_args: "{{ molecule_extra_args | default(omit) }}"
   register: molecule_install_molecule
   until: molecule_install_molecule is succeeded
   retries: 3
-  when:
-    - not register_molecule_state.stat.exists

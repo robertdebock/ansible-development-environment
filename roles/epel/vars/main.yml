@@ -1,0 +1,10 @@
+---
+# vars file for epel
+_epel_version:
+  default: "{{ ansible_distribution_major_version }}"
+  Amazon-2018: 6
+  Amazon-2: 7
+
+epel_version: "{{ _epel_version[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_epel_version['default']) }}"
+
+epel_url: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ epel_version }}.noarch.rpm"

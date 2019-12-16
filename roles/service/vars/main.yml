@@ -6,11 +6,9 @@ _service_required_packages:
     - psmisc
   Debian:
     - psmisc
-  Fedora:
+  RedHat:
     - psmisc
-  openSUSE Leap:
-    - psmisc
-  Ubuntu:
+  Suse:
     - psmisc
 
-service_required_packages: "{{ _service_required_packages[ansible_distribution] | default(_service_required_packages['default']) }}"
+service_required_packages: "{{ _service_required_packages[ansible_os_family] | default(_service_required_packages['default']) }}"

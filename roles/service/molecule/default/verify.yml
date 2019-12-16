@@ -1,0 +1,25 @@
+---
+- name: Verify
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  vars:
+    service_list:
+      - name: simple-service
+
+  tasks:
+    - name: start simple-service
+      service:
+        name: simple-service
+        state: started
+
+    - name: stop simple-service
+      service:
+        name: simple-service
+        state: stopped
+
+    - name: restart simple-service
+      service:
+        name: simple-service
+        state: restarted

@@ -1,15 +1,5 @@
 ---
 # tasks file for postfix
-- name: check postfix_aliases
-  assert:
-    that:
-      - item.name is defined
-      - item.destination is defined
-  when:
-    - postfix_aliases is defined
-  with_items:
-    - "{{ postfix_aliases }}"
-
 - name: install postfix
   package:
     name: "{{ postfix_packages }}"
@@ -53,10 +43,18 @@
   loop_control:
     label: "{{ item.name }}"
 
+- name: set group owner
+  file:
+    path: "{{ item }}"
+    group: "{{ postfix_group }}"
+  with_items:
+    - /usr/sbin/postqueue
+    - /usr/sbin/postdrop
+    - /var/spool/postfix/public
+    - /var/spool/postfix/maildrop
+
 - name: start and enable postfix
   service:
     name: "{{ postfix_service }}"
     state: started
     enabled: yes
-  when:
-    - ansible_virtualization_type != "docker"

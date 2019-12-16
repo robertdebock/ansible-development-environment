@@ -1,0 +1,6 @@
+---
+exceptions:
+  - variation: amazonline:1
+    reason: "ImportError: No module named pkg_resources"
+  - variation: amazonline
+    reason: "ImportError: No module named pkg_resources"

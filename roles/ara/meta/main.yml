@@ -5,25 +5,19 @@ galaxy_info:
   description: Install and configure ara on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.6
+  min_ansible_version: 2.8
 
   platforms:
-    - name: Alpine
-      versions:
-        - all
     - name: ArchLinux
-      version:
+      versions:
         - all
     - name: Debian
       versions:
         - all
     - name: EL
-      version:
-        - 7
-    - name: Fedora
       versions:
-        - all
-    - name: OpenSUSE
+        - 8
+    - name: Fedora
       versions:
         - all
     - name: Ubuntu
@@ -32,21 +26,14 @@ galaxy_info:
         - bionic
 
   galaxy_tags:
-    - alpine
     - ansiblerecordsansible
     - ara
     - arareportsansible
-    - archlinux
-    - centos
     - cloud
-    - debian
+    - centos
     - development
-    - fedora
     - monitoring
-    - opensuse
-    - reporting
     - rhel
-    - ubuntu
-    - web
+    - reporting
 
 dependencies: []

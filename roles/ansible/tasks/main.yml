@@ -1,12 +1,22 @@
 ---
 # tasks file for ansible
 - name: install ansible
-  package:
-    name: "{{ ansible_packages }}"
-    state: present
-  register: ansible_install_ansible
-  until: ansible_install_ansible is succeeded
-  retries: 3
+  block:
+    - name: install ansible package (allowed to fail)
+      package:
+        name: "{{ ansible_packages }}"
+        state: present
+      register: ansible_install_ansible_package
+      until: ansible_install_ansible_package is succeeded
+      retries: 3
+  rescue:
+    - name: install ansible pip
+      pip:
+        name: ansible
+        state: present
+      register: ansible_install_ansible_pip
+      until: ansible_install_ansible_pip is succeeded
+      retries: 3
 
 - name: ensure the ansible directory exists
   file:
