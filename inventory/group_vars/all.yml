@@ -205,6 +205,8 @@ git_repositories:
     dest: ansible-role-postgres
   - repo: ssh://git@github.com/robertdebock/ansible-role-powertop.git
     dest: ansible-role-powertop
+  - repo: ssh://git@github.com/robertdebock/ansible-role-powertools.git
+    dest: ansible-role-powertools
   - repo: ssh://git@github.com/robertdebock/ansible-role-python_pip.git
     dest: ansible-role-python_pip
   - repo: ssh://git@github.com/robertdebock/ansible-role-reboot.git
