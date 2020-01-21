@@ -107,6 +107,8 @@ git_repositories:
     dest: ansible-role-dsvpn
   - repo: ssh://git@github.com/robertdebock/ansible-role-earlyoom.git
     dest: ansible-role-earlyoom
+  - repo: ssh://git@github.com/robertdebock/ansible-role-eclipse.git
+    dest: ansible-role-eclipse
   - repo: ssh://git@github.com/robertdebock/ansible-role-environment.git
     dest: ansible-role-environment
   - repo: ssh://git@github.com/robertdebock/ansible-role-epel.git
