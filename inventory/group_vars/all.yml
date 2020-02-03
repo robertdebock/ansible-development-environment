@@ -81,6 +81,8 @@ git_repositories:
     dest: ansible-role-cloud9
   - repo: ssh://git@github.com/robertdebock/ansible-role-cntlm.git
     dest: ansible-role-cntlm
+  - repo: ssh://git@github.com/robertdebock/ansible-role-collectd.git
+    dest: ansible-role-collectd
   - repo: ssh://git@github.com/robertdebock/ansible-role-common.git
     dest: ansible-role-common
   - repo: ssh://git@github.com/robertdebock/ansible-role-core_dependencies.git
