@@ -163,6 +163,8 @@ git_repositories:
     dest: ansible-role-locale
   - repo: ssh://git@github.com/robertdebock/ansible-role-lynis.git
     dest: ansible-role-lynis
+  - repo: ssh://git@github.com/robertdebock/ansible-role-maintenance.git
+    dest: ansible-role-maintenance
   - repo: ssh://git@github.com/robertdebock/ansible-role-mediawiki.git
     dest: ansible-role-mediawiki
   - repo: ssh://git@github.com/robertdebock/ansible-role-memcached.git
