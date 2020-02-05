@@ -255,10 +255,12 @@ git_repositories:
     dest: ansible-role-storage
   - repo: ssh://git@github.com/robertdebock/ansible-role-stratis.git
     dest: ansible-role-stratis
-  - repo: ssh://git@github.com/robertdebock/ansible-role-sudo-pair.git
-    dest: ansible-role-sudo_pair
   - repo: ssh://git@github.com/robertdebock/ansible-role-subversion.git
     dest: ansible-role-subversion
+  - repo: ssh://git@github.com/robertdebock/ansible-role-sudo-pair.git
+    dest: ansible-role-sudo_pair
+  - repo: ssh://git@github.com/robertdebock/ansible-role-swap.git
+    dest: ansible-role-swap
   - repo: ssh://git@github.com/robertdebock/ansible-role-sysctl.git
     dest: ansible-role-sysctl
   - repo: ssh://git@github.com/robertdebock/ansible-role-sysstat.git
