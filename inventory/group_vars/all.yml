@@ -93,6 +93,8 @@ git_repositories:
     dest: ansible-role-cron
   - repo: ssh://git@github.com/robertdebock/ansible-role-debug.git
     dest: ansible-role-debug
+  - repo: ssh://git@github.com/robertdebock/ansible-role-desktop.git
+    dest: ansible-role-desktop
   - repo: ssh://git@github.com/robertdebock/ansible-role-dhcpd.git
     dest: ansible-role-dhcpd
   - repo: ssh://git@github.com/robertdebock/ansible-role-digitalocean-agent.git
@@ -271,6 +273,8 @@ git_repositories:
     dest: ansible-role-test_connection
   - repo: ssh://git@github.com/robertdebock/ansible-role-tftpd.git
     dest: ansible-role-tftpd
+  - repo: ssh://git@github.com/robertdebock/ansible-role-tigervnc.git
+    dest: ansible-role-tigervnc
   - repo: ssh://git@github.com/robertdebock/ansible-role-tomcat.git
     dest: ansible-role-tomcat
   - repo: ssh://git@github.com/robertdebock/ansible-role-travis.git
