@@ -297,6 +297,8 @@ git_repositories:
     dest: ansible-role-virtualbox
   - repo: ssh://git@github.com/robertdebock/ansible-role-xinetd.git
     dest: ansible-role-xinetd
+  - repo: ssh://git@github.com/robertdebock/ansible-role-xrdp.git
+    dest: ansible-role-xrdp
   - repo: ssh://git@github.com/robertdebock/ansible-role-y.git
     dest: ansible-role-y
   - repo: ssh://git@github.com/robertdebock/ansible-role-zabbix_repository.git
