@@ -133,6 +133,8 @@ git_repositories:
     dest: ansible-role-gitlab_runner
   - repo: ssh://git@github.com/robertdebock/ansible-role-glusterfs.git
     dest: ansible-role-glusterfs
+  - repo: ssh://git@github.com/robertdebock/ansible-role-gnome.git
+    dest: ansible-role-gnome
   - repo: ssh://git@github.com/robertdebock/ansible-role-go.git
     dest: ansible-role-go
   - repo: ssh://git@github.com/robertdebock/ansible-role-gotop.git
