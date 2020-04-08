@@ -151,6 +151,8 @@ git_repositories:
     dest: ansible-role-java
   - repo: ssh://git@github.com/robertdebock/ansible-role-jenkins.git
     dest: ansible-role-jenkins
+  - repo: ssh://git@github.com/robertdebock/ansible-role-jitsi.git
+    dest: ansible-role-jitsi
   - repo: ssh://git@github.com/robertdebock/ansible-role-kernel.git
     dest: ansible-role-kernel
   - repo: ssh://git@github.com/robertdebock/ansible-role-kubectl.git
