@@ -183,6 +183,8 @@ git_repositories:
     dest: ansible-role-minikube
   - repo: ssh://git@github.com/robertdebock/ansible-role-mitogen.git
     dest: ansible-role-mitogen
+  - repo: ssh://git@github.com/robertdebock/ansible-role-modprobe.git
+    dest: ansible-role-modprobe
   - repo: ssh://git@github.com/robertdebock/ansible-role-molecule.git
     dest: ansible-role-molecule
   - repo: ssh://git@github.com/robertdebock/ansible-role-mssql.git
