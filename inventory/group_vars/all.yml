@@ -137,6 +137,8 @@ git_repositories:
     dest: ansible-role-go
   - repo: ssh://git@github.com/robertdebock/ansible-role-gotop.git
     dest: ansible-role-gotop
+  - repo: ssh://git@github.com/robertdebock/ansible-role-grub.git
+    dest: ansible-role-grub
   - repo: ssh://git@github.com/robertdebock/ansible-role-haproxy.git
     dest: ansible-role-haproxy
   - repo: ssh://git@github.com/robertdebock/ansible-role-haveged.git
