@@ -291,6 +291,8 @@ git_repositories:
     dest: ansible-role-tftpd
   - repo: ssh://git@github.com/robertdebock/ansible-role-tigervnc.git
     dest: ansible-role-tigervnc
+  - repo: ssh://git@github.com/robertdebock/ansible-role-tlp.git
+    dest: ansible-role-tlp
   - repo: ssh://git@github.com/robertdebock/ansible-role-tomcat.git
     dest: ansible-role-tomcat
   - repo: ssh://git@github.com/robertdebock/ansible-role-travis.git
