@@ -2,8 +2,7 @@
 language: python
 
 install:
-  - pip install mazer
+  - pip install ansible
 
 script:
-  - release=$(mazer build | tail -n1 | awk '{print $NF}')
-  - mazer publish --api-key=${galaxy_api_key} ${release}
+  - ansible-galaxy collection publish $(ansible-galaxy collection build|awk '{print $NF}') --api-key=${galaxy_api_key}
