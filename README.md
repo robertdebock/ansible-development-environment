@@ -9,10 +9,8 @@ Setup a machine to write Ansible roles. Includes:
 
 ## Download
 
-### Mazer
-
 ```
-mazer install robertdebock.development_environment
+ansible-galaxy collection install robertdebock.development_environment
 ```
 
 ## Requirements
