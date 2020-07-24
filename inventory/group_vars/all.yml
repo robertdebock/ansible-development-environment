@@ -283,6 +283,8 @@ git_repositories:
     dest: ansible-role-sysctl
   - repo: ssh://git@github.com/robertdebock/ansible-role-sysstat.git
     dest: ansible-role-sysstat
+  - repo: ssh://git@github.com/robertdebock/ansible-role-systemd.git
+    dest: ansible-role-systemd
   - repo: ssh://git@github.com/robertdebock/ansible-role-terraform.git
     dest: ansible-role-terraform
   - repo: ssh://git@github.com/robertdebock/ansible-role-test_connection.git
