@@ -77,6 +77,8 @@ git_repositories:
     dest: ansible-role-cargo
   - repo: ssh://git@github.com/robertdebock/ansible-role-certbot.git
     dest: ansible-role-certbot
+  - repo: ssh://git@github.com/robertdebock/ansible-role-cis.git
+    dest: ansible-role-cis
   - repo: ssh://git@github.com/robertdebock/ansible-role-clamav.git
     dest: ansible-role-clamav
   - repo: ssh://git@github.com/robertdebock/ansible-role-cloud9.git
