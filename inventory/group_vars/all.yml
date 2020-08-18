@@ -317,6 +317,8 @@ git_repositories:
     dest: ansible-role-users
   - repo: ssh://git@github.com/robertdebock/ansible-role-vagrant.git
     dest: ansible-role-vagrant
+  - repo: ssh://git@github.com/robertdebock/ansible-role-vault.git
+    dest: ansible-role-vault
   - repo: ssh://git@github.com/robertdebock/ansible-role-vdo.git
     dest: ansible-role-vdo
   - repo: ssh://git@github.com/robertdebock/ansible-role-virtualbox.git
