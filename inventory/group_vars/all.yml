@@ -167,6 +167,8 @@ git_repositories:
     dest: ansible-role-kernel
   - repo: ssh://git@github.com/robertdebock/ansible-role-kubectl.git
     dest: ansible-role-kubectl
+  - repo: ssh://git@github.com/robertdebock/ansible-role-libvirt.git
+    dest: ansible-role-libvirt
   - repo: ssh://git@github.com/robertdebock/ansible-role-logrotate.git
     dest: ansible-role-logrotate
   - repo: ssh://git@github.com/robertdebock/ansible-role-logwatch.git
