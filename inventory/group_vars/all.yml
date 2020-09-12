@@ -103,6 +103,8 @@ git_repositories:
     dest: ansible-role-digitalocean_agent
   - repo: ssh://git@github.com/robertdebock/ansible-role-dns.git
     dest: ansible-role-dns
+  - repo: ssh://git@github.com/robertdebock/ansible-role-dnsmasq.git
+    dest: ansible-role-dnsmasq
   - repo: ssh://git@github.com/robertdebock/ansible-role-docker.git
     dest: ansible-role-docker
   - repo: ssh://git@github.com/robertdebock/ansible-role-docker_ce.git
