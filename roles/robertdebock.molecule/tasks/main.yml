@@ -1,0 +1,16 @@
+---
+# tasks file for molecule
+- name: include assert.yml
+  include_tasks: assert.yml
+
+- name: install requirements
+  package:
+    name: "{{ molecule_requirements }}"
+    state: present
+  become: yes
+
+- name: install molecule
+  pip:
+    name: molecule
+    state: present
+    extra_args: "{{ molecule_extra_args | default(omit) }}"

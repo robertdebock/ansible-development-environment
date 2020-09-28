@@ -1,0 +1,76 @@
+---
+# tasks file for common
+- name: include assert.yml
+  include_tasks: assert.yml
+
+- name: install requirements
+  package:
+    name: "{{ common_requirements }}"
+    state: present
+
+- name: check for network manager
+  stat:
+    path: /etc/NetworkManager/NetworkManager.conf
+  register: common_check_for_network_manager
+
+- name: set nameserver in resolv.conf
+  block:
+    - name: set nameserver in resolv.conf
+      lineinfile:
+        path: /etc/resolv.conf
+        line: "nameserver {{ item }}"
+        mode: "0644"
+      loop: "{{ common_nameservers }}"
+      notify:
+        - gather facts
+  when:
+    - common_nameservers is defined
+    - not common_check_for_network_manager.stat.exists
+    - ansible_connection != "docker"
+  rescue:
+    - name: comfort users
+      debug:
+        msg:
+          - "The file /etc/resolve.conf could not be modified."
+          - "This is likely because it is mapped from the Docker host to the Docker container."
+
+- name: set nameservers in network manager
+  ini_file:
+    path: /etc/NetworkManager/conf.d/dnsservers.conf
+    section: global-dns-domain-*
+    option: servers
+    value: "{{ common_nameservers | join(',') }}"
+    mode: "0644"
+  when:
+    - common_check_for_network_manager.stat.exists
+    - common_nameservers is defined
+  notify:
+    - reload network manager
+    - gather facts
+
+- name: flush handlers
+  meta: flush_handlers
+
+- name: set hostname
+  hostname:
+    name: "{{ common_hostname }}"
+  when:
+    - ansible_connection != "docker"
+  notify:
+    - reboot
+
+- name: fill /etc/hosts
+  block:
+    - name: fill /etc/hosts
+      template:
+        src: hosts.j2
+        dest: /etc/hosts
+        mode: "0644"
+      when:
+        - ansible_connection != "docker"
+  rescue:
+    - name: comfort users
+      debug:
+        msg:
+          - "The file /etc/hosts could not be modified."
+          - "This is likely because it is mapped from the Docker host to the Docker container."

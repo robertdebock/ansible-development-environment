@@ -1,5 +1,0 @@
----
-# handlers file for service
-- name: systemctl daemon-reload
-  systemd:
-    daemon_reload: yes

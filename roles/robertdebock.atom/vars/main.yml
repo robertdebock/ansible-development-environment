@@ -1,0 +1,32 @@
+---
+# vars file for atom
+
+_atom_requirements:
+  apt:
+    - apt-transport-https
+
+atom_requirements: "{{ _atom_requirements[ansible_pkg_mgr] | default(omit) }}"
+
+_atom_package:
+  apt:
+    url: 'https://atom.io/download/deb'
+    name: atom-amd64.deb
+  dnf: &rpmpackage
+    url: 'https://atom.io/download/rpm'
+    name: atom.x86_64.rpm
+  yum: *rpmpackage
+  zypper: *rpmpackage
+
+atom_package_url: '{{ _atom_package[ansible_pkg_mgr]["url"] }}'
+atom_package: "{{ _atom_package[ansible_pkg_mgr]['name'] }}"
+
+# The checksum of the downloaded artifact, this speeds up the execution of the
+# role on second runs as it calculates the (local) checksum and uses the results
+# to see if the artifact would need to be downloaded again.
+_atom_checksum:
+  dnf: &rpmchecksum "sha256:c281cbf02e0640b0cefc6232bd16ddfc8841a81ed1b6a9d7e5fc7d135ac7d831"
+  yum: *rpmchecksum
+  zypper: *rpmchecksum
+  apt: "sha256:ea1517f928916e09108fc1a0e6942304fcaa0dc9a920e0eb2de45d128dc1f331"
+
+atom_checksum: "{{ _atom_checksum[ansible_pkg_mgr] }}"

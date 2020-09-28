@@ -1,0 +1,19 @@
+---
+# vars file for molecule
+
+_molecule_requirements:
+  default: []
+  Alpine:
+    - linux-headers
+  CentOS-7:
+    - python-devel
+    - openssl-devel
+  Debian:
+    - libssl-dev
+  RedHat:
+    - python3-devel
+    - openssl-devel
+  Suse:
+    - python-devel
+
+molecule_requirements: "{{ _molecule_requirements[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_molecule_requirements[ansible_os_family] | default(_molecule_requirements['default'])) }}"

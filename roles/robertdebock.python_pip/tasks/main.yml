@@ -1,0 +1,38 @@
+---
+# tasks file for python_pip
+- name: include assert.yml
+  include_tasks: assert.yml
+
+- name: install python pip
+  package:
+    name: "{{ python_pip_packages }}"
+    state: present
+
+- name: configure pip proxy
+  ini_file:
+    path: /etc/pip.conf
+    section: global
+    option: index-url
+    value: "{{ python_pip_proxy }}"
+    mode: "0644"
+  when:
+    - python_pip_proxy is defined
+
+- name: trust hosts
+  ini_file:
+    path: /etc/pip.conf
+    section: global
+    option: trusted-host
+    value: "{{ python_pip_trusted_host }}"
+    mode: "0644"
+  when:
+    - python_pip_trusted_host is defined
+
+- name: install requested modules
+  pip:
+    name: "{{ item.name }}"
+    state: present
+    version: "{{ item.version | default(omit) }}"
+  loop: "{{ python_pip_modules }}"
+  loop_control:
+    label: "{{ item.name }}"

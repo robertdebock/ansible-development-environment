@@ -1,0 +1,5 @@
+---
+# handlers file for epel
+- name: yum update cache
+  yum:
+    update_cache: yes

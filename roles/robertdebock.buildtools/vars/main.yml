@@ -1,0 +1,56 @@
+---
+# vars file for buildroot
+
+_buildtools_packages:
+  default:
+    - build-essential
+  Alpine:
+    - alpine-sdk
+    - bison
+    - elfutils-libelf
+    - libffi-dev
+    - openssl-dev
+    - perl-utils
+    - python3-dev
+  Amazon:
+    - bison
+    - elfutils-libelf-devel
+    - gcc
+    - make
+    - perl-Digest-SHA
+    - python2-devel
+    - libffi-devel
+  Debian:
+    - bison
+    - build-essential
+    - libelf-dev
+  CentOS-7:
+    - "@Development Tools"
+    - elfutils-libelf-devel
+    - libffi-devel
+    - openssl-devel
+    - perl-Digest-SHA
+    - python-devel
+  CentOS:
+    - "@Development Tools"
+    - elfutils-libelf-devel
+    - libffi-devel
+    - openssl-devel
+    - perl-Digest-SHA
+    - python3-devel
+  RedHat:
+    - bison
+    - elfutils-libelf-devel
+    - gcc
+    - make
+    - perl-Digest-SHA
+    - python3-devel
+    - libffi-devel
+  Suse:
+    - bison
+    - gcc
+    - libelf-devel
+    - make
+    - perl-Digest-SHA1
+
+buildtools_packages: "{{ _buildtools_packages[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_buildtools_packages[ansible_distribution] | default(_buildtools_packages[ansible_os_family] | default (_buildtools_packages['default']))) }}"

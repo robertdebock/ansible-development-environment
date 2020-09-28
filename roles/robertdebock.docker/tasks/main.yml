@@ -1,0 +1,26 @@
+---
+# tasks file for docker
+- name: install docker
+  package:
+    name: "{{ docker_packages }}"
+    state: present
+
+- name: install docker pip packages
+  pip:
+    name: "{{ docker_pip_packages }}"
+    state: present
+
+- name: add docker group
+  group:
+    name: docker
+    system: yes
+
+- name: start and enable docker
+  service:
+    name: "{{ docker_service }}"
+    state: started
+    enabled: yes
+  notify:
+    - change group for docker socket
+  when:
+    - ansible_connection != "docker"

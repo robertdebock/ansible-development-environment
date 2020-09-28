@@ -1,0 +1,12 @@
+---
+# tasks file for travis
+- name: install requirements
+  package:
+    name: "{{ travis_requirements }}"
+    state: present
+
+- name: install travis
+  gem:
+    name: "{{ travis_package }}"
+    state: present
+    user_install: no

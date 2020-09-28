@@ -6,23 +6,23 @@
   gather_facts: no
 
   roles:
-    - robertdebock.development_environment.bootstrap
-    - robertdebock.development_environment.update
-    - robertdebock.development_environment.fail2ban
-    - robertdebock.development_environment.common
-    - robertdebock.development_environment.buildtools
-    - robertdebock.development_environment.epel
-    - robertdebock.development_environment.python_pip
-    - robertdebock.development_environment.docker
-    - robertdebock.development_environment.users
-    - robertdebock.development_environment.postfix
-    - robertdebock.development_environment.vagrant
-    - robertdebock.development_environment.investigate
-    - robertdebock.development_environment.ansible
-    - robertdebock.development_environment.ansible_lint
-    - robertdebock.development_environment.molecule
-    - robertdebock.development_environment.ara
-    - robertdebock.development_environment.ruby
-    - robertdebock.development_environment.travis
-    - robertdebock.development_environment.git
-    - robertdebock.development_environment.atom
+    - robertdebock.bootstrap
+    - robertdebock.update
+    - robertdebock.fail2ban
+    - robertdebock.common
+    - robertdebock.buildtools
+    - robertdebock.epel
+    - robertdebock.python_pip
+    - robertdebock.docker
+    - robertdebock.users
+    - robertdebock.postfix
+    - robertdebock.vagrant
+    - robertdebock.investigate
+    - robertdebock.ansible
+    - robertdebock.ansible_lint
+    - robertdebock.molecule
+    - robertdebock.ara
+    - robertdebock.ruby
+    - robertdebock.travis
+    - robertdebock.git
+    - robertdebock.atom

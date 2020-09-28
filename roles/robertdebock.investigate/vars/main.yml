@@ -1,0 +1,38 @@
+---
+# vars file for investigate
+
+_investigate_packages:
+  Alpine:
+    - net-tools
+    - busybox-extras
+    - tcpdump
+    - bash
+    - bash-completion
+    - curl
+    - screen
+  Debian:
+    - net-tools
+    - tcpdump
+    - telnet
+    - bash
+    - bash-completion
+    - curl
+    - screen
+  RedHat:
+    - net-tools
+    - tcpdump
+    - telnet
+    - bash
+    - bash-completion
+    - curl
+    - screen
+  Suse:
+    - net-tools
+    - tcpdump
+    - telnet
+    - bash
+    - bash-completion
+    - curl
+    - screen
+
+investigate_packages: "{{ _investigate_packages[ansible_os_family] }}"

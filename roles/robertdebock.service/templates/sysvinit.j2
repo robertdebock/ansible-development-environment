@@ -1,0 +1,104 @@
+#!/bin/sh
+{{ ansible_managed | comment }}
+#
+#       /etc/init.d/{{ item.name }}
+#
+#       {{ item.description }}
+#
+# chkconfig: 2345 20 80
+# description: {{ item.name }}
+
+# Source function library.
+if [ -f /etc/init.d/functions ] ; then
+  . /etc/init.d/functions
+fi
+
+{% if environment_variables is defined %}
+{% for key, value in environment_variables %}
+export {{ key }}={{ value }}
+{% endfor %}
+{% endif %}
+
+start() {
+{% if item.status_pattern is defined %}
+  pgrep -f {{ item.status_pattern }} > /dev/null
+{% else %}
+  pgrep -f {{ item.start_command | regex_replace(' .*') }} > /dev/null
+{% endif %}
+  returncode="${?}"
+  if [ $returncode -gt 0 ] ; then
+    echo -n "Starting {{ item.name }}: "
+{% if item.working_directory is defined %}
+    cd {{ item.working_directory }}
+{% endif %}
+{% if item.type is defined and item.type != "simple" %}
+    {% if item.user_name is defined %}su -c {% endif %}"{{ item.start_command }}"{% if item.user_name is defined %} {{ item.user_name }}{% endif %}
+{% else %}
+    ({% if item.user_name is defined %}su -c {% endif %}"{{ item.start_command }}"{% if item.user_name is defined %} {{ item.user_name }}{% endif %} &)
+{% endif %}
+    returncode="${?}"
+    touch /var/lock/subsys/{{ item.name }}
+  else
+    echo "Already running."
+  fi
+}
+
+stop() {
+{% if item.status_pattern is defined %}
+  pgrep -f {{ item.status_pattern }} > /dev/null
+{% else %}
+  pgrep -f {{ item.start_command | regex_replace(' .*') }} > /dev/null
+{% endif %}
+  returncode="${?}"
+  if [ $returncode -eq 0 ] ; then
+    echo -n "Shutting down {{ item.name }}: "
+{% if item.stop_command is defined %}
+    {{ item.stop_command }}
+{% elif item.status_pattern is defined %}
+    pkill -f {{ item.status_pattern }}
+{% else %}
+    pkill -f {{ item.start_command | regex_replace(' .*') }}
+{% endif %}
+    returncode="${?}"
+    rm -f /var/lock/subsys/{{ item.name }}
+  else
+    echo "Already stopped."
+  fi
+}
+
+status() {
+{% if item.status_pattern is defined %}
+  pgrep -f {{ item.status_pattern }} > /dev/null
+{% else %}
+  pgrep -f {{ item.start_command | regex_replace(' .*') }} > /dev/null
+{% endif %}
+  returncode="${?}"
+  if [ $returncode -gt 0 ] ; then
+    echo "{{ item.name }} is not running." ; exit 3
+  else
+    echo "{{ item.name }} is running." ; exit ${returncode}
+  fi
+  return ${returncode}
+}
+
+case "$1" in
+  start)
+    start
+  ;;
+  stop)
+    stop
+  ;;
+  status)
+    status
+  ;;
+  restart|force-reload)
+    stop
+    start
+  ;;
+    *)
+  echo "Usage: <servicename> {start|stop|status|restart}"
+  exit 1
+  ;;
+esac
+
+exit $?

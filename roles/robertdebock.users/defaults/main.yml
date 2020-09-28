@@ -1,0 +1,11 @@
+---
+# defaults file for users
+
+# The location to store ssh keys for user
+users_ssh_key_directory: ssh_keys
+
+# The default shell if not overwritten.
+users_shell: /bin/bash
+
+# manage cron permissions via /etc/cron.allow
+users_cron_allow: yes

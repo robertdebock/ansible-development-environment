@@ -1,8 +1,0 @@
----
-exceptions:
-  - variation: CentOS 7
-    reason: "error in click-completion setup command: 'install_requires' must be a string or list of strings containing valid project/version requirement specifiers"
-  - variation: amazonlinux
-    reason: Dependency (python_pip) not available
-  - variation: ubuntu
-    reason: "Not idempotent on install stratis"

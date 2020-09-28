@@ -1,0 +1,14 @@
+---
+# vars file for common
+
+_common_requirements:
+  default:
+    - hostname
+  Amazon-2018:
+    - net-tools
+  Alpine:
+    - net-tools
+  CentOS:
+    - dbus
+
+common_requirements: "{{ _common_requirements[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_common_requirements[ansible_distribution] | default(_common_requirements['default'])) }}"

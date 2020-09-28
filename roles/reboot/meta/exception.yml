@@ -1,4 +1,0 @@
----
-exceptions:
-  - variation: archlinux/base
-    reason: New-style module did not handle its own exit

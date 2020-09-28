@@ -1,4 +1,0 @@
----
-exceptions:
-  - variation: alpine
-    reason: "Service `fail2ban' needs non existent service `logger'"

@@ -1,0 +1,41 @@
+---
+# tasks file for ansible
+- name: include assert.yml
+  include_tasks: assert.yml
+
+- name: install ansible
+  block:
+    - name: install ansible package (allowed to fail)
+      package:
+        name: "{{ ansible_packages }}"
+        state: present
+  rescue:
+    - name: install ansible pip
+      pip:
+        name: ansible
+        state: present
+
+- name: ensure the ansible directory exists
+  file:
+    path: "{{ ansible_configuration_directory }}"
+    state: directory
+    mode: "0755"
+
+- name: mark configuration file as ansible managed
+  lineinfile:
+    path: "{{ ansible_configuration_directory }}/{{ ansible_configuration_file }}"
+    create: yes
+    insertbefore: BOF
+    line: "# This file is managed by Ansible."
+    mode: "0644"
+
+- name: configure ansible
+  ini_file:
+    path: "{{ ansible_configuration_directory }}/{{ ansible_configuration_file }}"
+    section: "{{ item.section | default('defaults') }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    mode: "0644"
+  loop: "{{ ansible_configuration }}"
+  loop_control:
+    label: "{{ item.option }}"

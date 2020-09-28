@@ -1,0 +1,11 @@
+---
+# defaults file for python_pip
+
+# By default no modules should be installed.
+python_pip_modules: []
+
+# Connect to a (pypi) proxy by setting this variable.
+# python_pip_proxy: "https://user:password@proxy:8443/artifactory/pypi/pypi-virtual/simple"
+
+# Don't forget to trust foreign pip repositories if you use them.
+# python_pip_trusted_host: my-pip-repository.example.com

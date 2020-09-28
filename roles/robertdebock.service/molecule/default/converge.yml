@@ -1,0 +1,46 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  vars:
+    _service_test_command:
+      default: /usr/bin/sleep
+      Alpine: /bin/sleep
+
+    service_test_command: "{{ _service_test_command[ansible_os_family] | default(_service_test_command['default']) }}"
+
+    service_list:
+      - name: simple-service
+        description: Simple Service
+        start_command: "{{ service_test_command }} 3600"
+      - name: forking-service
+        description: Forking Service
+        type: forking
+        start_command: "{{ service_test_command }} 7200 &"
+      - name: specific-stop-service
+        description: Specific Stop Service
+        start_command: "{{ service_test_command }} 1440"
+        stop_command: killall -f "sleep 1440"
+      - name: specific-user-group-service
+        description: Specific User Group Service
+        start_command: "{{ service_test_command }} 28800"
+        user_name: root
+        group_name: root
+      - name: specific-workingdirectory-service
+        description: Specific WorkingDirectory Service
+        start_command: "{{ service_test_command }} 57600"
+        working_directory: /tmp
+      - name: specific-pattern-service
+        description: Specific Status Pattern Service
+        start_command: "{{ service_test_command }} 115200"
+        status_pattern: 115200
+      - name: variable-service
+        description: Service with environment variables
+        start_command: "{{ service_test_command }} ${time}"
+        environment_variables:
+          time: 230400
+
+  roles:
+    - role: ansible-role-service

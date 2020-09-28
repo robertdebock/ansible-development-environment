@@ -1,0 +1,6 @@
+---
+# tasks file for investigate
+- name: install investigation tools
+  package:
+    name: "{{ investigate_packages }}"
+    state: present

@@ -1,4 +1,0 @@
----
-exceptions:
-  - variation: opensuse
-    reason: "Not idempotent on configure postfix (main.cf) and configure postfix"

@@ -1,0 +1,78 @@
+---
+#
+# Ansible managed
+#
+
+name: Ansible Molecule
+
+on:
+  push:
+    tags_ignore:
+      - '*'
+  pull_request:
+  schedule:
+    - cron: '21 21 21 * *'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+      - name: molecule
+        uses: robertdebock/molecule-action@2.6.1
+        with:
+          command: lint
+  test:
+    needs:
+      - lint
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - image: "alpine"
+            tag: "latest"
+          - image: "alpine"
+            tag: "edge"
+          - image: "amazonlinux"
+            tag: "1"
+          - image: "centos"
+            tag: "7"
+          - image: "centos"
+            tag: "latest"
+          - image: "debian"
+            tag: "latest"
+          - image: "debian"
+            tag: "bullseye"
+          - image: "fedora"
+            tag: "31"
+          - image: "fedora"
+            tag: "latest"
+          - image: "opensuse"
+            tag: "latest"
+          - image: "ubuntu"
+            tag: "latest"
+          - image: "ubuntu"
+            tag: "bionic"
+          - image: "ubuntu"
+            tag: "xenial"
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+      - name: disable apparmor for mysql
+        run: sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
+      - name: parse apparmor for mysql
+        run: sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
+      - name: molecule
+        uses: robertdebock/molecule-action@2.6.1
+        with:
+          image: ${{ matrix.config.image }}
+          tag: ${{ matrix.config.tag }}
+          options: "--parallel all"
+        env:
+          TOX_PARALLEL_NO_SPINNER: 1

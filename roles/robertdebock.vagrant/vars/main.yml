@@ -1,0 +1,16 @@
+---
+# vars file for vagrant
+
+vagrant_release_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}"
+
+_vagrant_package:
+  apt: "{{ vagrant_release_url }}/vagrant_{{ vagrant_version }}_{{ ansible_architecture }}.deb"
+  dnf: "{{ vagrant_release_url }}/vagrant_{{ vagrant_version }}_{{ ansible_architecture }}.rpm"
+  yum: "{{ vagrant_release_url }}/vagrant_{{ vagrant_version }}_{{ ansible_architecture }}.rpm"
+  zypper: "{{ vagrant_release_url }}/vagrant_{{ vagrant_version }}_{{ ansible_architecture }}.rpm"
+  src: "{{ vagrant_release_url }}/vagrant_{{ vagrant_version }}_linux_amd64.zip"
+
+vagrant_package: "{{ _vagrant_package[ansible_pkg_mgr] | default(_vagrant_package['src']) }}"
+
+vagrant_pip_packages:
+  - python-vagrant

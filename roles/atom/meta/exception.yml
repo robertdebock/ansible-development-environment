@@ -1,4 +1,0 @@
----
-exceptions:
-  - variation: amazonlinux:1
-    reason: "Package: atom ... Requires: libsecret-1.so.0 ... and ... polkit"

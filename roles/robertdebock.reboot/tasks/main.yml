@@ -1,0 +1,49 @@
+---
+# tasks file for reboot
+- name: include assert.yml
+  include_tasks: assert.yml
+
+- name: install requirements
+  package:
+    name: "{{ reboot_requirements }}"
+    state: present
+
+- when:
+    - ansible_connection != "docker"
+    - ansible_os_family == "RedHat"
+  block:
+    - name: check for needs-restarting executable (rhel)
+      stat:
+        path: /usr/bin/needs-restarting
+      register: reboot_rhel_needs_restarting_executable
+
+    - name: see if a reboot is required (rhel)
+      command: needs-restarting -r
+      check_mode: no
+      register: reboot_rhel_needsrestarting
+      changed_when: reboot_rhel_needsrestarting.rc == 1
+      failed_when: reboot_rhel_needsrestarting.rc not in [0,1]
+      when: reboot_rhel_needs_restarting_executable.stat.exists
+
+- when:
+    - ansible_connection != "docker"
+    - ansible_os_family == "Debian"
+  block:
+    - name: check for needrestart executable (debian)
+      stat:
+        path: /usr/sbin/needrestart
+      register: reboot_debian_needsrestart_executable
+
+    - name: see if a reboot is required (debian)
+      command: needrestart -b
+      check_mode: no
+      register: reboot_debian_needrestarting
+      changed_when: "'NEEDRESTART-KSTA: 3' in reboot_debian_needrestarting.stdout_lines"
+      when: reboot_debian_needsrestart_executable.stat.exists
+
+- when:
+    - ansible_connection != "docker"
+    - (reboot_always | bool)
+      or (reboot_rhel_needsrestarting.changed | default(no))
+      or (reboot_debian_needrestarting.changed | default(no))
+  include_tasks: reboot.yml

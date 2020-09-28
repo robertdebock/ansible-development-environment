@@ -1,0 +1,7 @@
+---
+# handlers file for update
+- name: reboot
+  reboot:
+  when:
+    - update_reboot | bool
+    - ansible_connection != "docker"

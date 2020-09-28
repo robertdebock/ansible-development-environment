@@ -1,0 +1,4 @@
+---
+exceptions:
+  - variation: amazonlinux
+    reason: "set hostname: [Errno 2] No such file or directory: '/etc/sysconfig/network'"

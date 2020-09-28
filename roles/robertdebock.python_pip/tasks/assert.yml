@@ -1,0 +1,23 @@
+---
+- name: test if python_pip_modules is set correctly
+  assert:
+    that:
+      - python_pip_modules is defined
+      - python_pip_modules | type_debug == "list"
+    quiet: yes
+
+- name: test if python_pip_proxy is set correctly
+  assert:
+    that:
+      - python_pip_proxy | length > 0
+    quiet: yes
+  when:
+    - python_pip_proxy is defined
+
+- name: test if python_pip_trusted_host is set correctly
+  assert:
+    that:
+      - python_pip_trusted_host | length > 0
+    quiet: yes
+  when:
+    - python_pip_trusted_host is defined

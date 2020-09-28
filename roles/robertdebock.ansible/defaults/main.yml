@@ -1,0 +1,14 @@
+---
+# defaults file for ansible
+
+ansible_configuration:
+  - option: roles_path
+    value: roles
+  - option: retry_files_enabled
+    value: "no"
+  - option: inventory
+    value: inventory
+  - option: stdout_callback
+    value: yaml
+  - option: callback_whitelist
+    value: profile_roles

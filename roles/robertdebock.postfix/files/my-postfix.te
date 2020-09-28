@@ -1,0 +1,10 @@
+
+module my-postfix 1.0;
+
+require {
+	type postfix_postdrop_t;
+	class capability dac_override;
+}
+
+#============= postfix_postdrop_t ==============
+allow postfix_postdrop_t self:capability dac_override;

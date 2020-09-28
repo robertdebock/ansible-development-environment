@@ -1,0 +1,9 @@
+---
+# vars file for ansible
+
+ansible_packages:
+  - ansible
+
+ansible_configuration_directory: /etc/ansible
+
+ansible_configuration_file: ansible.cfg

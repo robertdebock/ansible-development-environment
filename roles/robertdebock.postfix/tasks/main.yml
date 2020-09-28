@@ -1,0 +1,115 @@
+---
+# tasks file for postfix
+- name: include assert.yml
+  include_tasks: assert.yml
+
+- name: install postfix
+  package:
+    name: "{{ postfix_packages }}"
+    state: present
+
+- name: create group
+  group:
+    name: "{{ postfix_group }}"
+    state: present
+
+- name: configure postfix (main.cf)
+  template:
+    src: main.cf.j2
+    dest: /etc/postfix/main.cf
+    validate: postconf -d -c %s
+    mode: "0644"
+  notify:
+    - restart postfix
+
+- name: configure postfix (master.cf)
+  template:
+    src: master.cf.j2
+    dest: /etc/postfix/master.cf
+    validate: postconf -d -c %s
+    mode: "0644"
+  notify:
+    - restart postfix
+
+- name: force all notified handlers to run
+  meta: flush_handlers
+
+- name: configure aliases
+  lineinfile:
+    path: "{{ postfix_alias_path }}"
+    regexp: "^{{ item.name }}:"
+    line: "{{ item.name }}: {{ item.destination }}"
+    mode: "0644"
+  when:
+    - postfix_aliases is defined
+  loop: "{{ postfix_aliases }}"
+  notify:
+    - rebuild alias database
+    - restart postfix
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: configure sender_access
+  lineinfile:
+    path: "{{ postfix_sender_access_path }}"
+    regexp: "^{{ item.domain }}"
+    line: "{{ item.domain }} {{ item.action }}"
+    create: yes
+    mode: "0644"
+  when:
+    - postfix_sender_access is defined
+  loop: "{{ postfix_sender_access }}"
+  notify:
+    - rebuild sender_access database
+    - restart postfix
+  loop_control:
+    label: "{{ item.domain }}"
+
+- name: configure recipient_access
+  lineinfile:
+    path: "{{ postfix_recipient_access_path }}"
+    regexp: "^{{ item.domain }}"
+    line: "{{ item.domain }} {{ item.action }}"
+    create: yes
+    mode: "0644"
+  when:
+    - postfix_recipient_access is defined
+  loop: "{{ postfix_recipient_access }}"
+  notify:
+    - rebuild recipient_access database
+    - restart postfix
+  loop_control:
+    label: "{{ item.domain }}"
+
+- name: force all notified handlers to run
+  meta: flush_handlers
+
+- name: set group owner
+  file:
+    path: "{{ item }}"
+    group: "{{ postfix_group }}"
+    mode: "0755"
+  loop:
+    - /usr/sbin/postqueue
+    - /usr/sbin/postdrop
+    - /var/spool/postfix/public
+    - /var/spool/postfix/maildrop
+
+- name: place selinux type enforcement
+  copy:
+    src: my-postfix.te
+    dest: /etc/my-postfix.te
+    mode: "0644"
+  notify:
+    - create selinux mod for postfix
+    - create selinux pp for postfix
+    - load selinux pp for postfix
+  when:
+    - ansible_selinux.status is defined
+    - ansible_selinux.status == "enabled"
+
+- name: start and enable postfix
+  service:
+    name: "{{ postfix_service }}"
+    state: started
+    enabled: yes

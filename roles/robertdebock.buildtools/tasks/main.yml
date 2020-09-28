@@ -1,0 +1,6 @@
+---
+# tasks file for buildtools
+- name: install buildtools
+  package:
+    name: "{{ buildtools_packages }}"
+    state: present

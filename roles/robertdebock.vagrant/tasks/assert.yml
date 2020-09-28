@@ -1,0 +1,14 @@
+---
+- name: test if vagrant_version is set correctly
+  assert:
+    that:
+      - vagrant_version is defined
+      - vagrant_version | length > 0
+    quiet: yes
+
+- name: test if vagrant_unarchive_dest is set correctly
+  assert:
+    that:
+      - vagrant_unarchive_dest is defined
+      - vagrant_unarchive_dest | length > 0
+    quiet: yes

@@ -1,0 +1,6 @@
+---
+exceptions:
+  - variation: opensuse
+    reason: "Not idempotent on configure postfix (main.cf) and configure postfix"
+  - variation: alpine
+    reason: "451, 4.3.0 <root@example.com>: Temporary lookup failure"
