@@ -1,0 +1,61 @@
+---
+# tasks file for ara
+- name: include assert.yml
+  include_tasks: assert.yml
+
+- name: install ara
+  pip:
+    name: ara[server]
+    state: present
+
+- name: create ara service
+  import_role:
+    name: service
+
+- name: find callback_plugins path
+  block:
+    - name: try python2
+      command: "{{ ara_setup_command_python2 }}"
+      register: ara_callback_plugins
+      changed_when: no
+      check_mode: no
+
+  rescue:
+    - name: try python3
+      command: "{{ ara_setup_command_python3 }}"
+      register: ara_callback_plugins
+      changed_when: no
+
+- name: configure ansible to use ara
+  ini_file:
+    path: "{{ ara_configuration_file }}"
+    section: defaults
+    option: callback_plugins
+    value: "{{ ara_callback_plugins.stdout }}"
+    mode: "0644"
+  notify:
+    - restart ara
+  when:
+    - ara_configuration_file is defined
+    - ara_callback_plugins.stdout is defined
+
+- name: configure ara
+  ini_file:
+    path: "{{ ara_configuration_file }}"
+    section: ara
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    mode: "0644"
+  notify:
+    - restart ara
+  loop: "{{ ara_configuration }}"
+  when:
+    - ara_configuration is defined
+  loop_control:
+    label: "{{ item.option }}"
+
+- name: start and enable ara
+  service:
+    name: ara
+    state: started
+    enabled: yes
