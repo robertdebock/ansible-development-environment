@@ -323,6 +323,10 @@ git_repositories:
     dest: ansible-role-unbound
   - repo: ssh://git@github.com/robertdebock/ansible-role-ulimit.git
     dest: ansible-role-ulimit
+  - repo: ssh://git@github.com/robertdebock/ansible-role-umask.git
+    dest: ansible-role-umask
+  - repo: ssh://git@github.com/robertdebock/ansible-role-unbound.git
+    dest: ansible-role-unbound
   - repo: ssh://git@github.com/robertdebock/ansible-role-users.git
     dest: ansible-role-users
   - repo: ssh://git@github.com/robertdebock/ansible-role-vagrant.git
