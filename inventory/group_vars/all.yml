@@ -279,6 +279,8 @@ git_repositories:
     dest: ansible-role-service
   - repo: ssh://git@github.com/robertdebock/ansible-role-snort.git
     dest: ansible-role-snort
+  - repo: ssh://git@github.com/robertdebock/ansible-role-software.git
+    dest: ansible-role-software
   - repo: ssh://git@github.com/robertdebock/ansible-role-sosreport.git
     dest: ansible-role-sosreport
   - repo: ssh://git@github.com/robertdebock/ansible-role-spamassassin.git
