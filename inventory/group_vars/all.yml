@@ -203,6 +203,8 @@ git_repositories:
     dest: ansible-role-modprobe
   - repo: ssh://git@github.com/robertdebock/ansible-role-molecule.git
     dest: ansible-role-molecule
+  - repo: ssh://git@github.com/robertdebock/ansible-role-mount.git
+    dest: ansible-role-mount
   - repo: ssh://git@github.com/robertdebock/ansible-role-mssql.git
     dest: ansible-role-mssql
   - repo: ssh://git@github.com/robertdebock/ansible-role-mysql.git
