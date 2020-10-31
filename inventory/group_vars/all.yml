@@ -153,6 +153,8 @@ git_repositories:
     dest: ansible-role-grub
   - repo: ssh://git@github.com/robertdebock/ansible-role-haproxy.git
     dest: ansible-role-haproxy
+  - repo: ssh://git@github.com/robertdebock/ansible-role-hashicorp.git
+    dest: ansible-role-hashicorp
   - repo: ssh://git@github.com/robertdebock/ansible-role-haveged.git
     dest: ansible-role-haveged
   - repo: ssh://git@github.com/robertdebock/ansible-role-hostname.git
