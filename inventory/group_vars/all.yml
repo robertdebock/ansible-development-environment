@@ -221,6 +221,8 @@ git_repositories:
     dest: ansible-role-nginx
   - repo: ssh://git@github.com/robertdebock/ansible-role-node_red.git
     dest: ansible-role-node_red
+  - repo: ssh://git@github.com/robertdebock/ansible-role-nomad.git
+    dest: ansible-role-nomad
   - repo: ssh://git@github.com/robertdebock/ansible-role-npm.git
     dest: ansible-role-npm
   - repo: ssh://git@github.com/robertdebock/ansible-role-ntp.git
