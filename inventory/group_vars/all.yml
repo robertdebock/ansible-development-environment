@@ -163,8 +163,6 @@ git_repositories:
     dest: ansible-role-hostname
   - repo: ssh://git@github.com/robertdebock/ansible-role-httpd.git
     dest: ansible-role-httpd
-  - repo: ssh://git@github.com/robertdebock/ansible-role-image_builder.git
-    dest: ansible-role-image_builder
   - repo: ssh://git@github.com/robertdebock/ansible-role-investigate.git
     dest: ansible-role-investigate
   - repo: ssh://git@github.com/robertdebock/ansible-role-irslackd.git
