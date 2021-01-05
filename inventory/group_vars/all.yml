@@ -47,6 +47,8 @@ git_repositories:
     dest: ansible-role-ansible_lint
   - repo: ssh://git@github.com/robertdebock/ansible-role-apt_autostart.git
     dest: ansible-role-apt_autostart
+  - repo: ssh://git@github.com/robertdebock/ansible-role-apt_repository.git
+    dest: ansible-role-apt_repository
   - repo: ssh://git@github.com/robertdebock/ansible-role-ara.git
     dest: ansible-role-ara
   - repo: ssh://git@github.com/robertdebock/ansible-role-artifactory.git
