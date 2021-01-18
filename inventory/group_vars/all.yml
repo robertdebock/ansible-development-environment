@@ -191,6 +191,8 @@ git_repositories:
     dest: ansible-role-logrotate
   - repo: ssh://git@github.com/robertdebock/ansible-role-logwatch.git
     dest: ansible-role-logwatch
+  - repo: ssh://git@github.com/robertdebock/ansible-role-luks.git
+    dest: ansible-role-luks
   - repo: ssh://git@github.com/robertdebock/ansible-role-lynis.git
     dest: ansible-role-lynis
   - repo: ssh://git@github.com/robertdebock/ansible-role-maintenance.git
