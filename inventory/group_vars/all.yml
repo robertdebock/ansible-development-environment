@@ -137,6 +137,8 @@ git_repositories:
     dest: ansible-role-facts
   - repo: ssh://git@github.com/robertdebock/ansible-role-fail2ban.git
     dest: ansible-role-fail2ban
+  - repo: ssh://git@github.com/robertdebock/ansible-role-filesystem.git
+    dest: ansible-role-filesystem
   - repo: ssh://git@github.com/robertdebock/ansible-role-firewall.git
     dest: ansible-role-firewall
   - repo: ssh://git@github.com/robertdebock/ansible-role-forensics.git
