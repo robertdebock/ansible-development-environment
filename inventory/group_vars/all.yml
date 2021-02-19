@@ -33,8 +33,6 @@ git_user_email: robert@meinit.nl
 git_repository_destination: /home/robertdb/Documents/github.com/robertdebock
 
 git_repositories:
-  - repo: ssh://git@github.com/robertdebock/ansible-role-ad_auth.git
-    dest: ansible-role-ad_auth
   - repo: ssh://git@github.com/robertdebock/ansible-role-aide.git
     dest: ansible-role-aide
   - repo: ssh://git@github.com/robertdebock/ansible-role-alternatives.git
