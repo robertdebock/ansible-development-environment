@@ -1,0 +1,11 @@
+---
+- name: Verify
+  hosts: all
+  become: no
+  gather_facts: no
+
+  tasks:
+    - name: run ansible
+      shell: ansible --version > ansible.version
+      args:
+        creates: ansible.version

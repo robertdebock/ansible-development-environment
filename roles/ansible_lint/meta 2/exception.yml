@@ -1,0 +1,6 @@
+---
+exceptions:
+  - variation: amazonlinux:1
+    reason: "No package matching 'python3-pip'"
+  - variation: amazonlinux
+    reason: "No module named pkg_resources"

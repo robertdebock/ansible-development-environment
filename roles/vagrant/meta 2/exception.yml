@@ -1,0 +1,4 @@
+---
+exceptions:
+  - variation: alpine
+    reason: "Dependency not available: python_pip"

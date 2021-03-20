@@ -1,0 +1,4 @@
+---
+exceptions:
+  - variation: EL
+    reason: "No package matching 'bison' found available, installed or updated"
