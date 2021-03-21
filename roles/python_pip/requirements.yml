@@ -1,4 +1,7 @@
 ---
-- robertdebock.bootstrap
-- robertdebock.buildtools
-- robertdebock.epel
+roles:
+  - name: robertdebock.bootstrap
+  - name: robertdebock.buildtools
+  - name: robertdebock.epel
+collections:
+  - name: community.general

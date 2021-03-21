@@ -1,15 +1,16 @@
 ---
 # handlers file for common
+
 - name: gather facts
-  setup:
+  ansible.builtin.setup:
   become: no
 
 - name: reload network manager
-  service:
+  ansible.builtin.service:
     name: NetworkManager
     state: reloaded
 
 - name: reboot
-  reboot:
+  ansible.builtin.reboot:
   when:
     - common_reboot | bool

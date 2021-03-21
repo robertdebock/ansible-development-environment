@@ -6,10 +6,11 @@ dependency:
   name: galaxy
   options:
     role-file: requirements.yml
+    requirements-file: requirements.yml
 lint: |
-  PATH=${PATH}
-  yamllint molecule/default/converge.yml
-  ansible-lint molecule/default/converge.yml
+  set -e
+  yamllint .
+  ansible-lint
 driver:
   name: docker
 platforms:

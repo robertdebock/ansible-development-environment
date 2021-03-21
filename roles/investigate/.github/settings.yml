@@ -5,3 +5,4 @@
 repository:
   description: Install and configure investigation tools on your system.
   homepage: https://robertdebock.nl/
+  topics: investigate, ansible, molecule, tox, playbook, hacktoberfest

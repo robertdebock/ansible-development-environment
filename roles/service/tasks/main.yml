@@ -1,17 +1,20 @@
 ---
 # tasks file for service
+
 - name: include assert.yml
-  include_tasks: assert.yml
+  import_tasks: assert.yml
+  run_once: yes
+  delegate_to: localhost
 
 - name: install required packages
-  package:
+  ansible.builtin.package:
     name: "{{ service_required_packages }}"
     state: present
   notify:
     - gather facts
 
 - name: configure systemd service
-  template:
+  ansible.builtin.template:
     src: "systemd.j2"
     dest: "/etc/systemd/system/{{ item.name }}.service"
     mode: "0644"
@@ -24,17 +27,27 @@
     label: "{{ item.name }}"
 
 - name: configure sysvinit service
-  template:
+  ansible.builtin.template:
     src: "sysvinit.j2"
     dest: "/etc/init.d/{{ item.name }}"
     mode: "0755"
   when:
-    - ansible_service_mgr == "sysvinit" or
-      ansible_service_mgr == "upstart" or
-      ansible_service_mgr == "openrc"
+    - ansible_service_mgr in [ "sysvinit", "upstart", "openrc" ]
   loop: "{{ service_list }}"
   loop_control:
     label: "{{ item.name }}"
 
+- name: manage service
+  ansible.builtin.service:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default(omit) }}"
+    enabled: "{{ item.enabled | default(omit) }}"
+  loop: "{{ service_list }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state is defined or
+      item.enabled is defined
+
 - name: flush handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers

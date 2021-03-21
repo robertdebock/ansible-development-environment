@@ -5,3 +5,4 @@
 repository:
   description: Install ruby on your system.
   homepage: https://robertdebock.nl/
+  topics: ruby, installer, package, ansible, molecule, tox, playbook, hacktoberfest

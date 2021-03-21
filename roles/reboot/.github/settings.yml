@@ -5,3 +5,4 @@
 repository:
   description: The purpose of this role is to reboot your system.
   homepage: https://robertdebock.nl/
+  topics: reboot, ansible, molecule, tox, playbook, hacktoberfest

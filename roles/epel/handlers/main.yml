@@ -1,5 +1,6 @@
 ---
 # handlers file for epel
+
 - name: yum update cache
-  yum:
+  ansible.builtin.yum:
     update_cache: yes

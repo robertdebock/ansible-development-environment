@@ -1,66 +1,34 @@
 ---
-- name: test if git_username is set correctly
-  assert:
-    that:
-      - git_username | length > 0
-    quiet: yes
-  when:
-    - git_username is defined
-
-- name: test if git_groupname is set correctly
-  assert:
-    that:
-      - git_groupname | length > 0
-    quiet: yes
-  when:
-    - git_groupname is defined
-
-- name: test if git_user_email is set correctly
-  assert:
-    that:
-      - git_user_email | length > 0
-    quiet: yes
-  when:
-    - git_user_email is defined
-
-- name: test if git_user_name is set correctly
-  assert:
-    that:
-      - git_user_name | length > 0
-    quiet: yes
-  when:
-    - git_user_name is defined
 
 - name: test if git_repository_destination is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - git_repository_destination is defined
-      - git_repository_destination | length > 0
+      - git_repository_destination is string
     quiet: yes
 
 - name: test if git_force is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - git_force is defined
-      - git_force | type_debug == "bool"
+      - git_force is boolean
     quiet: yes
 
 - name: test if git_repositories is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
-      - git_repositories | length > 0
       - git_repositories is iterable
     quiet: yes
   when:
     - git_repositories is defined
 
 - name: test if item in git_repositories is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - item.repo is defined
-      - item.repo | length > 0
+      - item.repo is string
       - item.dest is defined
-      - item.dest | length > 0
+      - item.dest is string
     quiet: yes
   loop: "{{ git_repositories }}"
   loop_control:
@@ -68,19 +36,10 @@
   when:
     - git_repositories is defined
 
-- name: test if item in git_repositories with version is set correctly
-  assert:
-    that:
-      - item.version | length > 0
-    quiet: yes
-  when:
-    - git_repositories is defined
-    - item.version is defined
-
 - name: test if item in git_repositories with force is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
-      - item.version | type_debug == "bool"
+      - item.version is boolean
     quiet: yes
   when:
     - git_repositories is defined

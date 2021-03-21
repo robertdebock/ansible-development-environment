@@ -5,3 +5,4 @@
 repository:
   description: Install ansible-lint on your system.
   homepage: https://robertdebock.nl/
+  topics: ansiblelint, ansible, lint, ansible, molecule, tox, playbook, hacktoberfest

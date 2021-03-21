@@ -5,7 +5,7 @@ galaxy_info:
   description: Install ansible-lint on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.8
+  min_ansible_version: "2.10"
 
   platforms:
     - name: EL
@@ -13,20 +13,18 @@ galaxy_info:
         - 8
     - name: Debian
       versions:
-        - buster
-        - bullseye
+        - all
     - name: Fedora
       versions:
-        - 31
-        - 32
+        - all
     - name: Ubuntu
       versions:
         - focal
         - bionic
-        - xenial
 
   galaxy_tags:
     - ansiblelint
-    - centos
+    - ansible
+    - lint
 
 dependencies: []

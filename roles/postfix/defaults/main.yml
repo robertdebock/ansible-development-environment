@@ -25,7 +25,7 @@ postfix_mynetworks: "127.0.0.0/8"
 
 # If you want to forward emails to another central relay server, set relayhost.
 # use brackets to sent to the A-record of the relayhost.
-# postfix_relayhost: [relay.example.com]
+# postfix_relayhost: "[relay.example.com]"
 
 # Set the restrictions for receiving mails.
 postfix_smtpd_recipient_restrictions:
@@ -73,3 +73,6 @@ postfix_smtpd_sender_restrictions:
 #     action: OK
 #   - domain: baddomain.com
 #     action: REJECT
+
+# You can disable SSL/TLS versions here.
+# postfix_tls_protocols: '!SSLv2, !SSLv3, !TLSv1, !TLSv1.1'

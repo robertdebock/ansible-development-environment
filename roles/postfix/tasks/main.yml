@@ -1,29 +1,36 @@
 ---
 # tasks file for postfix
+
 - name: include assert.yml
-  include_tasks: assert.yml
+  import_tasks: assert.yml
+  run_once: yes
+  delegate_to: localhost
+
+- name: pre-configure debian systems
+  ansible.builtin.debconf:
+    name: postfix
+    question: postfix/main_mailer_type
+    vtype: string
+    value: "No configuration"
+  when:
+    - ansible_os_family == "Debian"
 
 - name: install postfix
-  package:
+  ansible.builtin.package:
     name: "{{ postfix_packages }}"
     state: present
 
-- name: create group
-  group:
-    name: "{{ postfix_group }}"
-    state: present
-
 - name: configure postfix (main.cf)
-  template:
+  ansible.builtin.template:
     src: main.cf.j2
     dest: /etc/postfix/main.cf
     validate: postconf -d -c %s
     mode: "0644"
   notify:
-    - restart postfix
+    - reload postfix
 
 - name: configure postfix (master.cf)
-  template:
+  ansible.builtin.template:
     src: master.cf.j2
     dest: /etc/postfix/master.cf
     validate: postconf -d -c %s
@@ -32,10 +39,10 @@
     - restart postfix
 
 - name: force all notified handlers to run
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: configure aliases
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ postfix_alias_path }}"
     regexp: "^{{ item.name }}:"
     line: "{{ item.name }}: {{ item.destination }}"
@@ -45,12 +52,12 @@
   loop: "{{ postfix_aliases }}"
   notify:
     - rebuild alias database
-    - restart postfix
+    - reload postfix
   loop_control:
     label: "{{ item.name }}"
 
 - name: configure sender_access
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ postfix_sender_access_path }}"
     regexp: "^{{ item.domain }}"
     line: "{{ item.domain }} {{ item.action }}"
@@ -61,12 +68,12 @@
   loop: "{{ postfix_sender_access }}"
   notify:
     - rebuild sender_access database
-    - restart postfix
+    - reload postfix
   loop_control:
     label: "{{ item.domain }}"
 
 - name: configure recipient_access
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ postfix_recipient_access_path }}"
     regexp: "^{{ item.domain }}"
     line: "{{ item.domain }} {{ item.action }}"
@@ -77,39 +84,15 @@
   loop: "{{ postfix_recipient_access }}"
   notify:
     - rebuild recipient_access database
-    - restart postfix
+    - reload postfix
   loop_control:
     label: "{{ item.domain }}"
 
 - name: force all notified handlers to run
-  meta: flush_handlers
-
-- name: set group owner
-  file:
-    path: "{{ item }}"
-    group: "{{ postfix_group }}"
-    mode: "0755"
-  loop:
-    - /usr/sbin/postqueue
-    - /usr/sbin/postdrop
-    - /var/spool/postfix/public
-    - /var/spool/postfix/maildrop
-
-- name: place selinux type enforcement
-  copy:
-    src: my-postfix.te
-    dest: /etc/my-postfix.te
-    mode: "0644"
-  notify:
-    - create selinux mod for postfix
-    - create selinux pp for postfix
-    - load selinux pp for postfix
-  when:
-    - ansible_selinux.status is defined
-    - ansible_selinux.status == "enabled"
+  ansible.builtin.meta: flush_handlers
 
 - name: start and enable postfix
-  service:
+  ansible.builtin.service:
     name: "{{ postfix_service }}"
     state: started
     enabled: yes

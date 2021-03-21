@@ -1,24 +1,26 @@
 ---
 # tasks file for vagrant
+
 - name: include assert.yml
-  include_tasks: assert.yml
+  import_tasks: assert.yml
+  run_once: yes
+  delegate_to: localhost
 
 - name: download vagrant
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ vagrant_package }}"
     dest: /tmp
 
 - name: install vagrant rpm using package
-  package:
+  ansible.builtin.package:
     name: "/tmp/{{ vagrant_package | basename }}"
     state: present
     disable_gpg_check: yes
   when:
-    - ansible_pkg_mgr == "yum" or
-      ansible_pkg_mgr == "dnf"
+    - ansible_pkg_mgr in [ "yum", "dnf" ]
 
 - name: install vagrant rpm using zypper
-  zypper:
+  community.general.zypper:
     name: "/tmp/{{ vagrant_package | basename }}"
     state: present
     disable_gpg_check: yes
@@ -26,26 +28,23 @@
     - ansible_pkg_mgr == "zypper"
 
 - name: install vagrant deb
-  apt:
+  ansible.builtin.apt:
     deb: "/tmp/{{ vagrant_package | basename }}"
     state: present
   when:
     - ansible_pkg_mgr == "apt"
 
 - name: install vagrant archive
-  unarchive:
+  ansible.builtin.unarchive:
     src: "/tmp/{{ vagrant_package | basename }}"
     dest: "{{ vagrant_unarchive_dest }}"
     creates: "{{ vagrant_unarchive_dest }}/vagrant"
     remote_src: yes
     mode: "0755"
   when:
-    - ansible_pkg_mgr != "apt"
-    - ansible_pkg_mgr != "yum"
-    - ansible_pkg_mgr != "dnf"
-    - ansible_pkg_mgr != "zypper"
+    - ansible_pkg_mgr not in [ "apt", "dnf", "yum", "zypper" ]
 
 - name: install pip requirements
-  pip:
+  ansible.builtin.pip:
     name: "{{ vagrant_pip_packages }}"
     state: present

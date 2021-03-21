@@ -1,6 +1,8 @@
 ---
 exceptions:
-  - variation: CentOS 7
+  - variation: centos:7
     reason: "Dependency faraday requires Ruby version >= 2.3"
-  - variation: Fedora
+  - variation: fedora
     reason: "extconf failed, exit code 1"
+  - variation: ubuntu:xenial
+    reason: "faraday requires Ruby version >= 2.4."

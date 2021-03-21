@@ -4,23 +4,19 @@
 _docker_packages:
   default:
     - docker
-    - docker-compose
   Alpine:
     - docker
   RedHat-7:
     - docker-io
-    - docker-compose
   RedHat-8:
     - podman-docker
   Debian:
     - docker.io
-    - docker-compose
 
 docker_packages: "{{ _docker_packages[ansible_os_family ~ '-' ~ ansible_distribution_major_version] | default(_docker_packages[ansible_os_family] | default(_docker_packages['default'])) }}"
 
 docker_pip_packages:
   - docker
-  - docker-compose
 
 _docker_service:
   default: docker

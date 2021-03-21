@@ -9,7 +9,13 @@
       stat:
         path: /home/keyuser/.ssh
       register: result
-    - name: check status of .ssh
-      assert:
-        that:
-          - result.stat.exists
+      failed_when:
+        - not result.stat.exists
+
+    - name: check if user notuser does not exist
+      user:
+        name: notuser
+        state: absent
+      register: users_check_user_notuser
+      failed_when:
+        - users_check_user_notuser is changed

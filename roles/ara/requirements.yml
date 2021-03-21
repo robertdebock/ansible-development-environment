@@ -1,6 +1,9 @@
 ---
-- robertdebock.bootstrap
-- robertdebock.buildtools
-- robertdebock.epel
-- robertdebock.python_pip
-- robertdebock.service
+roles:
+  - name: robertdebock.bootstrap
+  - name: robertdebock.buildtools
+  - name: robertdebock.epel
+  - name: robertdebock.python_pip
+  - name: robertdebock.service
+collections:
+  - name: community.general

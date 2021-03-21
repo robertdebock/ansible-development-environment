@@ -1,6 +1,7 @@
 ---
 # tasks file for investigate
+
 - name: install investigation tools
-  package:
+  ansible.builtin.package:
     name: "{{ investigate_packages }}"
     state: present
