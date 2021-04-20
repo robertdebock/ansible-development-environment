@@ -10,9 +10,3 @@ ara_binary_location: "{{ _ara_binary_location[ansible_os_family] | default(_ara_
 
 ara_setup_command_python2: python -m ara.setup.callback_plugins
 ara_setup_command_python3: python3 -m ara.setup.callback_plugins
-
-service_list:
-  - name: ara
-    description: Ansible Reports Ara
-    start_command: "{{ ara_binary_location }}/ara-manage runserver"
-    user_name: "{{ ara_user }}"

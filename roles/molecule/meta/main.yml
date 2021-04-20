@@ -5,12 +5,9 @@ galaxy_info:
   description: Install Molecule on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.8
+  min_ansible_version: "2.10"
 
   platforms:
-    - name: Alpine
-      versions:
-        - all
     - name: EL
       versions:
         - 8
@@ -20,14 +17,12 @@ galaxy_info:
         - bullseye
     - name: Fedora
       versions:
-        - 31
-        - 32
+        - all
     - name: Ubuntu
       versions:
         - focal
 
   galaxy_tags:
     - molecule
-    - centos
 
 dependencies: []

@@ -1,22 +1,23 @@
 ---
 # tasks file for docker
+
 - name: install docker
-  package:
+  ansible.builtin.package:
     name: "{{ docker_packages }}"
     state: present
 
 - name: install docker pip packages
-  pip:
+  ansible.builtin.pip:
     name: "{{ docker_pip_packages }}"
     state: present
 
 - name: add docker group
-  group:
+  ansible.builtin.group:
     name: docker
     system: yes
 
 - name: start and enable docker
-  service:
+  ansible.builtin.service:
     name: "{{ docker_service }}"
     state: started
     enabled: yes

@@ -26,20 +26,21 @@ start() {
   pgrep -f {{ item.start_command | regex_replace(' .*') }} > /dev/null
 {% endif %}
   returncode="${?}"
-  if [ $returncode -gt 0 ] ; then
+  if [ $returncode -ne 0 ] ; then
     echo -n "Starting {{ item.name }}: "
 {% if item.working_directory is defined %}
     cd {{ item.working_directory }}
 {% endif %}
 {% if item.type is defined and item.type != "simple" %}
-    {% if item.user_name is defined %}su -c {% endif %}"{{ item.start_command }}"{% if item.user_name is defined %} {{ item.user_name }}{% endif %}
+    {% if item.user_name is defined %}su - {{ item.user_name }} -c {% endif %}{{ item.start_command }}
 {% else %}
-    ({% if item.user_name is defined %}su -c {% endif %}"{{ item.start_command }}"{% if item.user_name is defined %} {{ item.user_name }}{% endif %} &)
+    ({% if item.user_name is defined %}su - {{ item.user_name }} -c {% endif %}{{ item.start_command }}&)
 {% endif %}
     returncode="${?}"
     touch /var/lock/subsys/{{ item.name }}
   else
     echo "Already running."
+    returncode=1
   fi
 }
 
@@ -72,11 +73,12 @@ status() {
 {% else %}
   pgrep -f {{ item.start_command | regex_replace(' .*') }} > /dev/null
 {% endif %}
-  returncode="${?}"
-  if [ $returncode -gt 0 ] ; then
-    echo "{{ item.name }} is not running." ; exit 3
+  if [ $? -gt 0 ] ; then
+    echo "{{ item.name }} is not running."
+    returncode=3
   else
-    echo "{{ item.name }} is running." ; exit ${returncode}
+    echo "{{ item.name }} is running."
+    returncode=0
   fi
   return ${returncode}
 }

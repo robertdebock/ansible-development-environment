@@ -2,9 +2,9 @@
 
 Add custom services to your Linux system.
 
-|Travis|GitHub|Quality|Downloads|Version|
+|GitHub|GitLab|Quality|Downloads|Version|
 |------|------|-------|---------|-------|
-|[![travis](https://travis-ci.com/robertdebock/ansible-role-service.svg?branch=master)](https://travis-ci.com/robertdebock/ansible-role-service)|[![github](https://github.com/robertdebock/ansible-role-service/workflows/Ansible%20Molecule/badge.svg)](https://github.com/robertdebock/ansible-role-service/actions)|[![quality](https://img.shields.io/ansible/quality/38040)](https://galaxy.ansible.com/robertdebock/service)|[![downloads](https://img.shields.io/ansible/role/d/38040)](https://galaxy.ansible.com/robertdebock/service)|[![Version](https://img.shields.io/github/release/robertdebock/ansible-role-service.svg)](https://github.com/robertdebock/ansible-role-service/releases/)|
+|[![github](https://github.com/robertdebock/ansible-role-service/workflows/Ansible%20Molecule/badge.svg)](https://github.com/robertdebock/ansible-role-service/actions)|[![gitlab](https://gitlab.com/robertdebock/ansible-role-service/badges/master/pipeline.svg)](https://gitlab.com/robertdebock/ansible-role-service)|[![quality](https://img.shields.io/ansible/quality/38040)](https://galaxy.ansible.com/robertdebock/service)|[![downloads](https://img.shields.io/ansible/role/d/38040)](https://galaxy.ansible.com/robertdebock/service)|[![Version](https://img.shields.io/github/release/robertdebock/ansible-role-service.svg)](https://github.com/robertdebock/ansible-role-service/releases/)|
 
 ## [Example Playbook](#example-playbook)
 
@@ -20,45 +20,57 @@ This example is taken from `molecule/resources/converge.yml` and is tested on ea
     _service_test_command:
       default: /usr/bin/sleep
       Alpine: /bin/sleep
-
-    service_test_command: "{{ _service_test_command[ansible_os_family] | default(_service_test_command['default']) }}"
-
-    service_list:
-      - name: simple-service
-        description: Simple Service
-        start_command: "{{ service_test_command }} 3600"
-      - name: forking-service
-        description: Forking Service
-        type: forking
-        start_command: "{{ service_test_command }} 7200 &"
-      - name: specific-stop-service
-        description: Specific Stop Service
-        start_command: "{{ service_test_command }} 1440"
-        stop_command: killall -f "sleep 1440"
-      - name: specific-user-group-service
-        description: Specific User Group Service
-        start_command: "{{ service_test_command }} 28800"
-        user_name: root
-        group_name: root
-      - name: specific-workingdirectory-service
-        description: Specific WorkingDirectory Service
-        start_command: "{{ service_test_command }} 57600"
-        working_directory: /tmp
-      - name: specific-pattern-service
-        description: Specific Status Pattern Service
-        start_command: "{{ service_test_command }} 115200"
-        status_pattern: 115200
-      - name: variable-service
-        description: Service with environment variables
-        start_command: "{{ service_test_command }} ${time}"
-        environment_variables:
-          time: 230400
+      Debian: /bin/sleep
+      Ubuntu-16: /bin/sleep
+      Ubuntu-18: /bin/sleep
+    service_test_command: "{{ _service_test_command[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_service_test_command[ansible_os_family] | default(_service_test_command['default'])) }}"  # noqa 204 Just long.
 
   roles:
     - role: robertdebock.service
+      service_list:
+        - name: simple-service
+          description: Simple Service
+          start_command: "{{ service_test_command }} 3600"
+          state: started
+          enabled: yes
+        - name: stopped-service
+          description: Simple Service
+          start_command: "{{ service_test_command }} 3601"
+          state: stopped
+          enabled: no
+        - name: specific-stop-service
+          description: Specific Stop Service
+          start_command: "{{ service_test_command }} 1440"
+          stop_command: /usr/bin/killall -f "sleep 1440"
+        - name: specific-user-group-service
+          description: Specific User Group Service
+          start_command: "{{ service_test_command }} 28800"
+          user_name: root
+          group_name: root
+        - name: specific-workingdirectory-service
+          description: Specific WorkingDirectory Service
+          start_command: "{{ service_test_command }} 57600"
+          working_directory: /tmp
+        - name: specific-pattern-service
+          description: Specific Status Pattern Service
+          start_command: "{{ service_test_command }} 115200"
+          status_pattern: 115200
+        - name: variable-service
+          description: Service with environment variables
+          start_command: "{{ service_test_command }} ${time}"
+          environment_variables:
+            time: 230400
+        - name: pidfile-service
+          description: Service with pidfile
+          start_command: "{{ service_test_command }} 460800"
+          pidfile: /var/run/pidfile-service.pid
+        - name: environmentfile-service
+          description: Service with environmentfile
+          start_command: "{{ service_test_command }} 921600"
+          environmentfile: /environmentfile.txt
 ```
 
-The machine may need to be prepared using `molecule/resources/prepare.yml`:
+The machine needs to be prepared in CI this is done using `molecule/resources/prepare.yml`:
 ```yaml
 ---
 - name: Prepare
@@ -69,35 +81,13 @@ The machine may need to be prepared using `molecule/resources/prepare.yml`:
 
   roles:
     - role: robertdebock.bootstrap
-```
 
-For verification `molecule/resources/verify.yml` run after the role has been applied.
-```yaml
----
-- name: Verify
-  hosts: all
-  become: yes
-  gather_facts: yes
-
-  vars:
-    service_list:
-      - name: simple-service
-
-  tasks:
-    - name: start simple-service
-      service:
-        name: simple-service
-        state: started
-
-    - name: stop simple-service
-      service:
-        name: simple-service
-        state: stopped
-
-    - name: restart simple-service
-      service:
-        name: simple-service
-        state: restarted
+  post_tasks:
+    - name: place /environmentfile.txt
+      copy:
+        content: "value=variable"
+        dest: /environmentfile.txt
+        mode: "0644"
 ```
 
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.
@@ -136,23 +126,22 @@ These variables are set in `defaults/main.yml`:
 
 ## [Requirements](#requirements)
 
-- Access to a repository containing packages, likely on the internet.
-- A recent version of Ansible. (Tests run on the current, previous and next release of Ansible.)
+- pip packages listed in [requirements.txt](https://github.com/robertdebock/ansible-role-service/blob/master/requirements.txt).
 
-The following roles can be installed to ensure all requirements are met, using `ansible-galaxy install -r requirements.yml`:
+## [Status of requirements](#status-of-requirements)
 
-```yaml
----
-- robertdebock.bootstrap
+The following roles are used to prepare a system. You may choose to prepare your system in another way, I have tested these roles as well.
 
-```
+| Requirement | GitHub | GitLab |
+|-------------|--------|--------|
+| [robertdebock.bootstrap](https://galaxy.ansible.com/robertdebock/bootstrap) | [![Build Status GitHub](https://github.com/robertdebock/ansible-role-bootstrap/workflows/Ansible%20Molecule/badge.svg)](https://github.com/robertdebock/ansible-role-bootstrap/actions) | [![Build Status GitLab ](https://gitlab.com/robertdebock/ansible-role-ansible-role-bootstrap/badges/master/pipeline.svg)](https://gitlab.com/robertdebock/ansible-role-bootstrap)
 
 ## [Context](#context)
 
 This role is a part of many compatible roles. Have a look at [the documentation of these roles](https://robertdebock.nl/) for further information.
 
 Here is an overview of related roles:
-![dependencies](https://raw.githubusercontent.com/robertdebock/drawings/artifacts/service.png "Dependency")
+![dependencies](https://raw.githubusercontent.com/robertdebock/ansible-role-service/png/requirements.png "Dependencies")
 
 ## [Compatibility](#compatibility)
 
@@ -160,55 +149,21 @@ This role has been tested on these [container images](https://hub.docker.com/u/r
 
 |container|tags|
 |---------|----|
-|alpine|all|
-|amazon|2018.03|
 |el|7, 8|
 |debian|buster, bullseye|
-|fedora|31, 32|
+|fedora|all|
 |opensuse|all|
-|ubuntu|focal, bionic, xenial|
+|ubuntu|focal, bionic|
 
-The minimum version of Ansible required is 2.8 but tests have been done to:
+The minimum version of Ansible required is 2.10, tests have been done to:
 
-- The previous version, on version lower.
+- The previous version.
 - The current version.
 - The development version.
 
 
 
-## [Testing](#testing)
-
-[Unit tests](https://travis-ci.com/robertdebock/ansible-role-service) are done on every commit, pull request, release and periodically.
-
 If you find issues, please register them in [GitHub](https://github.com/robertdebock/ansible-role-service/issues)
-
-Testing is done using [Tox](https://tox.readthedocs.io/en/latest/) and [Molecule](https://github.com/ansible/molecule):
-
-[Tox](https://tox.readthedocs.io/en/latest/) tests multiple ansible versions.
-[Molecule](https://github.com/ansible/molecule) tests multiple distributions.
-
-To test using the defaults (any installed ansible version, namespace: `robertdebock`, image: `fedora`, tag: `latest`):
-
-```
-molecule test
-
-# Or select a specific image:
-image=ubuntu molecule test
-# Or select a specific image and a specific tag:
-image="debian" tag="stable" tox
-```
-
-Or you can test multiple versions of Ansible, and select images:
-Tox allows multiple versions of Ansible to be tested. To run the default (namespace: `robertdebock`, image: `fedora`, tag: `latest`) tests:
-
-```
-tox
-
-# To run CentOS (namespace: `robertdebock`, tag: `latest`)
-image="centos" tox
-# Or customize more:
-image="debian" tag="stable" tox
-```
 
 ## [License](#license)
 

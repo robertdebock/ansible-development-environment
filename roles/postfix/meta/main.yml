@@ -5,7 +5,7 @@ galaxy_info:
   description: Install and configure postfix on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.8
+  min_ansible_version: "2.10"
 
   platforms:
     - name: Amazon
@@ -21,21 +21,18 @@ galaxy_info:
         - bullseye
     - name: Fedora
       versions:
-        - 31
         - 32
+        - 33
     - name: Ubuntu
       versions:
         - focal
         - bionic
-        - xenial
 
   galaxy_tags:
-    - centos
     - installer
     - mailserver
     - package
     - postfix
-    - redhat
     - security
     - system
 

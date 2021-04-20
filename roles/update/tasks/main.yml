@@ -1,44 +1,49 @@
 ---
 # tasks file for update
+
 - name: include assert.yml
-  include_tasks: assert.yml
+  import_tasks: assert.yml
+  run_once: yes
+  delegate_to: localhost
 
-- name: update cache (apk)
-  apk:
-    update_cache: yes
+- name: configure apk
+  block:
+    - name: update cache (apk)
+      community.general.apk:
+        update_cache: yes
+      changed_when: no
+
+    - name: update all software (apk)
+      community.general.apk:
+        upgrade: yes
+      notify:
+        - reboot
   when:
     - ansible_pkg_mgr == "apk"
-  changed_when: no
 
-- name: update all software (apk)
-  apk:
-    upgrade: yes
-  notify:
-    - reboot
-  when:
-    - ansible_pkg_mgr == "apk"
+- name: configure apt
+  block:
+    - name: update all software (apt)
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: "{{ update_upgrade_command }}"
+        cache_valid_time: "{{ update_cache_valid_time }}"
+      notify:
+        - reboot
 
-- name: update all software (apt)
-  apt:
-    update_cache: yes
-    upgrade: "{{ update_upgrade_command }}"
-    cache_valid_time: "{{ update_cache_valid_time }}"
-  notify:
-    - reboot
-  when:
-    - ansible_pkg_mgr == "apt"
-
-- name: apt autoremove (apt)
-  apt:
-    autoremove: "{{ update_autoremove }}"
+    - name: apt autoremove (apt)
+      ansible.builtin.apt:
+        autoremove: "{{ update_autoremove }}"
+      when:
+        - ansible_pkg_mgr == "apt"
+        - update_autoremove == "yes"
+      tags:
+        - skip_ansible_lint
   when:
     - ansible_pkg_mgr == "apt"
-    - update_autoremove == "yes"
-  tags:
-    - skip_ansible_lint
 
 - name: update all software (dnf)
-  dnf:
+  ansible.builtin.dnf:
     name: "*"
     state: latest
   notify:
@@ -49,7 +54,7 @@
     - skip_ansible_lint
 
 - name: update all software (pacman)
-  pacman:
+  community.general.pacman:
     update_cache: yes
     upgrade: yes
   notify:
@@ -59,39 +64,40 @@
   tags:
     - skip_ansible_lint
 
-- name: update all software (yum/6)
-  yum:
-    name: "*"
-    state: latest
-  notify:
-    - reboot
-  when:
-    - ansible_pkg_mgr == "yum"
-    - ansible_distribution_major_version == "6"
-  tags:
-    - skip_ansible_lint
+- name: configure yum
+  block:
+    - name: update all software (yum/6)
+      ansible.builtin.yum:
+        name: "*"
+        state: latest
+      notify:
+        - reboot
+      when:
+        - ansible_distribution_major_version == "6"
+      tags:
+        - skip_ansible_lint
 
-- name: update all software (yum/7)
-  yum:
-    name: "*"
-    state: latest
-  notify:
-    - reboot
-  when:
-    - ansible_pkg_mgr == "yum"
-    - ansible_distribution_major_version == "7"
-  tags:
-    - skip_ansible_lint
+    - name: configure 7
+      block:
+        - name: update all software (yum/7)
+          ansible.builtin.yum:
+            name: "*"
+            state: latest
+          notify:
+            - reboot
+          tags:
+            - skip_ansible_lint
 
-- name: install yum-utils
-  package:
-    name: yum-utils
+        - name: install yum-utils
+          ansible.builtin.package:
+            name: yum-utils
+      when:
+        - ansible_distribution_major_version == "7"
   when:
     - ansible_pkg_mgr == "yum"
-    - ansible_distribution_major_version == "7"
 
 - name: update all software (zypper)
-  zypper:
+  community.general.zypper:
     name: "*"
     state: latest
   notify:

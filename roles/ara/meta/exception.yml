@@ -1,8 +1,8 @@
 ---
 exceptions:
-  - variation: Alpine
+  - variation: alpine
     reason: "Could not find a version that satisfies the requirement Django>=2.1.5"
-  - variation: CentOS
+  - variation: centos:7
     reason: No matching distribution found for Django>=2.1.5
   - variation: amazonlinux:1
     reason: "No package matching 'python3-pip'"

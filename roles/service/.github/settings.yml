@@ -5,3 +5,4 @@
 repository:
   description: Add custom services to your Linux system.
   homepage: https://robertdebock.nl/
+  topics: service, ansible, molecule, tox, playbook, hacktoberfest

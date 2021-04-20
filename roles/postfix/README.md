@@ -2,9 +2,9 @@
 
 Install and configure postfix on your system.
 
-|Travis|GitHub|Quality|Downloads|Version|
+|GitHub|GitLab|Quality|Downloads|Version|
 |------|------|-------|---------|-------|
-|[![travis](https://travis-ci.com/robertdebock/ansible-role-postfix.svg?branch=master)](https://travis-ci.com/robertdebock/ansible-role-postfix)|[![github](https://github.com/robertdebock/ansible-role-postfix/workflows/Ansible%20Molecule/badge.svg)](https://github.com/robertdebock/ansible-role-postfix/actions)|[![quality](https://img.shields.io/ansible/quality/22976)](https://galaxy.ansible.com/robertdebock/postfix)|[![downloads](https://img.shields.io/ansible/role/d/22976)](https://galaxy.ansible.com/robertdebock/postfix)|[![Version](https://img.shields.io/github/release/robertdebock/ansible-role-postfix.svg)](https://github.com/robertdebock/ansible-role-postfix/releases/)|
+|[![github](https://github.com/robertdebock/ansible-role-postfix/workflows/Ansible%20Molecule/badge.svg)](https://github.com/robertdebock/ansible-role-postfix/actions)|[![gitlab](https://gitlab.com/robertdebock/ansible-role-postfix/badges/master/pipeline.svg)](https://gitlab.com/robertdebock/ansible-role-postfix)|[![quality](https://img.shields.io/ansible/quality/22976)](https://galaxy.ansible.com/robertdebock/postfix)|[![downloads](https://img.shields.io/ansible/role/d/22976)](https://galaxy.ansible.com/robertdebock/postfix)|[![Version](https://img.shields.io/github/release/robertdebock/ansible-role-postfix.svg)](https://github.com/robertdebock/ansible-role-postfix/releases/)|
 
 ## [Example Playbook](#example-playbook)
 
@@ -18,6 +18,7 @@ This example is taken from `molecule/resources/converge.yml` and is tested on ea
 
   roles:
     - role: robertdebock.postfix
+      postfix_relayhost: "[relay.example.com]"
       postfix_myhostname: "smtp.example.com"
       postfix_mydomain: "example.com"
       postfix_myorigin: "example.com"
@@ -26,7 +27,7 @@ This example is taken from `molecule/resources/converge.yml` and is tested on ea
           destination: test@example.com
 ```
 
-The machine may need to be prepared using `molecule/resources/prepare.yml`:
+The machine needs to be prepared in CI this is done using `molecule/resources/prepare.yml`:
 ```yaml
 ---
 - name: Prepare
@@ -37,27 +38,6 @@ The machine may need to be prepared using `molecule/resources/prepare.yml`:
   roles:
     - role: robertdebock.bootstrap
     - role: robertdebock.core_dependencies
-```
-
-For verification `molecule/resources/verify.yml` runs after the role has been applied.
-```yaml
----
-- name: Verify
-  hosts: all
-  become: yes
-  gather_facts: no
-
-  tasks:
-    - name: check if port 25 is open
-      wait_for:
-        port: 25
-
-    - name: check if a mail can be sent
-      mail:
-        from: "Robert de Bock <robert@example.com>"
-        to: "Robert de Bock <root@example.com>"
-        subject: Testing robertdebock.postfix.
-        body: Testing the ansible role postfix.
 ```
 
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.
@@ -93,7 +73,7 @@ postfix_mynetworks: "127.0.0.0/8"
 
 # If you want to forward emails to another central relay server, set relayhost.
 # use brackets to sent to the A-record of the relayhost.
-# postfix_relayhost: [relay.example.com]
+# postfix_relayhost: "[relay.example.com]"
 
 # Set the restrictions for receiving mails.
 postfix_smtpd_recipient_restrictions:
@@ -141,28 +121,30 @@ postfix_smtpd_sender_restrictions:
 #     action: OK
 #   - domain: baddomain.com
 #     action: REJECT
+
+# You can disable SSL/TLS versions here.
+# postfix_tls_protocols: '!SSLv2, !SSLv3, !TLSv1, !TLSv1.1'
 ```
 
 ## [Requirements](#requirements)
 
-- Access to a repository containing packages, likely on the internet.
-- A recent version of Ansible. (Tests run on the current, previous and next release of Ansible.)
+- pip packages listed in [requirements.txt](https://github.com/robertdebock/ansible-role-postfix/blob/master/requirements.txt).
 
-The following roles can be installed to ensure all requirements are met, using `ansible-galaxy install -r requirements.yml`:
+## [Status of requirements](#status-of-requirements)
 
-```yaml
----
-- robertdebock.bootstrap
-- robertdebock.core_dependencies
+The following roles are used to prepare a system. You may choose to prepare your system in another way, I have tested these roles as well.
 
-```
+| Requirement | GitHub | GitLab |
+|-------------|--------|--------|
+| [robertdebock.bootstrap](https://galaxy.ansible.com/robertdebock/bootstrap) | [![Build Status GitHub](https://github.com/robertdebock/ansible-role-bootstrap/workflows/Ansible%20Molecule/badge.svg)](https://github.com/robertdebock/ansible-role-bootstrap/actions) | [![Build Status GitLab ](https://gitlab.com/robertdebock/ansible-role-ansible-role-bootstrap/badges/master/pipeline.svg)](https://gitlab.com/robertdebock/ansible-role-bootstrap)
+| [robertdebock.core_dependencies](https://galaxy.ansible.com/robertdebock/core_dependencies) | [![Build Status GitHub](https://github.com/robertdebock/ansible-role-core_dependencies/workflows/Ansible%20Molecule/badge.svg)](https://github.com/robertdebock/ansible-role-core_dependencies/actions) | [![Build Status GitLab ](https://gitlab.com/robertdebock/ansible-role-ansible-role-core_dependencies/badges/master/pipeline.svg)](https://gitlab.com/robertdebock/ansible-role-core_dependencies)
 
 ## [Context](#context)
 
 This role is a part of many compatible roles. Have a look at [the documentation of these roles](https://robertdebock.nl/) for further information.
 
 Here is an overview of related roles:
-![dependencies](https://raw.githubusercontent.com/robertdebock/drawings/artifacts/postfix.png "Dependency")
+![dependencies](https://raw.githubusercontent.com/robertdebock/ansible-role-postfix/png/requirements.png "Dependencies")
 
 ## [Compatibility](#compatibility)
 
@@ -173,12 +155,12 @@ This role has been tested on these [container images](https://hub.docker.com/u/r
 |amazon|2018.03|
 |el|7, 8|
 |debian|buster, bullseye|
-|fedora|31, 32|
-|ubuntu|focal, bionic, xenial|
+|fedora|32, 33|
+|ubuntu|focal, bionic|
 
-The minimum version of Ansible required is 2.8 but tests have been done to:
+The minimum version of Ansible required is 2.10, tests have been done to:
 
-- The previous version, on version lower.
+- The previous version.
 - The current version.
 - The development version.
 
@@ -192,44 +174,17 @@ Some variarations of the build matrix do not work. These are the variations and 
 | alpine | 451, 4.3.0 <root@example.com>: Temporary lookup failure |
 
 
-## [Testing](#testing)
-
-[Unit tests](https://travis-ci.com/robertdebock/ansible-role-postfix) are done on every commit, pull request, release and periodically.
-
 If you find issues, please register them in [GitHub](https://github.com/robertdebock/ansible-role-postfix/issues)
-
-Testing is done using [Tox](https://tox.readthedocs.io/en/latest/) and [Molecule](https://github.com/ansible/molecule):
-
-[Tox](https://tox.readthedocs.io/en/latest/) tests multiple ansible versions.
-[Molecule](https://github.com/ansible/molecule) tests multiple distributions.
-
-To test using the defaults (any installed ansible version, namespace: `robertdebock`, image: `fedora`, tag: `latest`):
-
-```
-molecule test
-
-# Or select a specific image:
-image=ubuntu molecule test
-# Or select a specific image and a specific tag:
-image="debian" tag="stable" tox
-```
-
-Or you can test multiple versions of Ansible, and select images:
-Tox allows multiple versions of Ansible to be tested. To run the default (namespace: `robertdebock`, image: `fedora`, tag: `latest`) tests:
-
-```
-tox
-
-# To run CentOS (namespace: `robertdebock`, tag: `latest`)
-image="centos" tox
-# Or customize more:
-image="debian" tag="stable" tox
-```
 
 ## [License](#license)
 
 Apache-2.0
 
+## [Contributors](#contributors)
+
+I'd like to thank everybody that made contributions to this repository. It motivates me, improves the code and is just fun to collaborate.
+
+- [benformosa](https://github.com/benformosa)
 
 ## [Author Information](#author-information)
 

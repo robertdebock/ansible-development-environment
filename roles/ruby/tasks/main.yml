@@ -1,5 +1,6 @@
 ---
 # tasks file for ruby
+
 - name: install ruby
-  package:
+  ansible.builtin.package:
     name: "{{ ruby_packages }}"

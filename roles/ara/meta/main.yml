@@ -5,7 +5,7 @@ galaxy_info:
   description: Install and configure ara on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.8
+  min_ansible_version: "2.10"
 
   platforms:
     - name: EL
@@ -17,8 +17,7 @@ galaxy_info:
         - bullseye
     - name: Fedora
       versions:
-        - 31
-        - 32
+        - all
     - name: Ubuntu
       versions:
         - bionic
@@ -28,7 +27,6 @@ galaxy_info:
     - ara
     - arareportsansible
     - cloud
-    - centos
     - development
     - monitoring
     - reporting

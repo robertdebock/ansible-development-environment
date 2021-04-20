@@ -25,3 +25,24 @@
       vars:
         python_pip_modules:
           - name: docker
+
+    - name: check if requested modules can be removed
+      include_role:
+        name: ansible-role-python_pip
+      vars:
+        python_pip_modules:
+          - name: docker
+            state: absent
+
+    - name: check if pyOpenSSL can be installed
+      pip:
+        name: pyOpenSSL
+        state: present
+      notify:
+        - remove pyOpenSSL
+
+  handlers:
+    - name: remove pyOpenSSL
+      pip:
+        name: pyOpenSSL
+        state: absent

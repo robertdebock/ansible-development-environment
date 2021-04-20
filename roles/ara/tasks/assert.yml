@@ -1,34 +1,33 @@
 ---
+
 - name: test if ara_configuration_file is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - ara_configuration_file is defined
-      - ara_configuration_file | length > 0
+      - ara_configuration_file is string
     quiet: yes
 
 - name: test if ara_user is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - ara_user is defined
-      - ara_user | length > 0
+      - ara_user is string
     quiet: yes
 
 - name: test if ara_configuration is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
-      - ara_configuration | length > 0
       - ara_configuration is iterable
     quiet: yes
   when:
     - ara_configuration is defined
 
 - name: test if item in ara_configuration is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - item.option is defined
-      - item.option | length > 0
+      - item.option is string
       - item.value is defined
-      - item.value | length > 0
     quiet: yes
   loop: "{{ ara_configuration }}"
   loop_control:

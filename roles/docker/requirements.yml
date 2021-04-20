@@ -1,6 +1,7 @@
 ---
-- robertdebock.bootstrap
-- robertdebock.buildtools
-- robertdebock.core_dependencies
-- robertdebock.epel
-- robertdebock.python_pip
+roles:
+  - name: robertdebock.bootstrap
+  - name: robertdebock.buildtools
+  - name: robertdebock.core_dependencies
+  - name: robertdebock.epel
+  - name: robertdebock.python_pip

@@ -5,7 +5,7 @@ galaxy_info:
   description: Installs travis on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.8
+  min_ansible_version: "2.10"
 
   platforms:
     - name: Alpine
@@ -25,10 +25,8 @@ galaxy_info:
       versions:
         - focal
         - bionic
-        - xenial
 
   galaxy_tags:
     - travis
-    - centos
 
 dependencies: []

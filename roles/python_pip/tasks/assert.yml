@@ -1,23 +1,47 @@
 ---
+
 - name: test if python_pip_modules is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - python_pip_modules is defined
-      - python_pip_modules | type_debug == "list"
+      - python_pip_modules is iterable
     quiet: yes
 
-- name: test if python_pip_proxy is set correctly
-  assert:
+- name: test if item.name in python_pip_modules is set correctly
+  ansible.builtin.assert:
     that:
-      - python_pip_proxy | length > 0
+      - item.name is defined
+      - item.name is string
     quiet: yes
-  when:
-    - python_pip_proxy is defined
+  loop: "{{ python_pip_modules }}"
+  loop_control:
+    label: "{{ item.name }}"
 
-- name: test if python_pip_trusted_host is set correctly
-  assert:
+- name: test if item.state in python_pip_modules is set correctly
+  ansible.builtin.assert:
     that:
-      - python_pip_trusted_host | length > 0
+      - item.state in [ "absent", "latest", "present" ]
     quiet: yes
+  loop: "{{ python_pip_modules }}"
+  loop_control:
+    label: "{{ item.name }}"
   when:
-    - python_pip_trusted_host is defined
+    - item.state is defined
+
+- name: test if item.name in python_pip_modules is set correctly
+  ansible.builtin.assert:
+    that:
+      - item.version is string
+    quiet: yes
+  loop: "{{ python_pip_modules }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.version is defined
+
+- name: test if python_pip_update is set correctly
+  ansible.builtin.assert:
+    that:
+      - python_pip_update is defined
+      - python_pip_update is boolean
+    quiet: yes

@@ -5,12 +5,12 @@ galaxy_info:
   description: Install and configure fail2ban on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.8
+  min_ansible_version: "2.10"
 
   platforms:
     - name: Amazon
       versions:
-        - 2018.03
+        - Candidate
     - name: EL
       versions:
         - 7
@@ -21,21 +21,15 @@ galaxy_info:
         - bullseye
     - name: Fedora
       versions:
-        - 31
-        - 32
-    - name: OpenSUSE
-      versions:
         - all
     - name: Ubuntu
       versions:
         - focal
         - bionic
-        - xenial
 
   galaxy_tags:
     - fail2ban
     - installer
     - package
-    - centos
 
 dependencies: []

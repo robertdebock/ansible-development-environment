@@ -5,3 +5,4 @@
 repository:
   description: Install pythons pip on your system.
   homepage: https://robertdebock.nl/
+  topics: python, pip, pypip, system, installer, ansible, molecule, tox, playbook, hacktoberfest

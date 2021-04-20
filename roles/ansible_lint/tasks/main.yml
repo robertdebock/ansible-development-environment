@@ -1,6 +1,7 @@
 ---
 # tasks file for ansible_lint
+
 - name: install ansible_lint
-  pip:
+  ansible.builtin.pip:
     name: "{{ ansible_lint_packages }}"
     state: present

@@ -1,11 +1,12 @@
 ---
 galaxy_info:
   author: Robert de Bock
+  namespace: robertdebock
   role_name: update
   description: Install updates on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.8
+  min_ansible_version: "2.10"
 
   platforms:
     - name: Alpine
@@ -13,7 +14,7 @@ galaxy_info:
         - all
     - name: Amazon
       versions:
-        - 2018.03
+        - Candidate
     - name: EL
       versions:
         - 7
@@ -24,8 +25,7 @@ galaxy_info:
         - bullseye
     - name: Fedora
       versions:
-        - 31
-        - 32
+        - all
     - name: OpenSUSE
       versions:
         - all
@@ -33,11 +33,8 @@ galaxy_info:
       versions:
         - focal
         - bionic
-        - xenial
 
   galaxy_tags:
     - update
-    - centos
-    - redhat
 
 dependencies: []

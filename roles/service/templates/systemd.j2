@@ -27,11 +27,17 @@ ExecStop={{ item.stop_command }}
 Environment={{ key }}={{ item.environment_variables[key] }}
 {% endfor %}
 {% endif %}
+{% if item.environmentfile is defined %}
+EnvironmentFile={{ item.environmentfile }}
+{% endif %}
 {% if item.restart_mode is defined %}
 Restart={{ item.restart_mode }}
 {% endif %}
 {% if item.restart_seconds is defined %}
 RestartSec={{ item.restart_seconds }}
+{% endif %}
+{% if item.pidfile is defined %}
+PIDFile={{ item.pidfile }}
 {% endif %}
 
 [Install]

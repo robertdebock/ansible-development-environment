@@ -344,7 +344,7 @@ smtpd_sender_restrictions = check_sender_access hash:{{ postfix_sender_access_pa
 #relayhost = [mailserver.isp.tld]
 #relayhost = uucphost
 #relayhost = [an.ip.add.ress]
-{% if postfix_relayhost is defined %}
+{% if postfix_relayhost is defined and postfix_relayhost | length > 0 %}
 relayhost = {{ postfix_relayhost|replace("'", "") }}
 {% endif %}
 
@@ -691,7 +691,7 @@ mailq_path = /usr/bin/mailq.postfix
 # commands.  This must be a group name with a numerical group ID that
 # is not shared with other accounts, not even with the Postfix account.
 #
-setgid_group = postdrop
+setgid_group = {{ postfix_group }}
 
 # html_directory: The location of the Postfix HTML documentation.
 #
@@ -714,4 +714,14 @@ readme_directory = /usr/share/doc/postfix-2.10.1/README_FILES
 {% if postfix_clamav is defined and postfix_clamav == "enabled" %}
 content_filter = scan:127.0.0.1:10025
 receive_override_options = no_address_mappings
+{% endif %}
+
+{% if postfix_tls_protocols is defined %}
+# smtpd_tls_mandatory_protcols: TLS protocols accepted by the Postfix SMTP
+# server with mandatory TLS encryption.
+#
+smtpd_tls_mandatory_protocols = {{ postfix_tls_protocols }}
+smtpd_tls_protocols = {{ postfix_tls_protocols }}
+smtp_tls_mandatory_protocols = {{ postfix_tls_protocols }}
+smtp_tls_protocols = {{ postfix_tls_protocols }}
 {% endif %}

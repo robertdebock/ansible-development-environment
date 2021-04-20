@@ -1,114 +1,92 @@
 ---
+
 - name: test if service_list is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
-      - service_list | length > 0
+      - service_list is defined
       - service_list is iterable
     quiet: yes
-  when:
-    - service_list is defined
 
 - name: test if item in service_list is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - item.name is defined
-      - item.name | length > 0
+      - item.name is string
       - item.description is defined
-      - item.description | length > 0
+      - item.description is string
       - item.start_command is defined
-      - item.start_command | length > 0
+      - item.start_command is string
     quiet: yes
   loop: "{{ service_list }}"
   loop_control:
     label: "{{ item.name }}"
-  when:
-    - service_list is defined
-
-- name: test if stop_command in service_list is set correctly
-  assert:
-    that:
-      - item.stop_command | length > 0
-    quiet: yes
-  loop: "{{ service_list }}"
-  loop_control:
-    label: "{{ item.name }}"
-  when:
-    - service_list is defined
-    - item.stop_command is defined
 
 - name: test if type in service_list is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
-      - item.type | length > 0
-      - item.type in ["forking", "oneshot", "simple"]
+      - item.type is string
+      - item.type in [ "forking", "oneshot", "simple" ]
     quiet: yes
   loop: "{{ service_list }}"
   loop_control:
     label: "{{ item.name }}"
   when:
-    - service_list is defined
     - item.type is defined
 
-- name: test if working_directory in service_list is set correctly
-  assert:
-    that:
-      - item.working_directory | length > 0
-    quiet: yes
-  loop: "{{ service_list }}"
-  loop_control:
-    label: "{{ item.name }}"
-  when:
-    - service_list is defined
-    - item.working_directory is defined
-
 - name: test if environment_variables in service_list is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
-      - item.environment_variables | length > 0
       - item.environment_variables is iterable
     quiet: yes
   loop: "{{ service_list }}"
   loop_control:
     label: "{{ item.name }}"
   when:
-    - service_list is defined
     - item.environment_variables is defined
 
-- name: test if after in service_list is set correctly
-  assert:
-    that:
-      - item.after | length > 0
-    quiet: yes
-  loop: "{{ service_list }}"
-  loop_control:
-    label: "{{ item.name }}"
-  when:
-    - service_list is defined
-    - item.after is defined
-
 - name: test if restart_mode in service_list is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
-      - item.restart_mode | length > 0
-      - item.restart_mode in ["no", "on-success", "on-failure", "on-abnormal", "on-watchdog", "on-abort", "always"]
+      - item.restart_mode is string
+      - item.restart_mode in [ "no", "on-success", "on-failure", "on-abnormal", "on-watchdog", "on-abort", "always" ]
     quiet: yes
   loop: "{{ service_list }}"
   loop_control:
     label: "{{ item.name }}"
   when:
-    - service_list is defined
     - item.restart_mode is defined
 
 - name: test if restart_seconds in service_list is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
-      - item.seconds | length > 0
-      - item.seconds | int
-      - item.seconds | int >= 0
+      - item.seconds is number
+      - item.seconds >= 0
     quiet: yes
   loop: "{{ service_list }}"
   loop_control:
     label: "{{ item.name }}"
   when:
-    - service_list is defined
     - item.seconds is defined
+
+- name: test if state in service_list is set correctly
+  ansible.builtin.assert:
+    that:
+      - item.state is string
+      - item.state in [ "reloaded", "restarted", "started", "stopped" ]
+    quiet: yes
+  loop: "{{ service_list }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.state is defined
+
+- name: test if enabled in service_list is set correctly
+  ansible.builtin.assert:
+    that:
+      - item.enabled is boolean
+    quiet: yes
+  loop: "{{ service_list }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when:
+    - item.enabled is defined

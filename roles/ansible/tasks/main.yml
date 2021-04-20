@@ -1,28 +1,31 @@
 ---
 # tasks file for ansible
+
 - name: include assert.yml
-  include_tasks: assert.yml
+  import_tasks: assert.yml
+  run_once: yes
+  delegate_to: localhost
 
 - name: install ansible
   block:
     - name: install ansible package (allowed to fail)
-      package:
+      ansible.builtin.package:
         name: "{{ ansible_packages }}"
         state: present
   rescue:
     - name: install ansible pip
-      pip:
+      ansible.builtin.pip:
         name: ansible
         state: present
 
 - name: ensure the ansible directory exists
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_configuration_directory }}"
     state: directory
     mode: "0755"
 
 - name: mark configuration file as ansible managed
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ ansible_configuration_directory }}/{{ ansible_configuration_file }}"
     create: yes
     insertbefore: BOF
@@ -30,7 +33,7 @@
     mode: "0644"
 
 - name: configure ansible
-  ini_file:
+  community.general.ini_file:
     path: "{{ ansible_configuration_directory }}/{{ ansible_configuration_file }}"
     section: "{{ item.section | default('defaults') }}"
     option: "{{ item.option }}"

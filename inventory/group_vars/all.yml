@@ -387,3 +387,139 @@ git_repositories:
     dest: ansible-role-zabbix_server
   - repo: ssh://git@github.com/robertdebock/ansible-role-zabbix_web.git
     dest: ansible-role-zabbix_web
+  - repo: ssh://git@github.com/robertdebock/ansible-collection-roles.git
+    dest: ansible-collection-roles
+  - repo: ssh://git@github.com/robertdebock/ansible-collection-rundeck.git
+    dest: ansible-collection-rundeck
+  - repo: ssh://git@github.com/robertdebock/ansible-generator.git
+    dest: ansible-generator
+  - repo: ssh://git@github.com/robertdebock/ansible-integration.git
+    dest: ansible-integration
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-bios_update.git
+    dest: ansible-playbook-bios_update
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-cloudtop.git
+    dest: ansible-playbook-cloudtop
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-gitlab_runner.git
+    dest: ansible-playbook-gitlab_runner
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-haproxy.git
+    dest: ansible-playbook-haproxy
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-jitsi.git
+    dest: ansible-playbook-jitsi
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-keepalived.git
+    dest: ansible-playbook-keepalived
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-libvirt.git
+    dest: ansible-playbook-libvirt
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-mylucie.git
+    dest: ansible-playbook-mylucie
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-nextcloud.git
+    dest: ansible-playbook-nextcloud
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-nomad.git
+    dest: ansible-playbook-nomad
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-rancher.git
+    dest: ansible-playbook-rancher
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-saltstack.git
+    dest: ansible-playbook-saltstack
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-terraform.git
+    dest: ansible-playbook-terraform
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-tester.git
+    dest: ansible-playbook-tester
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-vault.git
+    dest: ansible-playbook-vault
+  - repo: ssh://git@github.com/robertdebock/ansible-playbook-zabbix.git
+    dest: ansible-playbook-zabbix
+  - repo: ssh://git@github.com/robertdebock/ansible-probe.git
+    dest: ansible-probe
+  - repo: ssh://git@github.com/robertdebock/docker-amazonlinux-systemd.git
+    dest: docker-amazonlinux-systemd
+  - repo: ssh://git@github.com/robertdebock/docker-archlinux-systemd.git
+    dest: docker-archlinux-systemd
+  - repo: ssh://git@github.com/robertdebock/docker-centos-openssh.git
+    dest: docker-centos-openssh
+  - repo: ssh://git@github.com/robertdebock/docker-centos-systemd.git
+    dest: docker-centos-systemd
+  - repo: ssh://git@github.com/robertdebock/docker-cntlm.git
+    dest: docker-cntlm
+  - repo: ssh://git@github.com/robertdebock/docker-debian-systemd.git
+    dest: docker-debian-systemd
+  - repo: ssh://git@github.com/robertdebock/docker-fedora-systemd.git
+    dest: docker-fedora-systemd
+  - repo: ssh://git@github.com/robertdebock/docker-github-action-galaxy.git
+    dest: docker-github-action-galaxy
+  - repo: ssh://git@github.com/robertdebock/docker-github-action-graphviz.git
+    dest: docker-github-action-graphviz
+  - repo: ssh://git@github.com/robertdebock/docker-github-action-molecule.git
+    dest: docker-github-action-molecule
+  - repo: ssh://git@github.com/robertdebock/docker-github-action-rpmbuild.git
+    dest: docker-github-action-rpmbuild
+  - repo: ssh://git@github.com/robertdebock/docker-opensuse-systemd.git
+    dest: docker-opensuse-systemd
+  - repo: ssh://git@github.com/robertdebock/docker-oraclelinux-systemd.git
+    dest: docker-oraclelinux-systemd
+  - repo: ssh://git@github.com/robertdebock/docker-redhat-systemd.git
+    dest: docker-redhat-systemd
+  - repo: ssh://git@github.com/robertdebock/docker-revealmd.git
+    dest: docker-revealmd
+  - repo: ssh://git@github.com/robertdebock/docker-ubuntu-systemd.git
+    dest: docker-ubuntu-systemd
+  - repo: ssh://git@github.com/robertdebock/galaxy-action.git
+    dest: galaxy-action
+  - repo: ssh://git@github.com/robertdebock/graphviz-action.git
+    dest: graphviz-action
+  - repo: ssh://git@github.com/robertdebock/katacoda-scenarios.git
+    dest: katacoda-scenarios
+  - repo: ssh://git@github.com/robertdebock/learn-terraform.git
+    dest: learn-terraform
+  - repo: ssh://git@github.com/robertdebock/learn-terraform-azure.git
+    dest: learn-terraform-azure
+  - repo: ssh://git@github.com/robertdebock/mirror.git
+    dest: mirror
+  - repo: ssh://git@github.com/robertdebock/molecule-action.git
+    dest: molecule-action
+  - repo: ssh://git@github.com/robertdebock/move_to_collections.git
+    dest: move_to_collections
+  - repo: ssh://git@github.com/robertdebock/packer-centos.git
+    dest: packer-centos
+  - repo: ssh://git@github.com/robertdebock/packer-fedora.git
+    dest: packer-fedora
+  - repo: ssh://git@github.com/robertdebock/packer-opensuse.git
+    dest: packer-opensuse
+  - repo: ssh://git@github.com/robertdebock/pre-commit.git
+    dest: pre-commit
+  - repo: ssh://git@github.com/robertdebock/presentations.git
+    dest: presentations
+  - repo: ssh://git@github.com/robertdebock/rpmbuild-action.git
+    dest: rpmbuild-action
+  - repo: ssh://git@github.com/robertdebock/ansible-role-skeleton.git
+    dest: skeleton
+  - repo: ssh://git@github.com/robertdebock/terraform-action.git
+    dest: terraform-action
+  - repo: ssh://git@github.com/robertdebock/terraform-aws-vpc-bootstrap.git
+    dest: terraform-aws-vpc-bootstrap
+  - repo: ssh://git@github.com/robertdebock/terraform-azurerm-azurerm_network_interface.git
+    dest: terraform-azurerm-azurerm_network_interface
+  - repo: ssh://git@github.com/robertdebock/terraform-azurerm-azurerm_network_security_group.git
+    dest: terraform-azurerm-azurerm_network_security_group
+  - repo: ssh://git@github.com/robertdebock/terraform-azurerm-azurerm_network_security_rule.git
+    dest: terraform-azurerm-azurerm_network_security_rule
+  - repo: ssh://git@github.com/robertdebock/terraform-azurerm-azurerm_public_ip.git
+    dest: terraform-azurerm-azurerm_public_ip
+  - repo: ssh://git@github.com/robertdebock/terraform-azurerm-azurerm_resource_group.git
+    dest: terraform-azurerm-azurerm_resource_group
+  - repo: ssh://git@github.com/robertdebock/terraform-azurerm-azurerm_subnet.git
+    dest: terraform-azurerm-azurerm_subnet
+  - repo: ssh://git@github.com/robertdebock/terraform-azurerm-azurerm_virtual_network.git
+    dest: terraform-azurerm-azurerm_virtual_network
+  - repo: ssh://git@github.com/robertdebock/terraform-cloudflare-record.git
+    dest: terraform-cloudflare-record
+  - repo: ssh://git@github.com/robertdebock/terraform-demo.git
+    dest: terraform-demo
+  - repo: ssh://git@github.com/robertdebock/terraform-digitalocean-droplet.git
+    dest: terraform-digitalocean-droplet
+  - repo: ssh://git@github.com/robertdebock/terraform-digitalocean-ssh_key.git
+    dest: terraform-digitalocean-ssh_key
+  - repo: ssh://git@github.com/robertdebock/terraform-digitalocean-vpc.git
+    dest: terraform-digitalocean-vpc
+  - repo: ssh://git@github.com/robertdebock/terraform-use-case-azure-loadbalanced-service.git
+    dest: terraform-use-case-azure-loadbalanced-service
+  - repo: ssh://git@github.com/robertdebock/terragrunt-demo.git
+    dest: terragrunt-demo

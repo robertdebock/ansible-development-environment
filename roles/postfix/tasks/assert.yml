@@ -1,58 +1,65 @@
 ---
+
 - name: test if postfix_myhostname is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - postfix_myhostname is defined
-      - postfix_myhostname | length > 0
+      - postfix_myhostname is string
     quiet: yes
 
 - name: test if postfix_mydomain is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - postfix_mydomain is defined
-      - postfix_mydomain | length > 0
+      - postfix_mydomain is string
     quiet: yes
 
 - name: test if postfix_myorigin is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - postfix_myorigin is defined
-      - postfix_myorigin | length > 0
+      - postfix_myorigin is string
     quiet: yes
 
 - name: test if postfix_inet_interfaces is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - postfix_inet_interfaces is defined
-      - postfix_inet_interfaces | length > 0
+      - postfix_inet_interfaces is string
     quiet: yes
 
 - name: test if postfix_mydestination is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - postfix_mydestination is defined
-      - postfix_mydestination | length > 0
+      - postfix_mydestination is string
     quiet: yes
 
 - name: test if postfix_mynetworks is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - postfix_mynetworks is defined
-      - postfix_mynetworks | length > 0
+      - postfix_mynetworks is string
     quiet: yes
 
 - name: test if postfix_smtpd_recipient_restrictions is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - postfix_smtpd_recipient_restrictions is defined
-      - postfix_smtpd_recipient_restrictions | length > 0
       - postfix_smtpd_recipient_restrictions is iterable
     quiet: yes
 
 - name: test if postfix_smtpd_sender_restrictions is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - postfix_smtpd_sender_restrictions is defined
-      - postfix_smtpd_sender_restrictions | length > 0
       - postfix_smtpd_sender_restrictions is iterable
     quiet: yes
+
+- name: test if postfix_smtpd_sender_restrictions is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_tls_protocols is string
+    quiet: yes
+  when:
+    - postfix_tls_protocols is defined

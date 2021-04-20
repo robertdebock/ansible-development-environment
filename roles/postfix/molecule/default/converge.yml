@@ -6,6 +6,7 @@
 
   roles:
     - role: ansible-role-postfix
+      postfix_relayhost: "[relay.example.com]"
       postfix_myhostname: "smtp.example.com"
       postfix_mydomain: "example.com"
       postfix_myorigin: "example.com"

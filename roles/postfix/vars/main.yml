@@ -13,8 +13,6 @@ _postfix_daemon_directory:
 
 postfix_daemon_directory: "{{_postfix_daemon_directory[ansible_os_family] | default(_postfix_daemon_directory['default']) }}"
 
-postfix_group: postdrop
-
 _postfix_alias_path:
   default: /etc/aliases
   Alpine: /etc/postfix/aliases
@@ -24,3 +22,9 @@ postfix_alias_path: "{{ _postfix_alias_path[ansible_os_family] | default(_postfi
 postfix_recipient_access_path: /etc/postfix/recipient_access
 
 postfix_sender_access_path: /etc/postfix/sender_access
+
+_postfix_group:
+  default: postdrop
+  Suse: maildrop
+
+postfix_group: "{{ _postfix_group[ansible_os_family] | default(_postfix_group['default']) }}"

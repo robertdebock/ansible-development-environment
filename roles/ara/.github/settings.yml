@@ -5,3 +5,4 @@
 repository:
   description: Install and configure ara on your system.
   homepage: https://robertdebock.nl/
+  topics: ansiblerecordsansible, ara, arareportsansible, cloud, development, monitoring, reporting, ansible, molecule, tox, playbook, hacktoberfest

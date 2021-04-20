@@ -1,14 +1,15 @@
 ---
+
 - name: test if vagrant_version is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - vagrant_version is defined
-      - vagrant_version | length > 0
+      - vagrant_version is string
     quiet: yes
 
 - name: test if vagrant_unarchive_dest is set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - vagrant_unarchive_dest is defined
-      - vagrant_unarchive_dest | length > 0
+      - vagrant_unarchive_dest is string
     quiet: yes

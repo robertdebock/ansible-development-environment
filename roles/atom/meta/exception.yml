@@ -4,3 +4,5 @@ exceptions:
     reason: "Package: atom ... Requires: libsecret-1.so.0 ... and ... polkit"
   - variation: debian:bullseye
     reason: "An error occurred during the test sequence action: 'idempotence'. Cleaning up."
+  - variation: centos:7
+    reason: "/lib64/libstdc++.so.6: version `CXXABI_1.3.9' not found"
