@@ -1,7 +1,0 @@
----
-#
-# Ansible managed
-#
-repository:
-  description: Install ruby on your system.
-  homepage: https://robertdebock.nl/

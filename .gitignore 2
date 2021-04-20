@@ -1,5 +1,0 @@
-id_rsa
-!roles/requirements.yml
-files/ssh_keys
-.vagrant
-releases
