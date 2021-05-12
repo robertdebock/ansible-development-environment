@@ -1,0 +1,8 @@
+---
+language: python
+
+install:
+  - pip install ansible
+
+script:
+  - ansible-galaxy collection publish $(ansible-galaxy collection build|awk '{print $NF}') --api-key=${galaxy_api_key}
