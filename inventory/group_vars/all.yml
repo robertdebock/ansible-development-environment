@@ -273,6 +273,8 @@ git_repositories:
     dest: ansible-role-python_pip
   - repo: ssh://git@github.com/robertdebock/ansible-role-qemu.git
     dest: ansible-role-qemu
+  - repo: ssh://git@github.com/robertdebock/ansible-role-rabbitvcs.git
+    dest: ansible-role-rabbitvcs
   - repo: ssh://git@github.com/robertdebock/ansible-role-reboot.git
     dest: ansible-role-reboot
   - repo: ssh://git@github.com/robertdebock/ansible-role-redis.git
