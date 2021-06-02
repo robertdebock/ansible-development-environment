@@ -303,6 +303,8 @@ git_repositories:
     dest: ansible-role-selinux
   - repo: ssh://git@github.com/robertdebock/ansible-role-service.git
     dest: ansible-role-service
+  - repo: ssh://git@github.com/robertdebock/ansible-role-snmpd.git
+    dest: ansible-role-snmpd
   - repo: ssh://git@github.com/robertdebock/ansible-role-snort.git
     dest: ansible-role-snort
   - repo: ssh://git@github.com/robertdebock/ansible-role-software.git
