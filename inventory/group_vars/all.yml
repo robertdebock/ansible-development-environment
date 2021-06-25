@@ -91,6 +91,8 @@ git_repositories:
     dest: ansible-role-common
   - repo: ssh://git@github.com/robertdebock/ansible-role-container_docs.git
     dest: ansible-role-container_docs
+  - repo: ssh://git@github.com/robertdebock/ansible-role-collabora_online.git
+    dest: ansible-role-collabora_online
   - repo: ssh://git@github.com/robertdebock/ansible-role-consul.git
     dest: ansible-role-consul
   - repo: ssh://git@github.com/robertdebock/ansible-role-core_dependencies.git
