@@ -109,6 +109,8 @@ git_repositories:
     dest: ansible-role-dhcpd
   - repo: ssh://git@github.com/robertdebock/ansible-role-digitalocean-agent.git
     dest: ansible-role-digitalocean-agent
+  - repo: ssh://git@github.com/robertdebock/ansible-role-diskspace.git
+    dest: ansible-role-diskspace
   - repo: ssh://git@github.com/robertdebock/ansible-role-dns.git
     dest: ansible-role-dns
   - repo: ssh://git@github.com/robertdebock/ansible-role-dnsmasq.git
