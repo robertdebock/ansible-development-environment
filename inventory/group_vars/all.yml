@@ -265,6 +265,8 @@ git_repositories:
     dest: ansible-role-php_fpm
   - repo: ssh://git@github.com/robertdebock/ansible-role-phpmyadmin.git
     dest: ansible-role-phpmyadmin
+  - repo: ssh://git@github.com/robertdebock/ansible-role-podman.git
+    dest: ansible-role-podman
   - repo: ssh://git@github.com/robertdebock/ansible-role-postfix.git
     dest: ansible-role-postfix
   - repo: ssh://git@github.com/robertdebock/ansible-role-postgres.git
