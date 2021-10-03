@@ -131,6 +131,8 @@ git_repositories:
     dest: ansible-role-eclipse
   - repo: ssh://git@github.com/robertdebock/ansible-role-environment.git
     dest: ansible-role-environment
+  - repo: ssh://git@github.com/robertdebock/ansible-role-elastic_repo.git
+    dest: ansible-role-elastic_repo
   - repo: ssh://git@github.com/robertdebock/ansible-role-epel.git
     dest: ansible-role-epel
   - repo: ssh://git@github.com/robertdebock/ansible-role-etherpad.git
