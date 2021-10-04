@@ -133,6 +133,8 @@ git_repositories:
     dest: ansible-role-environment
   - repo: ssh://git@github.com/robertdebock/ansible-role-elastic_repo.git
     dest: ansible-role-elastic_repo
+  - repo: ssh://git@github.com/robertdebock/ansible-role-elasticsearch.git
+    dest: ansible-role-elasticsearch
   - repo: ssh://git@github.com/robertdebock/ansible-role-epel.git
     dest: ansible-role-epel
   - repo: ssh://git@github.com/robertdebock/ansible-role-etherpad.git
@@ -189,6 +191,8 @@ git_repositories:
     dest: ansible-role-keepalived
   - repo: ssh://git@github.com/robertdebock/ansible-role-kernel.git
     dest: ansible-role-kernel
+  - repo: ssh://git@github.com/robertdebock/ansible-role-kibana.git
+    dest: ansible-role-kibana
   - repo: ssh://git@github.com/robertdebock/ansible-role-kubectl.git
     dest: ansible-role-kubectl
   - repo: ssh://git@github.com/robertdebock/ansible-role-libvirt.git
@@ -197,6 +201,8 @@ git_repositories:
     dest: ansible-role-locale
   - repo: ssh://git@github.com/robertdebock/ansible-role-logrotate.git
     dest: ansible-role-logrotate
+  - repo: ssh://git@github.com/robertdebock/ansible-role-logstash.git
+    dest: ansible-role-logstash
   - repo: ssh://git@github.com/robertdebock/ansible-role-logwatch.git
     dest: ansible-role-logwatch
   - repo: ssh://git@github.com/robertdebock/ansible-role-luks.git
