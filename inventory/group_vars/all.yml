@@ -219,6 +219,8 @@ git_repositories:
     dest: ansible-role-mediawiki
   - repo: ssh://git@github.com/robertdebock/ansible-role-memcached.git
     dest: ansible-role-memcached
+  - repo: ssh://git@github.com/robertdebock/ansible-role-metricbeat.git
+    dest: ansible-role-metricbeat
   - repo: ssh://git@github.com/robertdebock/ansible-role-microsoft_repository_keys.git
     dest: ansible-role-microsoft_repository_keys
   - repo: ssh://git@github.com/robertdebock/ansible-role-minikube.git
