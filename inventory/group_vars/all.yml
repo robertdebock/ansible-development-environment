@@ -103,6 +103,8 @@ git_repositories:
     dest: ansible-role-cups
   - repo: ssh://git@github.com/robertdebock/ansible-role-cve_2018_19788.git
     dest: ansible-role-cve_2018_19788
+  - repo: ssh://git@github.com/robertdebock/ansible-role-cve_2021_44228.git
+    dest: ansible-role-cve_2021_44228
   - repo: ssh://git@github.com/robertdebock/ansible-role-debug.git
     dest: ansible-role-debug
   - repo: ssh://git@github.com/robertdebock/ansible-role-dhcpd.git
