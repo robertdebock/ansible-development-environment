@@ -157,6 +157,8 @@ git_repositories:
     dest: ansible-role-functions
   - repo: ssh://git@github.com/robertdebock/ansible-role-git.git
     dest: ansible-role-git
+  - repo: ssh://git@github.com/robertdebock/ansible-role-gitlab.git
+    dest: ansible-role-gitlab
   - repo: ssh://git@github.com/robertdebock/ansible-role-gitlab_runner.git
     dest: ansible-role-gitlab_runner
   - repo: ssh://git@github.com/robertdebock/ansible-role-glusterfs.git
