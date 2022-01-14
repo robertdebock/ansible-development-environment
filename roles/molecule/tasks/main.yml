@@ -7,8 +7,30 @@
     state: present
   become: yes
 
-- name: install molecule
-  ansible.builtin.pip:
-    name: molecule[ansible,docker,lint]
-    state: present
-    extra_args: "{{ molecule_extra_args | default(omit) }}"
+- name: wrap pip module install 
+  block:
+
+    - name: Create temporary directory
+      ansible.builtin.tempfile:
+        path: '~'
+        state: directory
+        suffix: tmp
+      register: tmp_directory
+      changed_when: no
+
+    - name: install molecule
+      ansible.builtin.pip:
+        name: molecule[ansible,docker,lint]
+        state: present
+        extra_args: "{{ molecule_extra_args | default(omit) }}"
+      environment:
+        TMPDIR: "{{ tmp_directory.path }}"
+
+  always:
+
+    - name: Remove the temporary directory
+      ansible.builtin.file:
+        path: "{{ tmp_directory.path }}"
+        state: absent
+      when: tmp_directory.path is defined
+      changed_when: no
