@@ -13,7 +13,7 @@
 
 - name: create ara service
   ansible.builtin.import_role:
-    name: robertdebock.service
+    name: robertdebock.development_environment.service
   vars:
     service_list:
       - name: ara
