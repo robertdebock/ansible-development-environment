@@ -70,3 +70,4 @@
     - getent_passwd[git_username] != none
   loop_control:
     label: "{{ item.dest }}"
+  ignore_errors: '{{ not git_username == "robertdb" | bool }}'
