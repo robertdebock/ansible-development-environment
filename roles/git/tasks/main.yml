@@ -70,3 +70,5 @@
     - git_repository_destination is defined
     - git_username is defined
     - getent_passwd[git_username] != none
+  loop_control:
+    label: "{{ item.dest }}"
