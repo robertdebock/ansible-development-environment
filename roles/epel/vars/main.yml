@@ -6,8 +6,18 @@ _epel_version:
   Amazon-2018: 6
   Amazon-2: 7
 
-epel_version: "{{ _epel_version[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_epel_version['default']) }}"
+epel_version: "{{ _epel_version[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_epel_version['default'] ) }}"
 
 epel_url: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ epel_version }}.noarch.rpm"
 
+epel_next_url: "https://dl.fedoraproject.org/pub/epel/epel-next-release-latest-{{ epel_version }}.noarch.rpm"
+
 epel_gpg_key: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ epel_version }}"
+
+# Whether to install the new `epel-next` repository. This is only installed by default
+# on CentOS Stream, as per https://docs.fedoraproject.org/en-US/epel/#_quickstart.
+_epel_next:
+  default: no
+  Stream: yes
+
+epel_next: "{{ _epel_next[ansible_distribution_release] | default(_epel_next['default'] ) }}"

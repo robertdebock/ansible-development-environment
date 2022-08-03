@@ -8,10 +8,10 @@ _reboot_requirements:
   Fedora: dnf-utils
   Ubuntu: needrestart
 
-reboot_requirements: "{{ _reboot_requirements[ansible_distribution] | default(_reboot_requirements['default']) }}"
+reboot_requirements: "{{ _reboot_requirements[ansible_distribution] | default(_reboot_requirements['default'] ) }}"
 
 _reboot_command:
   default: shutdown -r now {{ reboot_message }}
   Alpine: reboot
 
-reboot_command: "{{ _reboot_command[ansible_os_family] | default(_reboot_command['default']) }}"
+reboot_command: "{{ _reboot_command[ansible_os_family] | default(_reboot_command['default'] ) }}"

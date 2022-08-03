@@ -2,18 +2,33 @@
 # vars file for python_pip
 
 _python_pip_packages:
-  Alpine:
-    - py3-pip
-    - py3-setuptools
-    - python3-dev
-  Debian:
-    - python3-pip
-    - python3-setuptools
-  RedHat:
-    - python3-pip
-    - python3-setuptools
-  Suse:
-    - python3-pip
-    - python3-setuptools
+  2:
+    default:
+      - python-pip
+      - python-setuptools
+  3:
+    default:
+      - python3-pip
+      - python3-setuptools
+    Alpine:
+      - py3-pip
+      - py3-setuptools
+      - python3-dev
 
-python_pip_packages: "{{ _python_pip_packages[ansible_os_family] | default(_python_pip_packages['default']) }}"
+# Find the list of packages, based on the mapping above and the used python
+# version used for running Ansible.
+python_pip_packages: "{{ _python_pip_packages[ansible_python.version.major | int][ansible_os_family] | default(_python_pip_packages[ansible_python.version.major | int]['default'] | default(_python_pip_packages['3']['default'] )) }}"
+
+_python_pip_pip_package:
+  default:
+    - pip
+  RedHat-7:
+    - pip==20.3.4
+
+python_pip_pip_package: "{{ _python_pip_pip_package[ansible_os_family ~ '-' ~ ansible_distribution_major_version] | default(_python_pip_pip_package['default'] ) }}"
+
+_python_pip_pip_state:
+  default: latest
+  RedHat-7: present
+
+python_pip_pip_state: "{{ _python_pip_pip_state[ansible_os_family] | default(_python_pip_pip_state['default'] ) }}"

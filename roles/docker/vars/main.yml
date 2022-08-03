@@ -4,28 +4,22 @@
 _docker_packages:
   default:
     - docker
-  Alpine:
-    - docker
-  RedHat-7:
-    - docker-io
-  RedHat-8:
-    - podman-docker
   Debian:
     - docker.io
+  RedHat-7:
+    - docker-io
+  RedHat:
+    - moby-engine
 
-docker_packages: "{{ _docker_packages[ansible_os_family ~ '-' ~ ansible_distribution_major_version] | default(_docker_packages[ansible_os_family] | default(_docker_packages['default'])) }}"
+docker_packages: "{{ _docker_packages[ansible_os_family ~ '-' ~ ansible_distribution_major_version] | default(_docker_packages[ansible_os_family] | default(_docker_packages['default'] )) }}"
 
 docker_pip_packages:
   - docker
 
 _docker_service:
   default: docker
-  RedHat-8: io.podman
+  RedHat: "docker"
 
-docker_service: "{{ _docker_service[ansible_os_family ~ '-' ~ ansible_distribution_major_version] | default(_docker_service['default']) }}"
+docker_service: "{{ _docker_service[ansible_os_family] | default(_docker_service['default'] ) }}"
 
-_docker_socket:
-  default: /var/run/docker.sock
-  RedHat-8: /var/run/podman/io.podman
-
-docker_socket: "{{ _docker_socket[ansible_os_family ~ '-' ~ ansible_distribution_major_version] | default(_docker_socket['default']) }}"
+docker_socket: /var/run/docker.sock

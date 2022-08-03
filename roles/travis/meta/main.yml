@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   author: Robert de Bock
+  namespace: robertdebock
   role_name: travis
   description: Installs travis on your system.
   license: Apache-2.0
@@ -16,15 +17,13 @@ galaxy_info:
         - 8
     - name: Debian
       versions:
-        - buster
-        - bullseye
+        - all
     - name: OpenSUSE
       versions:
         - all
     - name: Ubuntu
       versions:
-        - focal
-        - bionic
+        - all
 
   galaxy_tags:
     - travis

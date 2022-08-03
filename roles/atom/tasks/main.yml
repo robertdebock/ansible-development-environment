@@ -1,8 +1,8 @@
 ---
 # tasks file for atom
 
-- name: include assert.yml
-  import_tasks: assert.yml
+- name: import assert.yml
+  ansible.builtin.import_tasks: assert.yml
   run_once: yes
   delegate_to: localhost
 
@@ -18,7 +18,7 @@
   ansible.builtin.get_url:
     url: "{{ atom_package_url }}"
     dest: "/tmp/{{ atom_package }}"
-    checksum: "{{ atom_checksum }}"
+    # checksum: "{{ atom_checksum }}"
     validate_certs: no
   when:
     - ansible_pkg_mgr in [ "apt", "dnf", "yum", "zypper" ]
@@ -55,7 +55,7 @@
     - ansible_pkg_mgr == "zypper"
 
 - name: install apm packages
-  ansible.builtin.command: apm install {{ item }}
-  args:
+  ansible.builtin.command:
+    cmd: apm install {{ item }}
     creates: /root/.atom/packages/linter
   loop: "{{ atom_apm_packages }}"

@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   author: Robert de Bock
+  namespace: robertdebock
   role_name: docker
   description: Install and configure Docker (non-CE) on your system.
   license: Apache-2.0
@@ -11,20 +12,15 @@ galaxy_info:
     - name: Alpine
       versions:
         - all
-    - name: EL
-      versions:
-        - 8
     - name: Debian
       versions:
-        - buster
-        - bullseye
+        - all
     - name: Fedora
       versions:
         - all
     - name: Ubuntu
       versions:
-        - focal
-        - bionic
+        - all
 
   galaxy_tags:
     - docker

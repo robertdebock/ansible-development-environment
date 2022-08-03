@@ -11,4 +11,4 @@ _common_requirements:
   CentOS:
     - dbus
 
-common_requirements: "{{ _common_requirements[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_common_requirements[ansible_distribution] | default(_common_requirements['default'])) }}"
+common_requirements: "{{ _common_requirements[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_common_requirements[ansible_distribution] | default(_common_requirements['default'] )) }}"

@@ -1,8 +1,0 @@
----
-exceptions:
-  - variation: amazonlinux
-    reason: "python2 is installed already."
-  - variation: alpine
-    reason: "Failed to create temporary directory."
-  - variation: "centos:7"
-    reason: "CentOS 7 uses python2, which is EOL."

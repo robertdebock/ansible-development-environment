@@ -6,6 +6,7 @@
     name: ara
     state: restarted
   become: yes
+  become_user: root
   when:
     - not ansible_check_mode | bool
 
@@ -13,5 +14,6 @@
   ansible.builtin.systemd:
     daemon_reload: yes
   become: yes
+  become_user: root
   notify:
     - restart ara

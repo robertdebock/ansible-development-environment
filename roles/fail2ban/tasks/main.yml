@@ -1,8 +1,8 @@
 ---
 # tasks file for fail2ban
 
-- name: include assert.yml
-  import_tasks: assert.yml
+- name: import assert.yml
+  ansible.builtin.import_tasks: assert.yml
   run_once: yes
   delegate_to: localhost
 
@@ -11,9 +11,20 @@
     name: "{{ fail2ban_packages }}"
     state: present
 
-- name: configure fail2ban.conf
+- name: copy filters in filter.d
+  ansible.builtin.copy:
+    src: "{{ fail2ban_filterd_path }}"
+    dest: /etc/fail2ban/filter.d/
+    owner: root
+    group: root
+    mode: "0640"
+  when: fail2ban_filterd_path is defined
+  notify:
+    - restart fail2ban
+
+- name: configure fail2ban.local
   community.general.ini_file:
-    path: /etc/fail2ban/fail2ban.conf
+    path: /etc/fail2ban/fail2ban.local
     section: "{{ item.section }}"
     option: "{{ item.option }}"
     value: "{{ item.value }}"

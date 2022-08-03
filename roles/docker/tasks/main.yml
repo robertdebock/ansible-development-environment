@@ -11,10 +11,21 @@
     name: "{{ docker_pip_packages }}"
     state: present
 
-- name: add docker group
+- name: create privileged docker user group
   ansible.builtin.group:
     name: docker
-    system: yes
+    state: present
+
+- name: add privileged users to the docker user group
+  ansible.builtin.user:
+    name: "{{ user }}"
+    groups: docker
+    append: yes
+  loop: "{{ docker_privileged_users }}"
+  loop_control:
+    loop_var: user
+  when:
+    - docker_privileged_users is defined
 
 - name: start and enable docker
   ansible.builtin.service:
@@ -24,4 +35,4 @@
   notify:
     - change group for docker socket
   when:
-    - ansible_connection != "docker"
+    - ansible_connection not in [ "container", "docker", "community.docker.docker" ]

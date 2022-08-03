@@ -10,7 +10,7 @@
 
   tasks:
     - name: check simple-service
-      service:
+      ansible.builtin.service:
         name: simple-service
         state: started
         enabled: yes
@@ -20,7 +20,7 @@
         - service_check_simple_service is changed
 
     - name: check stopped-service
-      service:
+      ansible.builtin.service:
         name: stopped-service
         state: stopped
         enabled: no

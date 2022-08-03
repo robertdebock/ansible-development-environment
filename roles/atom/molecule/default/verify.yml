@@ -6,4 +6,8 @@
 
   tasks:
     - name: check if atom exists works
-      command: file /usr/bin/atom
+      ansible.builtin.stat:
+        path: /usr/bin/atom
+      register: atom_test_one
+      failed_when:
+        - not atom_test_one.stat.exists

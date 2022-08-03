@@ -16,7 +16,7 @@
         force: yes
       - repo: https://github.com/robertdebock/ansible-role-bootstrap
         dest: bootstrap-version
-        version: 2.11.1
+        version: "2.11.1"
 
   roles:
     - role: ansible-role-git

@@ -1,8 +1,8 @@
 ---
 # tasks file for python_pip
 
-- name: include assert.yml
-  import_tasks: assert.yml
+- name: import assert.yml
+  ansible.builtin.import_tasks: assert.yml
   run_once: yes
   delegate_to: localhost
 
@@ -33,13 +33,19 @@
 
 - name: update pip
   ansible.builtin.pip:
-    name:
-      - pip
-      - setuptools
-    state: latest  # noqa package-latest
+    name: "{{ python_pip_pip_package }}"
+    state: "{{ python_pip_pip_state }}"  # noqa package-latest
     executable: "{{ python_pip_executable | default(omit) }}"
   when:
     - python_pip_update | bool
+
+# - name: update setuptools
+#   ansible.builtin.pip:
+#     name: setuptools
+#     state: latest  # noqa package-latest
+#     executable: "{{ python_pip_executable | default(omit) }}"
+#   when:
+#     - python_pip_update | bool
 
 - name: install requested modules
   ansible.builtin.pip:

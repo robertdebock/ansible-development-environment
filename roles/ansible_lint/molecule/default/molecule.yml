@@ -6,6 +6,7 @@ dependency:
   name: galaxy
   options:
     role-file: requirements.yml
+    requirements-file: requirements.yml
 lint: |
   set -e
   yamllint .
@@ -13,7 +14,7 @@ lint: |
 driver:
   name: docker
 platforms:
-  - name: "ansible_lint-${image:-fedora}-${tag:-latest}${TOX_ENVNAME}"
+  - name: "ansiblelint-${image:-fedora}-${tag:-latest}${TOX_ENVNAME}"
     image: "${namespace:-robertdebock}/${image:-fedora}:${tag:-latest}"
     command: /sbin/init
     volumes:
@@ -22,9 +23,5 @@ platforms:
     pre_build_image: yes
 provisioner:
   name: ansible
-  config_options:
-    defaults:
-      stdout_callback: yaml
-      bin_ansible_callbacks: yes
 verifier:
   name: ansible

@@ -6,13 +6,17 @@
 
   tasks:
     - name: run gcc
-      command: gcc --version
+      ansible.builtin.command:
+        cmd: gcc --version
 
     - name: run make
-      command: make --version
+      ansible.builtin.command:
+        cmd: make --version
 
     - name: run shasum
-      command: shasum --version
+      ansible.builtin.command:
+        cmd: shasum --version
 
     - name: run bison
-      command: bison --version
+      ansible.builtin.command:
+        cmd: bison --version

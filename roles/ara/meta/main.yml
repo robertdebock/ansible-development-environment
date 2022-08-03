@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   author: Robert de Bock
+  namespace: robertdebock
   role_name: ara
   description: Install and configure ara on your system.
   license: Apache-2.0
@@ -13,8 +14,7 @@ galaxy_info:
         - 8
     - name: Debian
       versions:
-        - buster
-        - bullseye
+        - all
     - name: Fedora
       versions:
         - all

@@ -28,7 +28,7 @@
   when:
     - item.state is defined
 
-- name: test if item.name in python_pip_modules is set correctly
+- name: test if item.version in python_pip_modules is set correctly
   ansible.builtin.assert:
     that:
       - item.version is string

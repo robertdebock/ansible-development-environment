@@ -1,8 +1,8 @@
 ---
 # tasks file for postfix
 
-- name: include assert.yml
-  import_tasks: assert.yml
+- name: import assert.yml
+  ansible.builtin.import_tasks: assert.yml
   run_once: yes
   delegate_to: localhost
 
@@ -17,8 +17,39 @@
 
 - name: install postfix
   ansible.builtin.package:
-    name: "{{ postfix_packages }}"
+    name: postfix
     state: present
+
+- name: install postfix-mysql
+  ansible.builtin.package:
+    name: postfix-mysql
+    state: present
+  when:
+    - (postfix_virtual_mailbox_maps is defined and "'mysql' in postfix_virtual_mailbox_maps) or
+      (postfix_virtual_mailbox_domains is defined and 'mysql' in postfix_virtual_mailbox_domains) or
+      (postix_virtual_alias_maps is defined and 'mysql' in postix_virtual_alias_maps")
+
+- name: configure postfix (transport_maps)
+  ansible.builtin.template:
+    src: "{{ postfix_transport_maps_template }}"
+    dest: /etc/postfix/transport
+    mode: "0644"
+  notify:
+    - validate configuration
+    - rebuild transport_maps database
+  when:
+    - postfix_transport_maps_template is defined
+
+- name: configure postfix (header_checks)
+  ansible.builtin.template:
+    src: "{{ postfix_header_checks_template }}"
+    dest: /etc/postfix/header_checks
+    mode: "0644"
+  notify:
+    - validate configuration
+    - reload postfix
+  when:
+    - postfix_header_checks_template is defined
 
 - name: configure postfix (main.cf)
   ansible.builtin.template:
@@ -27,6 +58,7 @@
     validate: postconf -d -c %s
     mode: "0644"
   notify:
+    - validate configuration
     - reload postfix
 
 - name: configure postfix (master.cf)
@@ -36,9 +68,10 @@
     validate: postconf -d -c %s
     mode: "0644"
   notify:
+    - validate configuration
     - restart postfix
 
-- name: force all notified handlers to run
+- name: flush handlers
   ansible.builtin.meta: flush_handlers
 
 - name: configure aliases
@@ -83,12 +116,13 @@
     - postfix_recipient_access is defined
   loop: "{{ postfix_recipient_access }}"
   notify:
+    - validate configuration
     - rebuild recipient_access database
     - reload postfix
   loop_control:
     label: "{{ item.domain }}"
 
-- name: force all notified handlers to run
+- name: flush handlers again
   ansible.builtin.meta: flush_handlers
 
 - name: start and enable postfix

@@ -1,8 +1,8 @@
 ---
 # tasks file for git
 
-- name: include assert.yml
-  import_tasks: assert.yml
+- name: import assert.yml
+  ansible.builtin.import_tasks: assert.yml
   run_once: yes
   delegate_to: localhost
 
@@ -61,6 +61,8 @@
     version: "{{ item.version | default('HEAD') }}"
     force: "{{ item.force | default(git_force) }}"
   loop: "{{ git_repositories }}"
+  loop_control:
+    label: "{{ item.dest }}"
   become: yes
   become_user: "{{ git_username }}"
   when:
@@ -68,5 +70,3 @@
     - git_repository_destination is defined
     - git_username is defined
     - getent_passwd[git_username] != none
-  loop_control:
-    label: "{{ item.dest }}"

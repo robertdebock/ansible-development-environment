@@ -6,11 +6,11 @@
 
   tasks:
     - name: check if port 25 is open
-      wait_for:
+      ansible.builtin.wait_for:
         port: 25
 
     - name: check if a mail can be sent
-      mail:
+      community.general.mail:
         from: "Robert de Bock <robert@example.com>"
         to: "Robert de Bock <root@example.com>"
         subject: Testing ansible-role-postfix.

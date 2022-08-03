@@ -1,9 +1,6 @@
 ---
 # vars file for postfix
 
-postfix_packages:
-  - postfix
-
 postfix_service: postfix
 
 _postfix_daemon_directory:
@@ -11,13 +8,13 @@ _postfix_daemon_directory:
   Debian: /usr/lib/postfix/sbin
   Suse: /usr/lib/postfix/bin
 
-postfix_daemon_directory: "{{_postfix_daemon_directory[ansible_os_family] | default(_postfix_daemon_directory['default']) }}"
+postfix_daemon_directory: "{{ _postfix_daemon_directory[ansible_os_family] | default(_postfix_daemon_directory['default'] ) }}"
 
 _postfix_alias_path:
   default: /etc/aliases
   Alpine: /etc/postfix/aliases
 
-postfix_alias_path: "{{ _postfix_alias_path[ansible_os_family] | default(_postfix_alias_path['default']) }}"
+postfix_alias_path: "{{ _postfix_alias_path[ansible_os_family] | default(_postfix_alias_path['default'] ) }}"
 
 postfix_recipient_access_path: /etc/postfix/recipient_access
 
@@ -27,4 +24,4 @@ _postfix_group:
   default: postdrop
   Suse: maildrop
 
-postfix_group: "{{ _postfix_group[ansible_os_family] | default(_postfix_group['default']) }}"
+postfix_group: "{{ _postfix_group[ansible_os_family] | default(_postfix_group['default'] ) }}"

@@ -1,8 +1,8 @@
 ---
 # tasks file for common
 
-- name: include assert.yml
-  import_tasks: assert.yml
+- name: import assert.yml
+  ansible.builtin.import_tasks: assert.yml
   run_once: yes
   delegate_to: localhost
 
@@ -30,8 +30,7 @@
             - gather facts
       when:
         - not common_check_for_network_manager.stat.exists
-        - ansible_connection != "docker"
-
+        - ansible_connection not in [ "container", "docker", "community.docker.docker" ]
       rescue:
         - name: comfort users
           ansible.builtin.debug:
@@ -61,7 +60,7 @@
   ansible.builtin.hostname:
     name: "{{ common_hostname }}"
   when:
-    - ansible_connection != "docker"
+    - ansible_connection not in [ "container", "docker", "community.docker.docker" ]
   notify:
     - reboot
 
@@ -79,4 +78,4 @@
           - "The file /etc/hosts could not be modified."
           - "This is likely because it is mapped from the Docker host to the Docker container."
   when:
-    - ansible_connection != "docker"
+    - ansible_connection not in [ "container", "docker", "community.docker.docker" ]

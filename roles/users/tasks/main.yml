@@ -1,8 +1,8 @@
 ---
 # tasks file for users
 
-- name: include assert.yml
-  import_tasks: assert.yml
+- name: import assert.yml
+  ansible.builtin.import_tasks: assert.yml
   run_once: yes
   delegate_to: localhost
 
@@ -12,7 +12,8 @@
     state: present
 
 - name: loop over users_group_list
-  ansible.builtin.include: group.yml
+  ansible.builtin.include_tasks:
+    file: group.yml
   loop: "{{ users_group_list }}"
   loop_control:
     label: "{{ group.name }}"
@@ -21,7 +22,8 @@
     - users_group_list is defined
 
 - name: loop over users_user_list
-  ansible.builtin.include: user.yml
+  ansible.builtin.include_tasks:
+    file: user.yml
   loop: "{{ users_user_list }}"
   loop_control:
     label: "{{ user.name }}"
@@ -33,7 +35,7 @@
   ansible.builtin.template:
     src: cron.allow.j2
     dest: /etc/cron.allow
-    mode: "0640"
+    mode: "0644"
   when:
     - users_cron_allow | bool
 

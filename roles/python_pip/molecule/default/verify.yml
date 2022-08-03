@@ -6,28 +6,28 @@
 
   tasks:
     - name: install pip module
-      pip:
+      ansible.builtin.pip:
         name: docker
         state: present
 
     - name: check if bootstrap still works.
-      include_role:
+      ansible.builtin.include_role:
         name: robertdebock.bootstrap
 
     - name: remove pip module
-      pip:
+      ansible.builtin.pip:
         name: docker
         state: absent
 
     - name: check if requested modules can be installed
-      include_role:
+      ansible.builtin.include_role:
         name: ansible-role-python_pip
       vars:
         python_pip_modules:
           - name: docker
 
     - name: check if requested modules can be removed
-      include_role:
+      ansible.builtin.include_role:
         name: ansible-role-python_pip
       vars:
         python_pip_modules:
@@ -35,14 +35,15 @@
             state: absent
 
     - name: check if pyOpenSSL can be installed
-      pip:
+      ansible.builtin.pip:
         name: pyOpenSSL
         state: present
       notify:
         - remove pyOpenSSL
 
   handlers:
+
     - name: remove pyOpenSSL
-      pip:
+      ansible.builtin.pip:
         name: pyOpenSSL
         state: absent

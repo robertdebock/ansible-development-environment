@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: Robert de Bock
+  author: robertdebock
   role_name: buildtools
   description: Install buildtools on your system.
   license: Apache-2.0
@@ -16,22 +16,19 @@ galaxy_info:
         - Candidate
     - name: EL
       versions:
-        - 7
-        - 8
+        - "8"
     - name: Debian
       versions:
-        - buster
-        - bullseye
+        - all
     - name: Fedora
       versions:
         - all
-    - name: OpenSUSE
+    - name: opensuse
       versions:
         - all
     - name: Ubuntu
       versions:
-        - focal
-        - bionic
+        - all
 
   galaxy_tags:
     - development

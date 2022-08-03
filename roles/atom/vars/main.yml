@@ -19,14 +19,3 @@ _atom_package:
 
 atom_package_url: '{{ _atom_package[ansible_pkg_mgr]["url"] }}'
 atom_package: "{{ _atom_package[ansible_pkg_mgr]['name'] }}"
-
-# The checksum of the downloaded artifact, this speeds up the execution of the
-# role on second runs as it calculates the (local) checksum and uses the results
-# to see if the artifact would need to be downloaded again.
-_atom_checksum:
-  dnf: &rpmchecksum "sha256:e68d293033741f1f76650b73ea896dbfa94f2ebcaef9330a25001362f5523b7e"
-  yum: *rpmchecksum
-  zypper: *rpmchecksum
-  apt: "sha256:e1c650fcfdfc09aafef0ecfe041d254ad9007fb3ca797dafd21c8333fd0b1340"
-
-atom_checksum: "{{ _atom_checksum[ansible_pkg_mgr] }}"

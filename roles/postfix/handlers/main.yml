@@ -2,13 +2,25 @@
 # handlers file for postfix
 
 - name: rebuild alias database
-  ansible.builtin.command: postmap "{{ postfix_alias_path }}"
+  ansible.builtin.command:
+    cmd: postmap "{{ postfix_alias_path }}"
 
 - name: rebuild sender_access database
-  ansible.builtin.command: postmap "{{ postfix_sender_access_path }}"
+  ansible.builtin.command:
+    cmd: postmap "{{ postfix_sender_access_path }}"
 
 - name: rebuild recipient_access database
-  ansible.builtin.command: postmap "{{ postfix_recipient_access_path }}"
+  ansible.builtin.command:
+    cmd: postmap "{{ postfix_recipient_access_path }}"
+
+- name: rebuild transport_maps database
+  ansible.builtin.command:
+    cmd: postmap /etc/postfix/transport
+
+- name: validate configuration
+  ansible.builtin.command:
+    cmd: postconf
+  changed_when: no
 
 - name: reload postfix
   ansible.builtin.service:

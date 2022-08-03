@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   author: Robert de Bock
+  namespace: robertdebock
   role_name: investigate
   description: Install and configure investigation tools on your system.
   license: Apache-2.0
@@ -16,12 +17,10 @@ galaxy_info:
         - Candidate
     - name: EL
       versions:
-        - 7
         - 8
     - name: Debian
       versions:
-        - buster
-        - bullseye
+        - all
     - name: Fedora
       versions:
         - all
@@ -30,8 +29,7 @@ galaxy_info:
         - all
     - name: Ubuntu
       versions:
-        - focal
-        - bionic
+        - all
 
   galaxy_tags:
     - investigate

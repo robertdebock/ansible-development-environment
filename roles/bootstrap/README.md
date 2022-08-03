@@ -8,12 +8,19 @@ Prepare your system to be managed by Ansible.
 
 ## [Example Playbook](#example-playbook)
 
-This example is taken from `molecule/resources/converge.yml` and is tested on each push, pull request and release.
+This example is taken from `molecule/default/converge.yml` and is tested on each push, pull request and release.
 ```yaml
 ---
 - name: Converge
   hosts: all
-  become: yes
+  # This role installs packages using the `raw` module and needs to connect as
+  # `root`. (`sudo` is not available before bootstrapping.) All tasks in the
+  # role have `become` set to `no`, so you can use either `no` or `yes` for
+  # `become`, the role will not use become (so `sudo`) for any task.
+  become: yes  # `no` will also work.
+  # This role installs python, gathering facts can't be done before `python` is
+  # installed. This role runs the `setup` module, so facts will be available
+  # after running the role.
   gather_facts: no
 
   roles:
@@ -24,13 +31,10 @@ Also see a [full explanation and example](https://robertdebock.nl/how-to-use-the
 
 ## [Role Variables](#role-variables)
 
-These variables are set in `defaults/main.yml`:
+The default values for the variables are set in `defaults/main.yml`:
 ```yaml
 ---
 # defaults file for bootstrap
-
-# The user to use to connect to machines.
-bootstrap_user: root
 
 # Do you want to wait for the host to be available?
 bootstrap_wait_for_host: no
@@ -57,12 +61,13 @@ This role has been tested on these [container images](https://hub.docker.com/u/r
 
 |container|tags|
 |---------|----|
+|alpine|all|
 |amazon|Candidate|
 |el|7, 8|
 |debian|all|
 |fedora|all|
 |opensuse|all|
-|ubuntu|focal, bionic|
+|ubuntu|all|
 
 The minimum version of Ansible required is 2.10, tests have been done to:
 
@@ -72,7 +77,7 @@ The minimum version of Ansible required is 2.10, tests have been done to:
 
 ## [Exceptions](#exceptions)
 
-Some variarations of the build matrix do not work. These are the variations and reasons why the build won't work:
+Some roles can't run on a specific distribution or version. Here are some exceptions.
 
 | variation                 | reason                 |
 |---------------------------|------------------------|
@@ -84,17 +89,6 @@ If you find issues, please register them in [GitHub](https://github.com/robertde
 ## [License](#license)
 
 Apache-2.0
-
-## [Contributors](#contributors)
-
-I'd like to thank everybody that made contributions to this repository. It motivates me, improves the code and is just fun to collaborate.
-
-- [rembik](https://github.com/rembik)
-- [jellevandehaterd](https://github.com/jellevandehaterd)
-- [fzarifian](https://github.com/fzarifian)
-- [kmonticolo](https://github.com/kmonticolo)
-- [CrystalStiletto](https://github.com/CrystalStiletto)
-- [infothrill](https://github.com/infothrill)
 
 ## [Author Information](#author-information)
 

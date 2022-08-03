@@ -7,11 +7,12 @@ _travis_requirements:
     - ruby-dev
   Debian:
     - ruby-dev
-  RedHat:
+  RedHat: &redhat_requirements
     - ruby-devel
+  Rocky: *redhat_requirements
   Suse:
     - ruby-devel
 
-travis_requirements: "{{ _travis_requirements[ansible_os_family] | default(_travis_requirements['default']) }}"
+travis_requirements: "{{ _travis_requirements[ansible_os_family] | default(_travis_requirements['default'] ) }}"
 
 travis_package: travis

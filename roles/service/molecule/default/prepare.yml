@@ -10,7 +10,7 @@
 
   post_tasks:
     - name: place /environmentfile.txt
-      copy:
+      ansible.builtin.copy:
         content: "value=variable"
         dest: /environmentfile.txt
         mode: "0644"

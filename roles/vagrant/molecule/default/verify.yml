@@ -6,4 +6,5 @@
 
   tasks:
     - name: try vagrant
-      command: vagrant --version
+      ansible.builtin.command:
+        cmd: vagrant --version

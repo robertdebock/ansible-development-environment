@@ -1,8 +1,8 @@
 ---
 # tasks file for ara
 
-- name: include assert.yml
-  import_tasks: assert.yml
+- name: import assert.yml
+  ansible.builtin.import_tasks: assert.yml
   run_once: yes
   delegate_to: localhost
 
@@ -24,11 +24,11 @@
 - name: find callback_plugins path
   block:
     - name: try python2
-      ansible.builtin.command: "{{ ara_setup_command_python2 }}"
+      ansible.builtin.command:
+        cmd: "{{ ara_setup_command_python2 }}"
       register: ara_callback_plugins
       changed_when: no
       check_mode: no
-
   rescue:
     - name: try python3
       ansible.builtin.command: "{{ ara_setup_command_python3 }}"

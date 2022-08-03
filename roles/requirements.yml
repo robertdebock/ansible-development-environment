@@ -11,6 +11,8 @@
   name: bootstrap
 - src: robertdebock.buildtools
   name: buildtools
+- src: robertdebock.code
+  name: code
 - src: robertdebock.common
   name: common
 - src: robertdebock.docker

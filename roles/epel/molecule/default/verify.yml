@@ -6,6 +6,6 @@
 
   tasks:
     - name: install a package from epel
-      package:
+      ansible.builtin.package:
         name: aalib
         state: present

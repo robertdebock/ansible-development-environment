@@ -28,6 +28,14 @@
       - postfix_inet_interfaces is string
     quiet: yes
 
+- name: test if postfix_banner is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_banner is string
+    quiet: yes
+  when:
+    - postfix_banner is defined
+
 - name: test if postfix_mydestination is set correctly
   ansible.builtin.assert:
     that:
@@ -39,7 +47,7 @@
   ansible.builtin.assert:
     that:
       - postfix_mynetworks is defined
-      - postfix_mynetworks is string
+      - postfix_mynetworks is iterable
     quiet: yes
 
 - name: test if postfix_smtpd_recipient_restrictions is set correctly
@@ -56,10 +64,327 @@
       - postfix_smtpd_sender_restrictions is iterable
     quiet: yes
 
-- name: test if postfix_smtpd_sender_restrictions is set correctly
+- name: test if postfix_tls_protocols is set correctly
   ansible.builtin.assert:
     that:
       - postfix_tls_protocols is string
     quiet: yes
   when:
     - postfix_tls_protocols is defined
+
+- name: test if postfix_smtp_tls_security_level is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtp_tls_security_level is defined
+      - postfix_smtp_tls_security_level is string
+      - postfix_smtp_tls_security_level in [ "dane", "encrypt", "fingerprint", "may", "none", "secure", "verify" ]
+    quiet: yes
+
+- name: test if postfix_biff is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_biff is boolean
+    quiet: yes
+  when:
+    - postfix_biff is defined
+
+- name: test if postfix_append_dot_mydomain is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_append_dot_mydomain is boolean
+    quiet: yes
+  when:
+    - postfix_append_dot_mydomain is defined
+
+- name: test if postfix_alias_maps is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_alias_maps is string
+    quiet: yes
+  when:
+    - postfix_alias_maps is defined
+
+- name: test if postfix_virtual_mailbox_base is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_virtual_mailbox_base is string
+    quiet: yes
+  when:
+    - postfix_virtual_mailbox_base is defined
+
+- name: test if postfix_virtual_mailbox_maps is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_virtual_mailbox_maps is string
+    quiet: yes
+  when:
+    - postfix_virtual_mailbox_maps is defined
+
+- name: test if postfix_virtual_mailbox_domains is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_virtual_mailbox_domains is string
+    quiet: yes
+  when:
+    - postfix_virtual_mailbox_domains is defined
+
+- name: test if postfix_virtual_alias_domains is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_virtual_alias_domains is string
+    quiet: yes
+  when:
+    - postfix_virtual_alias_domains is defined
+
+- name: test if postfix_virtual_alias_maps is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_virtual_alias_maps is string
+    quiet: yes
+  when:
+    - postfix_virtual_alias_maps is defined
+
+- name: test if postfix_virtual_uid_maps is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_virtual_uid_maps is string
+    quiet: yes
+  when:
+    - postfix_virtual_uid_maps is defined
+
+- name: test if postfix_virtual_gid_maps is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_virtual_gid_maps is string
+    quiet: yes
+  when:
+    - postfix_virtual_gid_maps is defined
+
+- name: test if postfix_smtpd_sasl_auth_enable is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_sasl_auth_enable is boolean
+    quiet: yes
+  when:
+    - postfix_smtpd_sasl_auth_enable is defined
+
+- name: test if postfix_smtpd_sasl_local_domain is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_sasl_local_domain is string
+    quiet: yes
+  when:
+    - postfix_smtpd_sasl_local_domain is defined
+
+- name: test if postfix_smtpd_sasl_security_options is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_sasl_security_options is string
+      - postfix_smtpd_sasl_security_options in [ "noplaintext", "noactive", "nodictionary", "noanonymous", "forward_secrecy", "mutual_auth" ]
+    quiet: yes
+  when:
+    - postfix_smtpd_sasl_security_options is defined
+
+- name: test if postfix_smtpd_sasl_authenticated_header is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_sasl_authenticated_header is boolean
+    quiet: yes
+  when:
+    - postfix_smtpd_sasl_authenticated_header is defined
+
+- name: test if postfix_broken_sasl_auth_clients is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_broken_sasl_auth_clients is boolean
+    quiet: yes
+  when:
+    - postfix_broken_sasl_auth_clients is defined
+
+- name: test if postfix_smtpd_tls_cert_file is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_tls_cert_file is string
+    quiet: yes
+  when:
+    - postfix_smtpd_tls_cert_file is defined
+
+- name: test if postfix_smtpd_tls_key_file is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_tls_key_file is string
+    quiet: yes
+  when:
+    - postfix_smtpd_tls_key_file is defined
+
+- name: test if postfix_smtpd_tls_received_header is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_tls_received_header is boolean
+    quiet: yes
+  when:
+    - postfix_smtpd_tls_received_header is defined
+
+- name: test if postfix_smtpd_tls_security_level is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_tls_security_level is string
+      - postfix_smtpd_tls_security_level in [ "dane", "encrypt", "fingerprint", "may", "none", "secure", "verify" ]
+    quiet: yes
+  when:
+    - postfix_smtpd_tls_security_level is defined
+
+- name: test if postfix_smtpd_tls_ask_ccert is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_tls_ask_ccert is boolean
+    quiet: yes
+  when:
+    - postfix_smtpd_tls_ask_ccert is defined
+
+- name: test if postfix_smtpd_tls_loglevel is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_tls_loglevel is number
+      - postfix_smtpd_tls_loglevel in [ 0, 1, 2, 3, 4 ]
+    quiet: yes
+  when:
+    - postfix_smtpd_tls_loglevel is defined
+
+- name: test if postfix_smtpd_tls_session_cache_database is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_tls_session_cache_database is string
+    quiet: yes
+  when:
+    - postfix_smtpd_tls_session_cache_database is defined
+
+- name: test if postfix_smtp_tls_cert_file is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtp_tls_cert_file is string
+    quiet: yes
+  when:
+    - postfix_smtp_tls_cert_file is defined
+
+- name: test if postfix_smtp_tls_key_file is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtp_tls_key_file is string
+    quiet: yes
+  when:
+    - postfix_smtp_tls_key_file is defined
+
+- name: test if postfix_smtp_tls_session_cache_database is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtp_tls_session_cache_database is string
+    quiet: yes
+  when:
+    - postfix_smtp_tls_session_cache_database is defined
+
+- name: test if postfix_tls_random_source is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_tls_random_source is string
+    quiet: yes
+  when:
+    - postfix_tls_random_source is defined
+
+- name: test if postfix_smtpd_tls_mandatory_protocols is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_tls_mandatory_protocols is string
+      - postfix_smtpd_tls_mandatory_protocols in [ "SSLv2", "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2", "TLSv1.3" ]
+    quiet: yes
+  when:
+    - postfix_smtpd_tls_mandatory_protocols is defined
+
+- name: test if postfix_smtp_tls_mandatory_protocols is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtp_tls_mandatory_protocols is string
+      - postfix_smtp_tls_mandatory_protocols in [ "SSLv2", "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2", "TLSv1.3" ]
+    quiet: yes
+  when:
+    - postfix_smtp_tls_mandatory_protocols is defined
+
+- name: test if postfix_virtual_transport is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_virtual_transport is string
+    quiet: yes
+  when:
+    - postfix_virtual_transport is defined
+
+- name: test if postfix_home_mailbox is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_home_mailbox is string
+    quiet: yes
+  when:
+    - postfix_home_mailbox is defined
+
+- name: test if postfix_message_size_limit is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_message_size_limit is number
+    quiet: yes
+  when:
+    - postfix_message_size_limit is defined
+
+- name: test if postfix_smtpd_helo_required is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_helo_required is boolean
+    quiet: yes
+  when:
+    - postfix_smtpd_helo_required is defined
+
+- name: test if postfix_anvil_rate_time_unit is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_anvil_rate_time_unit is string
+    quiet: yes
+  when:
+    - postfix_anvil_rate_time_unit is defined
+
+- name: test if postfix_smtpd_client_connection_rate_limit is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_client_connection_rate_limit is number
+    quiet: yes
+  when:
+    - postfix_smtpd_client_connection_rate_limit is defined
+
+- name: test if postfix_smtpd_client_connection_count_limit is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_smtpd_client_connection_count_limit is number
+    quiet: yes
+  when:
+    - postfix_smtpd_client_connection_count_limit is defined
+
+- name: test if postfix_bounce_queue_lifetime is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_bounce_queue_lifetime is string
+    quiet: yes
+  when:
+    - postfix_bounce_queue_lifetime is defined
+
+- name: test if postfix_readme_directory is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_readme_directory is string
+    quiet: yes
+  when:
+    - postfix_readme_directory is defined
+
+- name: test if postfix_html_directory is set correctly
+  ansible.builtin.assert:
+    that:
+      - postfix_html_directory is string
+    quiet: yes
+  when:
+    - postfix_html_directory is defined

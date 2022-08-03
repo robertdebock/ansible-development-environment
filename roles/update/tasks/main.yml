@@ -1,8 +1,8 @@
 ---
 # tasks file for update
 
-- name: include assert.yml
-  import_tasks: assert.yml
+- name: import assert.yml
+  ansible.builtin.import_tasks: assert.yml
   run_once: yes
   delegate_to: localhost
 
@@ -36,22 +36,18 @@
         autoremove: "{{ update_autoremove }}"
       when:
         - ansible_pkg_mgr == "apt"
-        - update_autoremove == "yes"
-      tags:
-        - skip_ansible_lint
+        - update_autoremove
   when:
     - ansible_pkg_mgr == "apt"
 
 - name: update all software (dnf)
   ansible.builtin.dnf:
     name: "*"
-    state: latest
+    state: latest  # noqa package-latest This role is to update packages.
   notify:
     - reboot
   when:
     - ansible_pkg_mgr == "dnf"
-  tags:
-    - skip_ansible_lint
 
 - name: update all software (pacman)
   community.general.pacman:
@@ -61,36 +57,30 @@
     - reboot
   when:
     - ansible_pkg_mgr == "pacman"
-  tags:
-    - skip_ansible_lint
 
 - name: configure yum
   block:
     - name: update all software (yum/6)
       ansible.builtin.yum:
         name: "*"
-        state: latest
+        state: latest  # noqa package-latest This role is to update packages.
       notify:
         - reboot
       when:
         - ansible_distribution_major_version == "6"
-      tags:
-        - skip_ansible_lint
 
-    - name: configure 7
-      block:
-        - name: update all software (yum/7)
-          ansible.builtin.yum:
-            name: "*"
-            state: latest
-          notify:
-            - reboot
-          tags:
-            - skip_ansible_lint
+    - name: update all software (yum/7)
+      ansible.builtin.yum:
+        name: "*"
+        state: latest  # noqa package-latest This role is to update packages.
+      notify:
+        - reboot
+      when:
+        - ansible_distribution_major_version == "7"
 
-        - name: install yum-utils
-          ansible.builtin.package:
-            name: yum-utils
+    - name: install yum-utils
+      ansible.builtin.package:
+        name: yum-utils
       when:
         - ansible_distribution_major_version == "7"
   when:
@@ -99,10 +89,8 @@
 - name: update all software (zypper)
   community.general.zypper:
     name: "*"
-    state: latest
+    state: latest  # noqa package-latest This role is to update packages.
   notify:
     - reboot
   when:
     - ansible_pkg_mgr == "zypper"
-  tags:
-    - skip_ansible_lint

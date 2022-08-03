@@ -272,7 +272,7 @@ unknown_local_recipient_reject_code = 550
 #mynetworks = 168.100.189.0/28, 127.0.0.0/8
 #mynetworks = $config_directory/mynetworks
 #mynetworks = hash:/etc/postfix/network_table
-mynetworks = {{ postfix_mynetworks }}
+mynetworks = {% for network in postfix_mynetworks %}{{ network }}{% if not loop.last %}, {% endif %}{% endfor %}
 
 # The relay_domains parameter restricts what destinations this system will
 # relay mail to.  See the smtpd_recipient_restrictions description in
@@ -415,7 +415,10 @@ relayhost = {{ postfix_relayhost|replace("'", "") }}
 # "postfix reload" to eliminate the delay.
 #
 #alias_maps = dbm:/etc/aliases
-alias_maps = hash:/etc/aliases
+{% if postfix_alias_maps is defined %}
+alias_maps = {{ postfix_alias_maps }}
+{% endif %}
+
 #alias_maps = hash:/etc/aliases, nis:mail.aliases
 #alias_maps = netinfo:/aliases
 
@@ -579,6 +582,10 @@ alias_database = hash:/etc/aliases
 #
 #header_checks = regexp:/etc/postfix/header_checks
 
+{% if postfix_header_checks_template is defined %}
+header_checks = regexp:/etc/postfix/header_checks
+{% endif %}
+
 # FAST ETRN SERVICE
 #
 # Postfix maintains per-destination logfiles with information about
@@ -603,6 +610,7 @@ alias_database = hash:/etc/aliases
 #
 #smtpd_banner = $myhostname ESMTP $mail_name
 #smtpd_banner = $myhostname ESMTP $mail_name ($mail_version)
+smtpd_banner = {{ postfix_banner }}
 
 # PARALLEL DELIVERY TO THE SAME DESTINATION
 #
@@ -695,7 +703,9 @@ setgid_group = {{ postfix_group }}
 
 # html_directory: The location of the Postfix HTML documentation.
 #
-html_directory = no
+{% if postfix_html_directory is defined %}
+html_directory = {{ postfix_html_directory }}
+{% endif %}
 
 # manpage_directory: The location of the Postfix on-line manual pages.
 #
@@ -708,7 +718,9 @@ sample_directory = /usr/share/doc/postfix-2.10.1/samples
 
 # readme_directory: The location of the Postfix README files.
 #
-readme_directory = /usr/share/doc/postfix-2.10.1/README_FILES
+{% if postfix_readme_directory is defined %}
+readme_directory = {{ postfix_readme_directory }}
+{% endif %}
 
 # content_filter: An optional filter to classify content.
 {% if postfix_clamav is defined and postfix_clamav == "enabled" %}
@@ -724,4 +736,154 @@ smtpd_tls_mandatory_protocols = {{ postfix_tls_protocols }}
 smtpd_tls_protocols = {{ postfix_tls_protocols }}
 smtp_tls_mandatory_protocols = {{ postfix_tls_protocols }}
 smtp_tls_protocols = {{ postfix_tls_protocols }}
+{% endif %}
+
+# The default SMTP TLS security level for the Postfix SMTP client
+smtp_tls_security_level = {{ postfix_smtp_tls_security_level }}
+
+# Optional lookup tables with mappings from recipient address to (message delivery transport, next-hop destination).
+# transport_maps = hash:/etc/postfix/transport
+{% if postfix_transport_maps_template is defined %}
+transport_maps = hash:/etc/postfix/transport
+{% endif %}
+
+{% if postfix_biff is defined %}
+biff = {% if postfix_biff %}yes{% else %}no{% endif %}
+{% endif %}
+
+{% if postfix_append_dot_mydomain is defined %}
+append_dot_mydomain = {% if postfix_append_dot_mydomain %}yes{% else %}no{% endif %}
+{% endif %}
+
+{% if postfix_virtual_mailbox_base is defined %}
+virtual_mailbox_base = {{ postfix_virtual_mailbox_base }}
+{% endif %}
+
+{% if postfix_virtual_mailbox_maps is defined %}
+virtual_mailbox_maps = {{ postfix_virtual_mailbox_maps }}
+{% endif %}
+
+{% if postfix_virtual_mailbox_domains is defined %}
+virtual_mailbox_domains = {{ postfix_virtual_mailbox_domains }}
+{% endif %}
+
+{% if postfix_virtual_alias_domains is defined %}
+virtual_alias_domains = {{ postfix_virtual_alias_domains }}
+{% endif %}
+
+{% if postix_virtual_alias_maps is defined %}
+virtual_alias_maps = {{ postix_virtual_alias_maps }}
+{% endif %}
+
+{% if postfix_virtual_uid_maps is defined %}
+virtual_uid_maps = {{ postfix_virtual_uid_maps }}
+{% endif %}
+
+{% if postfix_virtual_gid_maps is defined %}
+virtual_gid_maps = {{ postfix_virtual_gid_maps }}
+{% endif %}
+
+{% if postfix_smtpd_sasl_auth_enable is defined %}
+smtpd_sasl_auth_enable = {% if postfix_smtpd_sasl_auth_enable %}yes{% else %}no{% endif %}
+{% endif %}
+
+{% if postfix_smtpd_sasl_local_domain is defined %}
+smtpd_sasl_local_domain = {{ postfix_smtpd_sasl_local_domain }}
+{% endif %}
+
+{% if postfix_smtpd_sasl_security_options is defined %}
+smtpd_sasl_security_options = {{ postfix_smtpd_sasl_security_options }}
+{% endif %}
+
+{% if postfix_smtpd_sasl_authenticated_header is defined %}
+smtpd_sasl_authenticated_header = {% if postfix_smtpd_sasl_authenticated_header %}yes{% else %}no{% endif %}
+{% endif %}
+
+{% if postfix_broken_sasl_auth_clients is defined %}
+broken_sasl_auth_clients = {% if postfix_broken_sasl_auth_clients %}yes{% else %}no{% endif %}
+
+{% endif %}
+
+{% if postfix_smtpd_tls_cert_file is defined %}
+smtpd_tls_cert_file = {{ postfix_smtpd_tls_cert_file }}
+{% endif %}
+
+{% if postfix_smtpd_tls_key_file is defined %}
+smtpd_tls_key_file = {{ postfix_smtpd_tls_key_file }}
+{% endif %}
+
+{% if postfix_smtpd_tls_received_header is defined %}
+smtpd_tls_received_header = {% if postfix_smtpd_tls_received_header %}yes{% else %}no{% endif %}
+{% endif %}
+
+{% if postfix_smtpd_tls_security_level is defined %}
+smtpd_tls_security_level = {{ postfix_smtpd_tls_security_level }}
+{% endif %}
+
+{% if postfix_smtpd_tls_ask_ccert is defined %}
+smtpd_tls_ask_ccert = {% if postfix_smtpd_tls_ask_ccert %}yes{% else %}no{% endif %}
+{% endif %}
+
+{% if postfix_smtpd_tls_loglevel is defined %}
+smtpd_tls_loglevel = {{ postfix_smtpd_tls_loglevel }}
+{% endif %}
+
+{% if postfix_smtpd_tls_session_cache_database is defined %}
+smtpd_tls_session_cache_database = {{ postfix_smtpd_tls_session_cache_database }}
+{% endif %}
+
+{% if postfix_smtp_tls_cert_file is defined %}
+smtp_tls_cert_file = {{ postfix_smtp_tls_cert_file }}
+{% endif %}
+
+{% if postfix_smtp_tls_key_file is defined %}
+smtp_tls_key_file = {{ postfix_smtp_tls_key_file }}
+{% endif %}
+
+{% if postfix_smtp_tls_session_cache_database is defined %}
+smtp_tls_session_cache_database = {{ postfix_smtp_tls_session_cache_database }}
+{% endif %}
+
+{% if postfix_tls_random_source is defined %}
+tls_random_source = {{ postfix_tls_random_source }}
+{% endif %}
+
+{% if postfix_smtpd_tls_mandatory_protocols is defined %}
+smtpd_tls_mandatory_protocols = {{ postfix_smtpd_tls_mandatory_protocols }}
+{% endif %}
+
+{% if postfix_smtp_tls_mandatory_protocols is defined %}
+smtp_tls_mandatory_protocols = {{ postfix_smtp_tls_mandatory_protocols }}
+{% endif %}
+
+{% if postfix_virtual_transport is defined %}
+virtual_transport = {{ postfix_virtual_transport }}
+{% endif %}
+
+{% if postfix_home_mailbox is defined %}
+home_mailbox = {{ postfix_home_mailbox }}
+{% endif %}
+
+{% if postfix_message_size_limit is defined %}
+message_size_limit = {{ postfix_message_size_limit }}
+{% endif %}
+
+{% if postfix_smtpd_helo_required is defined %}
+smtpd_helo_required = {% if postfix_smtpd_helo_required %}yes{% else %}no{% endif %}
+{% endif %}
+
+{% if postfix_anvil_rate_time_unit is defined %}
+anvil_rate_time_unit = {{ postfix_anvil_rate_time_unit }}
+{% endif %}
+
+{% if postfix_smtpd_client_connection_rate_limit is defined %}
+smtpd_client_connection_rate_limit = {{ postfix_smtpd_client_connection_rate_limit }}
+{% endif %}
+
+{% if postfix_smtpd_client_connection_count_limit is defined %}
+smtpd_client_connection_count_limit = {{ postfix_smtpd_client_connection_count_limit }}
+{% endif %}
+
+{% if postfix_bounce_queue_lifetime is defined %}
+bounce_queue_lifetime = {{ postfix_bounce_queue_lifetime }}
 {% endif %}

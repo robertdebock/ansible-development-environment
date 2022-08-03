@@ -6,6 +6,7 @@
 
   tasks:
     - name: run ansible
-      shell: ansible --version > ansible.version
+      ansible.builtin.shell:
+        cmd: ansible --version > ansible.version
       args:
         creates: ansible.version

@@ -13,9 +13,18 @@
         name: "{{ epel_url }}"
         state: present
       notify:
-        - yum update cache
+        - update package cache
+
+    - name: install epel-next-release
+      ansible.builtin.package:
+        name: "{{ epel_next_url }}"
+        state: present
+      when:
+        - epel_next
+      notify:
+        - update package cache
   when:
     - (ansible_distribution == "Amazon" and
       ansible_distribution_major_version == "2") or
-      (ansible_distribution in [ "CentOS", "RedHat" ] and
+      (ansible_os_family == "RedHat" and
       ansible_distribution_major_version in [ "7", "8" ])

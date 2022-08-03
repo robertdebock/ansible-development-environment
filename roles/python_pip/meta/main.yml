@@ -6,27 +6,27 @@ galaxy_info:
   description: Install pythons pip on your system.
   license: Apache-2.0
   company: none
-  min_ansible_version: 2.10
+  min_ansible_version: "2.10"
 
   platforms:
-    - name: EL
+    - name: Alpine
       versions:
-        - 8
+        - all
     - name: Debian
       versions:
-        - buster
-        - bullseye
+        - all
+    - name: EL
+      versions:
+        - all
     - name: Fedora
       versions:
-        - 32
-        - 33
+        - all
     - name: OpenSUSE
       versions:
         - all
     - name: Ubuntu
       versions:
-        - focal
-        - bionic
+        - all
 
   galaxy_tags:
     - python

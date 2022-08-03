@@ -6,3 +6,16 @@
 
   roles:
     - role: ansible-role-docker
+      docker_privileged_users:
+        - woody
+        - buzz
+
+  tasks:
+    - name: Create test case users
+      ansible.builtin.user:
+        name: "{{ user }}"
+      loop:
+        - woody
+        - buzz
+      loop_control:
+        loop_var: user

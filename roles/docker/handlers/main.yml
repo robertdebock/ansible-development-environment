@@ -5,4 +5,4 @@
   ansible.builtin.file:
     path: "{{ docker_socket }}"
     group: docker
-    mode: "0640"
+    mode: "0660"
