@@ -85,6 +85,8 @@ git_repositories:
     dest: ansible-role-clamav
   - repo: ssh://git@github.com/robertdebock/ansible-role-cntlm.git
     dest: ansible-role-cntlm
+  - repo: ssh://git@github.com/robertdebock/ansible-role-code.git
+    dest: ansible-role-code
   - repo: ssh://git@github.com/robertdebock/ansible-role-collectd.git
     dest: ansible-role-collectd
   - repo: ssh://git@github.com/robertdebock/ansible-role-common.git
@@ -157,6 +159,8 @@ git_repositories:
     dest: ansible-role-functions
   - repo: ssh://git@github.com/robertdebock/ansible-role-git.git
     dest: ansible-role-git
+  - repo: ssh://git@github.com/robertdebock/ansible-role-gitea.git
+    dest: ansible-role-gitea
   - repo: ssh://git@github.com/robertdebock/ansible-role-gitlab.git
     dest: ansible-role-gitlab
   - repo: ssh://git@github.com/robertdebock/ansible-role-gitlab_runner.git
