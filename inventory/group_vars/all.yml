@@ -403,6 +403,8 @@ git_repositories:
     dest: ansible-role-vault
   - repo: ssh://git@github.com/robertdebock/ansible-role-vault_configuration.git
     dest: ansible-role-vault_configuration
+  - repo: ssh://git@github.com/robertdebock/ansible-role-vault_initialize.git
+    dest: ansible-role-vault_initialize
   - repo: ssh://git@github.com/robertdebock/ansible-role-vault_snapshot.git
     dest: ansible-role-vault_snapshot
   - repo: ssh://git@github.com/robertdebock/ansible-role-vdo.git
