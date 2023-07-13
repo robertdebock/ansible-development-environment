@@ -329,6 +329,8 @@ git_repositories:
     dest: ansible-role-rundeck
   - repo: ssh://git@github.com/robertdebock/ansible-role-scl.git
     dest: ansible-role-scl
+  - repo: ssh://git@github.com/robertdebock/ansible-role-scripts.git
+    dest: ansible-role-scripts
   - repo: ssh://git@github.com/robertdebock/ansible-role-selinux.git
     dest: ansible-role-selinux
   - repo: ssh://git@github.com/robertdebock/ansible-role-service.git
