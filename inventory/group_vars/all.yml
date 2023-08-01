@@ -245,6 +245,8 @@ git_repositories:
     dest: ansible-role-modprobe
   - repo: ssh://git@github.com/robertdebock/ansible-role-molecule.git
     dest: ansible-role-molecule
+  - repo: ssh://git@github.com/robertdebock/ansible-role-mongodb.git
+    dest: ansible-role-mongodb
   - repo: ssh://git@github.com/robertdebock/ansible-role-moodle.git
     dest: ansible-role-moodle
   - repo: ssh://git@github.com/robertdebock/ansible-role-mount.git
