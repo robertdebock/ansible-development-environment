@@ -285,6 +285,8 @@ git_repositories:
     dest: ansible-role-packer
   - repo: ssh://git@github.com/robertdebock/ansible-role-php.git
     dest: ansible-role-php
+  - repo: ssh://git@github.com/robertdebock/ansible-role-php_unsupported.git
+    dest: ansible-role-php_unsupported
   - repo: ssh://git@github.com/robertdebock/ansible-role-php_fpm.git
     dest: ansible-role-php_fpm
   - repo: ssh://git@github.com/robertdebock/ansible-role-phpmyadmin.git
