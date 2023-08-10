@@ -67,6 +67,8 @@ git_repositories:
     dest: ansible-role-azure_cli
   - repo: ssh://git@github.com/robertdebock/ansible-role-backup.git
     dest: ansible-role-backup
+  - repo: ssh://git@github.com/robertdebock/ansible-role-bareos.git
+    dest: ansible-role-bareos
   - repo: ssh://git@github.com/robertdebock/ansible-role-bios_update.git
     dest: ansible-role-bios_update
   - repo: ssh://git@github.com/robertdebock/ansible-role-bootstrap.git
