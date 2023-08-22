@@ -69,6 +69,14 @@ git_repositories:
     dest: ansible-role-backup
   - repo: ssh://git@github.com/robertdebock/ansible-role-bareos.git
     dest: ansible-role-bareos
+  - repo: ssh://git@github.com/robertdebock/ansible-role-bareos_repository.git
+    dest: ansible-role-bareos_repository
+  - repo: ssh://git@github.com/robertdebock/ansible-role-bareos_dir.git
+    dest: ansible-role-bareos_dir
+  - repo: ssh://git@github.com/robertdebock/ansible-role-bareos_fd.git
+    dest: ansible-role-bareos_fd
+  - repo: ssh://git@github.com/robertdebock/ansible-role-bareos_sd.git
+    dest: ansible-role-bareos_sd
   - repo: ssh://git@github.com/robertdebock/ansible-role-bios_update.git
     dest: ansible-role-bios_update
   - repo: ssh://git@github.com/robertdebock/ansible-role-bootstrap.git
