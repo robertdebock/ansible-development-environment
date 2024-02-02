@@ -317,6 +317,8 @@ git_repositories:
     dest: ansible-role-tailscale
   - repo: ssh://git@github.com/robertdebock/ansible-role-terraform.git
     dest: ansible-role-terraform
+  - repo: ssh://git@github.com/robertdebock/ansible-role-tfe.git
+    dest: ansible-role-tfe
   - repo: ssh://git@github.com/robertdebock/ansible-role-tftpd.git
     dest: ansible-role-tftpd
   - repo: ssh://git@github.com/robertdebock/ansible-role-tigervnc.git
