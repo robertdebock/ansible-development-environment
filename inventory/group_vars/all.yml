@@ -243,6 +243,8 @@ git_repositories:
     dest: ansible-role-openssl
   - repo: ssh://git@github.com/robertdebock/ansible-role-openvpn.git
     dest: ansible-role-openvpn
+  - repo: ssh://git@github.com/robertdebock/ansible-role-oracle_instant_client.git
+    dest: ansible-role-oracle_instant_client
   - repo: ssh://git@github.com/robertdebock/ansible-role-owncloud.git
     dest: ansible-role-owncloud
   - repo: ssh://git@github.com/robertdebock/ansible-role-php.git
@@ -357,6 +359,8 @@ git_repositories:
     dest: ansible-role-vault_configuration
   - repo: ssh://git@github.com/robertdebock/ansible-role-vault_initialize.git
     dest: ansible-role-vault_initialize
+  - repo: ssh://git@github.com/robertdebock/ansible-role-vault_plugin_oracle.git
+    dest: ansible-role-vault_plugin_oracle
   - repo: ssh://git@github.com/robertdebock/ansible-role-vault_snapshot.git
     dest: ansible-role-vault_snapshot
   - repo: ssh://git@github.com/robertdebock/ansible-role-virtualbox.git
