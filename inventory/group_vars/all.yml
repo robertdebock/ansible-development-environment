@@ -107,6 +107,8 @@ git_repositories:
     dest: ansible-role-core_dependencies
   - repo: ssh://git@github.com/robertdebock/ansible-role-cron.git
     dest: ansible-role-cron
+  - repo: ssh://git@github.com/robertdebock/ansible-role-cve_2024_3094.git
+    dest: ansible-role-cve_2024_3094
   - repo: ssh://git@github.com/robertdebock/ansible-role-debug.git
     dest: ansible-role-debug
   - repo: ssh://git@github.com/robertdebock/ansible-role-dhcpd.git
