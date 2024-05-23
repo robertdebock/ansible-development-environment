@@ -1,7 +1,7 @@
 namespace: "robertdebock"
 name: "development_environment"
 description: Install everything you need to develop Ansible roles.
-version: "2.6.7"
+version: "2.6.8"
 readme: "README.md"
 authors:
     - "Robert de Bock"
