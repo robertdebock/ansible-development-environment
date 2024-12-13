@@ -91,6 +91,8 @@ git_repositories:
     dest: ansible-role-clamav
   - repo: ssh://git@github.com/robertdebock/ansible-role-cntlm.git
     dest: ansible-role-cntlm
+  - repo: ssh://git@github.com/robertdebock/ansible-role-cisco_anyconnect.git
+    dest: ansible-role-cisco_anyconnect
   - repo: ssh://git@github.com/robertdebock/ansible-role-code.git
     dest: ansible-role-code
   - repo: ssh://git@github.com/robertdebock/ansible-role-collectd.git
